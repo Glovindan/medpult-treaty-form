@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import ButtonPanel from './components/ButtonPanel/ButtonPanel'
 import Table from './components/Table/Table'
+import CustomSelect from './components/CustomSelect/CustomSelect'
 import Context from './stores/context'
 
 export default function App() {
@@ -21,8 +22,20 @@ export default function App() {
 
 	return (
 		<>
-			<ButtonPanel searchHandler={buttonSearchHandler} />
-			<Table />
+			<div style={{width: "500px"}}><CustomSelect values={[
+				"turbo",
+				"gmail",
+				"com",
+				"turbo",
+				"gmail",
+				"com",
+				"turbo",
+				"gmail",
+				"com",
+				"turbo",
+				"gmail",
+				"com",
+			]}/></div>
 		</>
 	)
 }
