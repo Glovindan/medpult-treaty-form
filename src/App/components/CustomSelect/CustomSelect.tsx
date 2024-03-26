@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
 import CustomSelectRow from '../CustomSelectRow/CustomSelectRow';
+import CustomInput from '../CustomInput/CustomInput';
 
 interface CustomSelectData {
 	values: string[]
@@ -43,25 +44,16 @@ function CustomSelect({ values }: CustomSelectData) {
 		};
 	}, [isOpen])
 
-
 	return (
 		<div className="custom-select" ref={rootRef}>
-			<div
-				className={
-					isOpen
-						? 'custom-select__input-wrapper custom-select__input-wrapper_open'
-						: 'custom-select__input-wrapper'
-				}
-
-				ref={wrapperRef}
-			>
-				<input
-					className='custom-select__input'
-					onClick={clickHandler}
-					value={value}
-					readOnly
-				/>
-			</div>
+			<CustomInput
+				value={value}
+				clickHandler={clickHandler}
+				wrapperRef={wrapperRef}
+				cursor='pointer'
+				isOpen={isOpen}
+				readOnly
+			/>
 			<div
 				className={
 					isOpen

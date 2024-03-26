@@ -1,41 +1,55 @@
 import React, { useContext, useState } from 'react'
-import ButtonPanel from './components/ButtonPanel/ButtonPanel'
-import Table from './components/Table/Table'
+
 import CustomSelect from './components/CustomSelect/CustomSelect'
-import Context from './stores/context'
+import LabledField from './components/LabledField/LabledField'
+import CustomInput from './components/CustomInput/CustomInput'
+import Panel from './components/Panel/Panel'
+import TabItem from './components/TabItem/TabItem'
+import TabsWrapper from './components/TabsWrapper/TabsWrapper'
+import GeneralTab from './components/GeneralTab/GeneralTab'
 
 export default function App() {
-	const store = useContext(Context)
-	const [dataRender, setDataRender] = useState(store.dataRender)
+	const [value, setValue] = useState<string>("test")
 
-	async function buttonSearchHandler() {
-		store.dataRender = store.dataRender.filter(
-			(project) => project.projectManager?.name === 'User 1'
-		)
-
-		setDataRender(store.dataRender)
-		console.log('data:')
-		console.log(store.data)
-		console.log('data_render:')
-		console.log(store.dataRender)
+	const handleInput = (ev) => {
+		setValue(ev.target.value)
 	}
 
 	return (
 		<>
-			<div style={{width: "500px"}}><CustomSelect values={[
-				"turbo",
-				"gmail",
-				"com",
-				"turbo",
-				"gmail",
-				"com",
-				"turbo",
-				"gmail",
-				"com",
-				"turbo",
-				"gmail",
-				"com",
-			]}/></div>
+			<div style={{ background: "#F2F4F6", padding: "20px", height: "100%" }}>
+				<Panel label={"Договор  001СБС00123456/2023ДМС от 01.12.2023 "}>
+					<TabsWrapper>
+						<TabItem code={"general"} name={"Общее"}>
+							<GeneralTab />
+						</TabItem>
+						<TabItem code={"sides"} name={"Стороны"}>
+							<LabledField label={"Номер"}>
+								<CustomSelect values={[
+									"turbo",
+									"gmail",
+									"com",
+									"turbo",
+									"gmail",
+									"com",
+									"turbo",
+									"gmail",
+									"com",
+									"turbo",
+									"gmail",
+									"com",
+								]} />
+							</LabledField>
+							<LabledField label={"Номер"}>
+								<CustomInput
+									value={value}
+									inputHandler={handleInput}
+								/>
+							</LabledField>
+						</TabItem>
+					</TabsWrapper>
+				</Panel>
+			</div>
 		</>
 	)
 }

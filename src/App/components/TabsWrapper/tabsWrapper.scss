@@ -1,0 +1,16 @@
+.tabs-wrapper {
+	display: flex;
+	flex-direction: column;
+
+	&__selector {
+		display: flex;
+		flex-direction: row;
+		border-bottom: 2px solid var(--medpult-bg-color);
+		height: 55px;
+		align-items: center;
+		padding: 0 18px;
+	}
+
+	&__container {
+	}
+}
