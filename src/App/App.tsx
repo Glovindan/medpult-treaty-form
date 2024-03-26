@@ -7,6 +7,7 @@ import Panel from './components/Panel/Panel'
 import TabItem from './components/TabItem/TabItem'
 import TabsWrapper from './components/TabsWrapper/TabsWrapper'
 import GeneralTab from './components/GeneralTab/GeneralTab'
+import Button from './components/Button/Button'
 
 export default function App() {
 	const [value, setValue] = useState<string>("test")
@@ -48,6 +49,11 @@ export default function App() {
 							</LabledField>
 						</TabItem>
 					</TabsWrapper>
+					<div style={{ padding: "0 18px 18px 18px", textAlign: "right", display: "flex", gap: "18px", flexDirection: "row", justifyContent: "flex-end" }}>
+						<Button clickHandler={() => { }} type='outline' title='ИЗМЕНИТЬ' />
+						<Button clickHandler={() => { }} type='outline' title='СОХРАНИТЬ' />
+						<Button clickHandler={() => { }} title='ЗАКРЫТЬ' />
+					</div>
 				</Panel>
 			</div>
 		</>

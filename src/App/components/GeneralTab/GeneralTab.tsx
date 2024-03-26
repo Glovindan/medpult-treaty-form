@@ -5,7 +5,7 @@ import CustomInput from '../CustomInput/CustomInput';
 
 function GeneralTab() {
 	return (
-		<div className="general-tab__columns">
+		<div className="general-tab general-tab__columns">
 			<div className="general-tab__column">
 				<LabledField label={"Номер"}>
 					<CustomInput />
