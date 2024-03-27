@@ -1,37 +1,51 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
 import CustomSelectRow from '../CustomSelectRow/CustomSelectRow';
 import CustomInput from '../CustomInput/CustomInput';
+import { CustomInputProps, IInputData } from '../../shared/types';
+import InputButton from '../InputButton/InputButton';
+import Loader from '../Loader/Loader';
 
-interface CustomSelectData {
-	values: string[]
+interface CustomSelect extends CustomInputProps {
+	getDataHandler: () => Promise<IInputData[]>
 }
 
-function CustomSelect({ values }: CustomSelectData) {
+function CustomSelect(props: CustomSelect) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [value, setValue] = useState<string>("");
 	const [listWidth, setListWidth] = useState<number>(100);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [values, setValues] = useState<IInputData[]>([]);
 	const rootRef = useRef<HTMLDivElement>(null);
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
-	const clickHandler = () => {
-		console.log(wrapperRef.current)
+	const clickHandler = async () => {
+		// Показать список
 		setIsOpen(true)
+		// Показать лоадер
+		setIsLoading(true)
+
+		// Показать данные
+		setValues([]);
+		const values = await props.getDataHandler();
+		setValues(values);
+
+		// Скрыть лоадер
+		setIsLoading(false)
 	}
 
 	const handleOptionClick = (value: string) => {
 		setIsOpen(false)
-		setValue(value);
+		console.log("handleOptionClick")
+		props.inputHandler(props.name, { value: value })
 	}
 
 	useEffect(() => {
 		const wrapper = wrapperRef.current!;
 		setListWidth(wrapper.getBoundingClientRect().width);
-	})
+	}, [isOpen])
 
 	useEffect(() => {
 		const handleClick = (event: MouseEvent) => {
 			const { target } = event;
-			console.log(event)
 			if (target instanceof Node && !rootRef.current?.contains(target)) {
 				setIsOpen(false);
 			}
@@ -44,14 +58,18 @@ function CustomSelect({ values }: CustomSelectData) {
 		};
 	}, [isOpen])
 
+	const buttonSvg = <svg height='10px' width='10px' viewBox='0 0 16 16' fill='#64C3F4' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z' /></svg>
+
 	return (
 		<div className="custom-select" ref={rootRef}>
 			<CustomInput
-				value={value}
+				values={props.values}
+				name={props.name}
 				clickHandler={clickHandler}
 				wrapperRef={wrapperRef}
 				cursor='pointer'
 				isOpen={isOpen}
+				buttons={[<InputButton svg={buttonSvg} clickHandler={clickHandler} />]}
 				readOnly
 			/>
 			<div
@@ -66,7 +84,8 @@ function CustomSelect({ values }: CustomSelectData) {
 				}}
 			>
 				<div className="custom-select__list">
-					{values.map(value => <CustomSelectRow value={value} clickHandler={handleOptionClick} />)}
+					{values.map(value => <CustomSelectRow value={value.value} clickHandler={handleOptionClick} />)}
+					{isLoading && <Loader />}
 				</div>
 			</div>
 		</div>

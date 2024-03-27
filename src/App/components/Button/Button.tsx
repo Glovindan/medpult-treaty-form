@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
-import CustomSelectRow from '../CustomSelectRow/CustomSelectRow';
 
 interface ButtonData {
 	title: string,

@@ -2,35 +2,45 @@ import React, { useState } from 'react'
 
 import LabledField from '../LabledField/LabledField';
 import CustomInput from '../CustomInput/CustomInput';
+import { IFormData, IInputData } from '../../shared/types';
+import CustomSelect from '../CustomSelect/CustomSelect';
+import Scripts from '../../shared/utils/clientScripts';
+import Masks from '../../shared/utils/masks';
+import CustomInputDate from '../CustomInputDate/CustomInputDate';
 
-function GeneralTab() {
+type GeneralTabProps = {
+	handler: any
+	values: IFormData
+}
+
+function GeneralTab({ handler, values }: GeneralTabProps) {
 	return (
 		<div className="general-tab general-tab__columns">
 			<div className="general-tab__column">
 				<LabledField label={"Номер"}>
-					<CustomInput />
+					<CustomInput name='number' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Страхователь"}>
-					<CustomInput />
+					<CustomInput name='policyHolder' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Продукт"}>
-					<CustomInput />
+					<CustomSelect getDataHandler={Scripts.getProducts} name='objProduct' inputHandler={handler} values={values} />
 				</LabledField>
 				<div className="general-tab__columns">
 					<div className="general-tab__column">
 						<LabledField label={"Статус"}>
-							<CustomInput />
+							<CustomInput name='status' inputHandler={handler} values={values} />
 						</LabledField>
 						<LabledField label={"Дата начала действия"}>
-							<CustomInput />
+							<CustomInputDate name='startDate' inputHandler={handler} values={values} />
 						</LabledField>
 					</div>
 					<div className="general-tab__column">
 						<LabledField label={"Дата заключения"}>
-							<CustomInput />
+							<CustomInputDate name='conclusionDate' inputHandler={handler} values={values} />
 						</LabledField>
 						<LabledField label={"Дата окончания действия"}>
-							<CustomInput />
+							<CustomInputDate name='endDate' inputHandler={handler} values={values} />
 						</LabledField>
 					</div>
 				</div>
@@ -38,29 +48,29 @@ function GeneralTab() {
 
 			<div className="general-tab__column">
 				<LabledField label={"Канал продажи"}>
-					<CustomInput />
+					<CustomInput name='channel' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Регион заключения"}>
-					<CustomInput />
+					<CustomInput name='region' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Валюта договора"}>
-					<CustomInput />
+					<CustomInput name='currency' inputHandler={handler} values={values} />
 				</LabledField>
 				<div className="general-tab__columns">
 					<div className="general-tab__column">
 						<LabledField label={"Страховая сумма по договору"}>
-							<CustomInput />
+							<CustomInput name='test' inputHandler={handler} values={values} />
 						</LabledField>
 						<LabledField label={"Страховая премия по договору"}>
-							<CustomInput />
+							<CustomInput name='test' inputHandler={handler} values={values} />
 						</LabledField>
 					</div>
 					<div className="general-tab__column">
 						<LabledField label={"Страховая сумма по договору, руб"}>
-							<CustomInput />
+							<CustomInput name='test' inputHandler={handler} values={values} />
 						</LabledField>
 						<LabledField label={"Страховая премия по договору, руб"}>
-							<CustomInput />
+							<CustomInput name='test' inputHandler={handler} values={values} />
 						</LabledField>
 					</div>
 				</div>

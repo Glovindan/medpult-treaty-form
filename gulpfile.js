@@ -149,6 +149,7 @@ async function replaceFuncNames() {
   return gulp
     .src(path.deploy + '/index.html')
     .pipe(replace('Scripts', '<%= Scripts%>'))
+    .pipe(replace('var <%= Scripts%>', 'var placehloder'))
     .pipe(gulp.dest(path.deploy))
 }
 

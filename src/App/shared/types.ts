@@ -1,20 +1,42 @@
-export interface IProject {
-	projectName: string
-	id: string
-	projectManager?: IPeople
-	team?: IPeople[]
-}
-
-interface IPeople {
+/** Тип категория/элемент приложения */
+export interface ICategory {
+	/** Код или идетификатор */
+	code: string
+	/** Название */
 	name: string
-	id: string
 }
 
-export interface IStore {
-	data: IProject[]
-	dataRender: IProject[]
+export interface IFormData {
+	/** Номер */
+	number: string
+	/** Страхователь */
+	policyHolder: string
+	/** Продукт */
+	objProduct: string
+	/** Канал продажи */
+	channel: string
+	/** Регион заключения */
+	region: string
+	/** Валюта договора */
+	currency: string
+	/** Статус */
+	status: string
+	/** Дата заключения */
+	conclusionDate: string
+	/** Дата начала действия */
+	startDate: string
+	/** Дата окончания действия */
+	endDate: string
 }
 
-export interface IPropsForTable {
-	data: IProject[]
+export interface CustomInputProps {
+	name: string
+	buttons?: any
+	values: IFormData
+	inputHandler?: any
+	clickHandler?: () => void
+	cursor?: string
+	isOpen?: boolean
+	wrapperRef?: React.RefObject<HTMLDivElement>
+	readOnly?: boolean
 }
