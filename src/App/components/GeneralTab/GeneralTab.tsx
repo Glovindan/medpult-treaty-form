@@ -29,7 +29,7 @@ function GeneralTab({ handler, values }: GeneralTabProps) {
 				<div className="general-tab__columns">
 					<div className="general-tab__column">
 						<LabledField label={"Статус"}>
-							<CustomInput name='status' inputHandler={handler} values={values} />
+							<CustomSelect getDataHandler={Scripts.getStatuses} name='status' inputHandler={handler} values={values} />
 						</LabledField>
 						<LabledField label={"Дата начала действия"}>
 							<CustomInputDate name='startDate' inputHandler={handler} values={values} />
@@ -48,29 +48,29 @@ function GeneralTab({ handler, values }: GeneralTabProps) {
 
 			<div className="general-tab__column">
 				<LabledField label={"Канал продажи"}>
-					<CustomInput name='channel' inputHandler={handler} values={values} />
+					<CustomSelect getDataHandler={Scripts.getChannels} name='channel' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Регион заключения"}>
 					<CustomInput name='region' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Валюта договора"}>
-					<CustomInput name='currency' inputHandler={handler} values={values} />
+					<CustomSelect getDataHandler={Scripts.getCurrencies} name='currency' inputHandler={handler} values={values} />
 				</LabledField>
 				<div className="general-tab__columns">
 					<div className="general-tab__column">
 						<LabledField label={"Страховая сумма по договору"}>
-							<CustomInput name='test' inputHandler={handler} values={values} />
+							<CustomInput name='insuranceAmount' inputHandler={handler} values={values} maskFunction={Masks.applyNumbersMask} />
 						</LabledField>
 						<LabledField label={"Страховая премия по договору"}>
-							<CustomInput name='test' inputHandler={handler} values={values} />
+							<CustomInput name='insurancePremium' inputHandler={handler} values={values} maskFunction={Masks.applyNumbersMask} />
 						</LabledField>
 					</div>
 					<div className="general-tab__column">
 						<LabledField label={"Страховая сумма по договору, руб"}>
-							<CustomInput name='test' inputHandler={handler} values={values} />
+							<CustomInput name='insuranceAmountRub' inputHandler={handler} values={values} maskFunction={Masks.applyNumbersMask} />
 						</LabledField>
 						<LabledField label={"Страховая премия по договору, руб"}>
-							<CustomInput name='test' inputHandler={handler} values={values} />
+							<CustomInput name='insurancePremiumRub' inputHandler={handler} values={values} maskFunction={Masks.applyNumbersMask} />
 						</LabledField>
 					</div>
 				</div>

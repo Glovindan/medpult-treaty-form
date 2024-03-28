@@ -18,6 +18,11 @@ const applyDateMask = (value: string): string => {
 	return value
 }
 
+const applyNumbersMask = (value: string): string => {
+	return value.match(/\d/g)?.join('') ?? ''
+}
+
 export default {
 	applyDateMask,
+	applyNumbersMask,
 }

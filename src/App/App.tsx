@@ -23,7 +23,13 @@ export default function App() {
 		conclusionDate: { value: "" },
 		startDate: { value: "" },
 		endDate: { value: "" },
+		insuranceAmount: { value: "" },
+		insuranceAmountRub: { value: "" },
+		insurancePremium: { value: "" },
+		insurancePremiumRub: { value: "" },
 	});
+
+	const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
 
 	// Установка значения поля формы
 	const setValue = (name: string, value: IInputData) => {
@@ -34,6 +40,25 @@ export default function App() {
 	useEffect(() => {
 		console.log(values)
 	}, [values])
+
+	/** Нажатие на кнопку Изменить */
+	const onClickEdit = () => {
+		setIsReadOnly(false)
+	}
+
+	/** Нажатие на кнопку сохранить */
+	const onClickSave = async () => {
+		await new Promise((resolve) => {
+			setTimeout(resolve, 1000)
+		})
+		setIsReadOnly(true)
+	}
+
+	const formActionButton = (
+		isReadOnly
+			? <Button clickHandler={onClickEdit} type='outline' title='ИЗМЕНИТЬ' />
+			: <Button clickHandler={onClickSave} type='outline' title='СОХРАНИТЬ' />
+	)
 
 	return (
 		<>
@@ -48,8 +73,7 @@ export default function App() {
 						</TabItem>
 					</TabsWrapper>
 					<div style={{ padding: "0 18px 18px 18px", textAlign: "right", display: "flex", gap: "18px", flexDirection: "row", justifyContent: "flex-end" }}>
-						<Button clickHandler={() => { }} type='outline' title='ИЗМЕНИТЬ' />
-						<Button clickHandler={() => { }} type='outline' title='СОХРАНИТЬ' />
+						{formActionButton}
 						<Button clickHandler={() => { }} title='ЗАКРЫТЬ' />
 					</div>
 				</Panel>
