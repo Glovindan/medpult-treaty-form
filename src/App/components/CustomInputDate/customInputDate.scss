@@ -1,47 +1,10 @@
-.custom-input {
-	&__wrapper {
-		color: black;
-		font-size: 14px;
-		font-style: normal;
-		font-weight: 400;
-		line-height: normal;
-		letter-spacing: 0.42px;
+.custom-input-date {
+	position: relative;
 
-		opacity: 1;
-
-		border: 2px solid var(--medpult-field-border-color);
-		border-radius: 7px;
-		height: 40px;
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		overflow: hidden;
-
-		&_open {
-			border-bottom-right-radius: 0;
-			border-bottom-left-radius: 0;
-			box-shadow: none;
-		}
-	}
-
-	&__input {
-		width: 100%;
+	&__picker {
+		position: absolute;
+		visibility: hidden;
 		height: 100%;
-		padding-left: 6px;
-		user-select: text;
-		outline: none;
-		border: none;
-		background-color: transparent;
-		font-style: normal;
-		font-weight: 400;
-		font-family: Inter;
-		font-size: 14px;
+		width: 100%;
 	}
-}
-
-.button__wrapper {
-	width: 30px;
-	height: 30px;
-	background-color: red;
 }
