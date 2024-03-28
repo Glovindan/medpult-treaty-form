@@ -13,6 +13,7 @@ function CustomInput(props) {
 		isOpen = false,
 		wrapperRef = useRef<HTMLDivElement>(null),
 		readOnly = false,
+		isViewMode = false,
 		placeholder = "",
 		maskFunction
 	} = props;
@@ -34,7 +35,8 @@ function CustomInput(props) {
 	}
 
 	let buttonsWrapper;
-	if (buttons) {
+
+	if (!isViewMode && buttons) {
 		buttonsWrapper =
 			<div className='custom-input__buttons'>
 				{buttons}
@@ -60,7 +62,7 @@ function CustomInput(props) {
 				onInput={onInput}
 				onClick={clickHandler}
 				value={getValueByName()}
-				readOnly={readOnly}
+				readOnly={readOnly || isViewMode}
 				placeholder={placeholder}
 			/>
 			{buttonsWrapper}

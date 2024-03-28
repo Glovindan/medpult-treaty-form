@@ -6,7 +6,8 @@ import InputButton from '../InputButton/InputButton';
 import Loader from '../Loader/Loader';
 
 interface CustomSelect extends CustomInputProps {
-	getDataHandler: () => Promise<IInputData[]>
+	getDataHandler: () => Promise<IInputData[]>,
+	isViewMode: boolean
 }
 
 function CustomSelect(props: CustomSelect) {
@@ -18,6 +19,7 @@ function CustomSelect(props: CustomSelect) {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
 	const clickHandler = async () => {
+		if (props.isViewMode) return;
 		// Показать список
 		setIsOpen(true)
 		// Показать лоадер
@@ -67,9 +69,10 @@ function CustomSelect(props: CustomSelect) {
 				name={props.name}
 				clickHandler={clickHandler}
 				wrapperRef={wrapperRef}
-				cursor='pointer'
+				cursor={props.isViewMode ? 'text' : 'pointer'}
 				isOpen={isOpen}
 				buttons={[<InputButton svg={buttonSvg} clickHandler={clickHandler} />]}
+				isViewMode={props.isViewMode}
 				readOnly
 			/>
 			<div

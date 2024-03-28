@@ -114,9 +114,79 @@ async function getStatuses() {
 	return data
 }
 
+/** Получение списка статусов */
+async function saveTreaty(data) {
+	await randomDelay()
+	console.log(data)
+}
+
+/** Получение списка статусов */
+async function getTreaty() {
+	const data = {
+		'number': {
+			'value': 'test',
+		},
+		'policyHolder': {
+			'value': '',
+		},
+		'objProduct': {
+			'value': 'Aenean tellus elit leo consectetur',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+		'channel': {
+			'value': 'channelTest',
+			'data': {
+				'code': 'channelTest',
+			},
+		},
+		'region': {
+			'value': '',
+		},
+		'currency': {
+			'value': 'currencyTest',
+			'data': {
+				'code': 'currencyTest',
+			},
+		},
+		'status': {
+			'value': 'Еще статус',
+			'data': {
+				'code': 'eshe_status',
+			},
+		},
+		'conclusionDate': {
+			'value': '28.03.2024',
+		},
+		'startDate': {
+			'value': '28.03.2024',
+		},
+		'endDate': {
+			'value': '28.03.2024',
+		},
+		'insuranceAmount': {
+			'value': '',
+		},
+		'insuranceAmountRub': {
+			'value': '',
+		},
+		'insurancePremium': {
+			'value': '',
+		},
+		'insurancePremiumRub': {
+			'value': '',
+		},
+	}
+	await randomDelay()
+	return data
+}
+
 export default {
 	getProducts,
 	getChannels,
 	getCurrencies,
 	getStatuses,
+	saveTreaty,
+	getTreaty,
 }

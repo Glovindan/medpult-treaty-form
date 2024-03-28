@@ -10,6 +10,7 @@ import GeneralTab from './components/GeneralTab/GeneralTab'
 import Button from './components/Button/Button'
 import { ICategory, IFormData, IInputData } from './shared/types'
 import Loader from './components/Loader/Loader'
+import Scripts from './shared/utils/clientScripts'
 
 export default function App() {
 	const [values, setValues] = useState<IFormData>({
@@ -29,12 +30,20 @@ export default function App() {
 		insurancePremiumRub: { value: "" },
 	});
 
-	const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+	const [isViewMode, setIsViewMode] = useState<boolean>(true);
 
 	// Установка значения поля формы
 	const setValue = (name: string, value: IInputData) => {
 		setValues({ ...values, [name]: value })
 	}
+
+	// Получение данных договора
+	useEffect(() => {
+		const dataPromise: Promise<IFormData> = Scripts.getTreaty();
+		dataPromise.then((data) => {
+			setValues(data)
+		})
+	}, [])
 
 	// Debug
 	useEffect(() => {
@@ -43,30 +52,35 @@ export default function App() {
 
 	/** Нажатие на кнопку Изменить */
 	const onClickEdit = () => {
-		setIsReadOnly(false)
+		setIsViewMode(false)
 	}
 
 	/** Нажатие на кнопку сохранить */
 	const onClickSave = async () => {
-		await new Promise((resolve) => {
-			setTimeout(resolve, 1000)
-		})
-		setIsReadOnly(true)
+		await Scripts.saveTreaty(values);
+		setIsViewMode(true)
 	}
 
+	/** Кнопка Изменить или Сохранить взависимости от режима формы */
 	const formActionButton = (
-		isReadOnly
+		isViewMode
 			? <Button clickHandler={onClickEdit} type='outline' title='ИЗМЕНИТЬ' />
 			: <Button clickHandler={onClickSave} type='outline' title='СОХРАНИТЬ' />
 	)
 
+	/** Заголовок панели */
+	const panelLabel =
+		values.number.value
+			? `Договор ${values.number.value} от 01.12.2023`
+			: "Новый договор"
+
 	return (
 		<>
-			<div style={{ background: "#F2F4F6", padding: "20px", height: "100%" }}>
-				<Panel label={"Договор  001СБС00123456/2023ДМС от 01.12.2023 "}>
+			<div style={{ background: "#F2F4F6", padding: "10px", height: "100%" }}>
+				<Panel label={panelLabel}>
 					<TabsWrapper>
 						<TabItem code={"general"} name={"Общее"}>
-							<GeneralTab handler={setValue} values={values} />
+							<GeneralTab handler={setValue} values={values} isViewMode={isViewMode} />
 						</TabItem>
 						<TabItem code={"sides"} name={"Стороны"}>
 							<Loader />

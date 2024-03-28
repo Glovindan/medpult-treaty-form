@@ -1,32 +1,46 @@
-/** Тип категория/элемент приложения */
-export interface ICategory {
-	/** Код или идетификатор */
-	code: string
-	/** Название */
-	name: string
+// /** Тип категория/элемент приложения */
+// export interface ICategory {
+// 	/** Код или идетификатор */
+// 	code: string
+// 	/** Название */
+// 	name: string
+// }
+
+export interface IInputData {
+	value: string
+	data?: any
 }
 
+/** Значения полей формы */
 export interface IFormData {
 	/** Номер */
-	number: string
+	number: IInputData
 	/** Страхователь */
-	policyHolder: string
+	policyHolder: IInputData
 	/** Продукт */
-	objProduct: string
+	objProduct: IInputData
 	/** Канал продажи */
-	channel: string
+	channel: IInputData
 	/** Регион заключения */
-	region: string
+	region: IInputData
 	/** Валюта договора */
-	currency: string
+	currency: IInputData
 	/** Статус */
-	status: string
+	status: IInputData
 	/** Дата заключения */
-	conclusionDate: string
+	conclusionDate: IInputData
 	/** Дата начала действия */
-	startDate: string
+	startDate: IInputData
 	/** Дата окончания действия */
-	endDate: string
+	endDate: IInputData
+	/** Страховая сумма по договору */
+	insuranceAmount: IInputData
+	/** Страховая сумма по договору, руб */
+	insuranceAmountRub: IInputData
+	/** Страховая премия по договору */
+	insurancePremium: IInputData
+	/** Страховая премия по договору, руб */
+	insurancePremiumRub: IInputData
 }
 
 export interface CustomInputProps {
