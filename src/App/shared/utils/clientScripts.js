@@ -12,19 +12,19 @@ async function getProducts() {
 		{
 			'value': 'placeholder 1',
 			'data': {
-				'id': '018e7fa6-010e-712b-aecd-d07441142e97',
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
 			},
 		},
 		{
 			'value': 'placeholder 2',
 			'data': {
-				'id': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
 			},
 		},
 		{
 			'value': 'placeholder 3',
 			'data': {
-				'id': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
 			},
 		},
 	]
@@ -39,19 +39,19 @@ async function getChannels() {
 		{
 			'value': 'СБОЛ',
 			'data': {
-				'id': '018e7fa6-010e-712b-aecd-d07441142e97',
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
 			},
 		},
 		{
 			'value': 'БУБУБУ',
 			'data': {
-				'id': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
 			},
 		},
 		{
 			'value': 'ВСТАВИТЬ ТЕКСТ',
 			'data': {
-				'id': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
 			},
 		},
 	]
@@ -66,19 +66,19 @@ async function getCurrencies() {
 		{
 			'value': 'RUB',
 			'data': {
-				'id': '018e7fa6-010e-712b-aecd-d07441142e97',
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
 			},
 		},
 		{
 			'value': 'USD',
 			'data': {
-				'id': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
 			},
 		},
 		{
 			'value': 'EUR',
 			'data': {
-				'id': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
 			},
 		},
 	]
@@ -93,19 +93,19 @@ async function getStatuses() {
 		{
 			'value': 'RUB',
 			'data': {
-				'id': '018e7fa6-010e-712b-aecd-d07441142e97',
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
 			},
 		},
 		{
 			'value': 'USD',
 			'data': {
-				'id': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
 			},
 		},
 		{
 			'value': 'EUR',
 			'data': {
-				'id': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
 			},
 		},
 	]
@@ -123,11 +123,20 @@ async function saveTreaty(data) {
 /** Получение списка статусов */
 async function getTreaty() {
 	const data = {
+		'treaty': {
+			'value': 'test',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
 		'number': {
 			'value': 'test',
 		},
 		'policyHolder': {
-			'value': '',
+			'value': 'test',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
 		},
 		'objProduct': {
 			'value': 'Aenean tellus elit leo consectetur',
@@ -142,7 +151,7 @@ async function getTreaty() {
 			},
 		},
 		'region': {
-			'value': '',
+			'value': 'test',
 		},
 		'currency': {
 			'value': 'currencyTest',
@@ -182,6 +191,27 @@ async function getTreaty() {
 	return data
 }
 
+/** Получение ссылки на форму отбора контрагента */
+const getSelectContractorPageLink = () => {
+	return '#test'
+}
+
+/** Получение подсказок по адресу */
+const getAddressSuggestion = async (value) => {
+	const addresses = [
+		{
+			'value': 'г Полный адрес, улица Полная, д12 кв34',
+			'isFull': true,
+		},
+		{
+			'value': 'г Неполный адрес',
+			'isFull': false,
+		},
+	]
+	await randomDelay()
+	return addresses
+}
+
 export default {
 	getProducts,
 	getChannels,
@@ -189,4 +219,6 @@ export default {
 	getStatuses,
 	saveTreaty,
 	getTreaty,
+	getSelectContractorPageLink,
+	getAddressSuggestion,
 }

@@ -15,7 +15,8 @@ function CustomInput(props) {
 		readOnly = false,
 		isViewMode = false,
 		placeholder = "",
-		maskFunction
+		maskFunction,
+		...inputStyles
 	} = props;
 
 	const getValueByName = () => {
@@ -64,6 +65,7 @@ function CustomInput(props) {
 				value={getValueByName()}
 				readOnly={readOnly || isViewMode}
 				placeholder={placeholder}
+				{...inputStyles}
 			/>
 			{buttonsWrapper}
 		</div>

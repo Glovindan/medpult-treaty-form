@@ -13,6 +13,8 @@ export interface IInputData {
 
 /** Значения полей формы */
 export interface IFormData {
+	/** Договор */
+	treaty: IInputData
 	/** Номер */
 	number: IInputData
 	/** Страхователь */
@@ -53,4 +55,66 @@ export interface CustomInputProps {
 	isOpen?: boolean
 	wrapperRef?: React.RefObject<HTMLDivElement>
 	readOnly?: boolean
+}
+
+/** Значение поля ввода типа Строка */
+class InputDataString implements IInputData {
+	value: string
+	data: null
+
+	constructor(value?: string) {
+		this.value = value ?? ''
+	}
+}
+
+/** Значение поля ввода типа Категория */
+class InputDataCategory implements IInputData {
+	value: string
+	data: {
+		code: string
+	}
+
+	constructor(value?: string, code?: string) {
+		this.value = value ?? ''
+		this.data = { code: code ?? '' }
+	}
+}
+
+/** Значения полей формы с уточненными типами полей */
+export class TreatyFormData implements IFormData {
+	treaty: InputDataCategory
+	objProduct: InputDataCategory
+	channel: InputDataCategory
+	currency: InputDataCategory
+	status: InputDataCategory
+
+	number: IInputData
+	policyHolder: IInputData
+	region: IInputData
+	conclusionDate: IInputData
+	startDate: IInputData
+	endDate: IInputData
+	insuranceAmount: IInputData
+	insuranceAmountRub: IInputData
+	insurancePremium: IInputData
+	insurancePremiumRub: IInputData
+
+	constructor() {
+		this.treaty = new InputDataCategory()
+		this.objProduct = new InputDataCategory()
+		this.channel = new InputDataCategory()
+		this.currency = new InputDataCategory()
+		this.status = new InputDataCategory()
+
+		this.number = new InputDataString()
+		this.policyHolder = new InputDataString()
+		this.region = new InputDataString()
+		this.conclusionDate = new InputDataString()
+		this.startDate = new InputDataString()
+		this.endDate = new InputDataString()
+		this.insuranceAmount = new InputDataString()
+		this.insuranceAmountRub = new InputDataString()
+		this.insurancePremium = new InputDataString()
+		this.insurancePremiumRub = new InputDataString()
+	}
 }

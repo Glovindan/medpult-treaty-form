@@ -6,41 +6,60 @@ import InputButton from '../InputButton/InputButton';
 import Loader from '../Loader/Loader';
 import icons from '../../shared/icons';
 
-interface CustomSelect extends CustomInputProps {
-	getDataHandler: () => Promise<IInputData[]>,
+interface CustomInputSearch extends CustomInputProps {
+	getDataHandler: (query?: any) => Promise<any>,
 	isViewMode: boolean
 }
 
-function CustomSelect(props: CustomSelect) {
+function CustomInputSearch(props: CustomInputSearch) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [listWidth, setListWidth] = useState<number>(100);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [values, setValues] = useState<IInputData[]>([]);
+	const [values, setValues] = useState<any[]>([]);
+	const [buffer, setBuffer] = useState<any>();
 	const rootRef = useRef<HTMLDivElement>(null);
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
 	const clickHandler = async () => {
-		if (props.isViewMode) return;
-		if (isOpen) return;
-		// Показать список
-		setIsOpen(true)
+		// Записать в буфер и очистить в поле
+		setBuffer("")
+	}
+
+	const loadData = async (query: string) => {
 		// Показать лоадер
 		setIsLoading(true)
 
 		// Показать данные
 		setValues([]);
-		const values = await props.getDataHandler();
-		console.log(values);
+		const values = await props.getDataHandler(query);
 		setValues(values);
 
 		// Скрыть лоадер
 		setIsLoading(false)
 	}
 
-	const handleOptionClick = ({ value, code }: { value: string, code: string }) => {
-		setIsOpen(false)
-		props.inputHandler(props.name, { value: value, data: { code: code } })
+	const inputHandler = async (name: string, data: IInputData) => {
+
+		props.inputHandler(props.name, data)
+		// Показать список
+		setIsOpen(true)
+
+		await loadData(data.value);
 	}
+
+	const handleOptionClick = async ({ value, data }: { value: string, data?: any }) => {
+		console.log(data);
+		setIsOpen(false)
+		props.inputHandler(props.name, { value: value, data: data })
+	}
+
+	/** Не закрывать список подсказок, если адрес неполный */
+	useEffect(() => {
+		if (props.values[props.name].data && !props.values[props.name].data.isFull) {
+			setIsOpen(true)
+			loadData(props.values[props.name].value)
+		}
+	}, [props.values[props.name]])
 
 	useEffect(() => {
 		const wrapper = wrapperRef.current!;
@@ -48,9 +67,10 @@ function CustomSelect(props: CustomSelect) {
 	}, [isOpen])
 
 	useEffect(() => {
-		const handleClick = (event: MouseEvent) => {
+		const handleClick = (event) => {
 			const { target } = event;
-			if (target instanceof Node && !rootRef.current?.contains(target)) {
+			console.log(target.className)
+			if (!rootRef.current?.contains(target)) {
 				setIsOpen(false);
 			}
 		};
@@ -60,7 +80,7 @@ function CustomSelect(props: CustomSelect) {
 		return () => {
 			window.removeEventListener("click", handleClick);
 		};
-	}, [isOpen])
+	}, [])
 
 	const buttonSvg = icons.Triangle;
 
@@ -70,12 +90,12 @@ function CustomSelect(props: CustomSelect) {
 				values={props.values}
 				name={props.name}
 				clickHandler={clickHandler}
+				inputHandler={inputHandler}
 				wrapperRef={wrapperRef}
 				cursor={props.isViewMode ? 'text' : 'pointer'}
 				isOpen={isOpen}
 				buttons={[<InputButton svg={buttonSvg} clickHandler={clickHandler} />]}
 				isViewMode={props.isViewMode}
-				readOnly
 			/>
 			<div
 				className={
@@ -89,7 +109,7 @@ function CustomSelect(props: CustomSelect) {
 				}}
 			>
 				<div className="custom-select__list">
-					{values.map(value => <CustomSelectRow value={value.value} code={value.data.code} clickHandler={handleOptionClick} />)}
+					{values.map(value => <CustomSelectRow value={value.value} data={{ isFull: value.isFull }} clickHandler={handleOptionClick} />)}
 					{isLoading && <Loader />}
 				</div>
 			</div>
@@ -97,4 +117,4 @@ function CustomSelect(props: CustomSelect) {
 	)
 }
 
-export default CustomSelect
+export default CustomInputSearch

@@ -1,11 +1,2 @@
-import Scripts from './clientScripts'
-
-/** Получение списка продуктов */
-async function getProducts() {
-	const products = await Scripts.getProducts()
-	return products
-}
-
-export default {
-	getProducts,
-}
+/** Код значения черновика в localStorage */
+export const localStorageDraftKey = 'medpult-treaty-draft'

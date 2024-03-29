@@ -3,32 +3,19 @@ import React, { useContext, useEffect, useState } from 'react'
 import CustomSelect from './components/CustomSelect/CustomSelect'
 import LabledField from './components/LabledField/LabledField'
 import CustomInput from './components/CustomInput/CustomInput'
-import Panel from './components/Panel/Panel'
+import Panel from './components/Panel/Panel'	/** Договор */
 import TabItem from './components/TabItem/TabItem'
 import TabsWrapper from './components/TabsWrapper/TabsWrapper'
 import GeneralTab from './components/GeneralTab/GeneralTab'
 import Button from './components/Button/Button'
-import { ICategory, IFormData, IInputData } from './shared/types'
+import { IFormData, IInputData, TreatyFormData } from './shared/types'
 import Loader from './components/Loader/Loader'
 import Scripts from './shared/utils/clientScripts'
+import { localStorageDraftKey } from './shared/utils/constants'
+import SidesTab from './components/SidesTab/SidesTab'
 
 export default function App() {
-	const [values, setValues] = useState<IFormData>({
-		number: { value: "" },
-		policyHolder: { value: "" },
-		objProduct: { value: "" },
-		channel: { value: "" },
-		region: { value: "" },
-		currency: { value: "" },
-		status: { value: "" },
-		conclusionDate: { value: "" },
-		startDate: { value: "" },
-		endDate: { value: "" },
-		insuranceAmount: { value: "" },
-		insuranceAmountRub: { value: "" },
-		insurancePremium: { value: "" },
-		insurancePremiumRub: { value: "" },
-	});
+	const [values, setValues] = useState<IFormData>(new TreatyFormData());
 
 	const [isViewMode, setIsViewMode] = useState<boolean>(true);
 
@@ -39,6 +26,17 @@ export default function App() {
 
 	// Получение данных договора
 	useEffect(() => {
+		// Получение данных из черновика
+		const draftData = localStorage.getItem(localStorageDraftKey)
+		localStorage.removeItem(localStorageDraftKey)
+		if (draftData) {
+			const data = JSON.parse(draftData);
+			setValues(data)
+			setIsViewMode(false);
+			return;
+		}
+
+		// Получение данных из Системы
 		const dataPromise: Promise<IFormData> = Scripts.getTreaty();
 		dataPromise.then((data) => {
 			setValues(data)
@@ -61,6 +59,12 @@ export default function App() {
 		setIsViewMode(true)
 	}
 
+	/** Сохранить состояние в localStorage */
+	const saveState = () => {
+		const data = JSON.stringify(values)
+		localStorage.setItem(localStorageDraftKey, data);
+	}
+
 	/** Кнопка Изменить или Сохранить взависимости от режима формы */
 	const formActionButton = (
 		isViewMode
@@ -80,10 +84,10 @@ export default function App() {
 				<Panel label={panelLabel}>
 					<TabsWrapper>
 						<TabItem code={"general"} name={"Общее"}>
-							<GeneralTab handler={setValue} values={values} isViewMode={isViewMode} />
+							<GeneralTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} />
 						</TabItem>
 						<TabItem code={"sides"} name={"Стороны"}>
-							<Loader />
+							<SidesTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} />
 						</TabItem>
 					</TabsWrapper>
 					<div style={{ padding: "0 18px 18px 18px", textAlign: "right", display: "flex", gap: "18px", flexDirection: "row", justifyContent: "flex-end" }}>

@@ -7,15 +7,19 @@ import CustomSelect from '../CustomSelect/CustomSelect';
 import Scripts from '../../shared/utils/clientScripts';
 import Masks from '../../shared/utils/masks';
 import CustomInputDate from '../CustomInputDate/CustomInputDate';
+import CustomInputAppItem from '../CustomInputAppItem/CustomInputAppItem';
+import CustomInputSearch from '../CustomInputSearch/CustomInputSearch';
 
 type GeneralTabProps = {
 	handler: any
 	values: IFormData
 	isViewMode: boolean
+	saveStateHandler: () => void
 }
 
+/** Вкладка Общее */
 function GeneralTab(props: GeneralTabProps) {
-	const { handler, values, isViewMode } = props;
+	const { handler, values, isViewMode, saveStateHandler } = props;
 	return (
 		<div className="general-tab general-tab__columns">
 			<div className="general-tab__column">
@@ -23,7 +27,7 @@ function GeneralTab(props: GeneralTabProps) {
 					<CustomInput isViewMode={isViewMode} name='number' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Страхователь"}>
-					<CustomInput isViewMode={isViewMode} name='policyHolder' inputHandler={handler} values={values} />
+					<CustomInputAppItem href={Scripts.getSelectContractorPageLink()} saveStateHandler={saveStateHandler} isViewMode={isViewMode} name='policyHolder' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Продукт"}>
 					<CustomSelect isViewMode={isViewMode} getDataHandler={Scripts.getProducts} name='objProduct' inputHandler={handler} values={values} />
@@ -53,7 +57,7 @@ function GeneralTab(props: GeneralTabProps) {
 					<CustomSelect isViewMode={isViewMode} getDataHandler={Scripts.getChannels} name='channel' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Регион заключения"}>
-					<CustomInput isViewMode={isViewMode} name='region' inputHandler={handler} values={values} />
+					<CustomInputSearch isViewMode={isViewMode} name='region' inputHandler={handler} values={values} getDataHandler={Scripts.getAddressSuggestion} />
 				</LabledField>
 				<LabledField label={"Валюта договора"}>
 					<CustomSelect isViewMode={isViewMode} getDataHandler={Scripts.getCurrencies} name='currency' inputHandler={handler} values={values} />
