@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 function SidesTabRow(props) {
 	return (
 		<div className="sides-tab-row">
-			<div className="sides-tab-row__type">dasd</div>
-			<div className="sides-tab-row__contractor">dsasda</div>
+			<div className="sides-tab-row__type">Продавец</div>
+			<div className="sides-tab-row__contractor">Иванов Иван Иванович</div>
 		</div>
 	)
 }

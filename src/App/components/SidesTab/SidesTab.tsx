@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useDebugValue, useEffect, useState } from 'react'
 
 import LabledField from '../LabledField/LabledField';
 import CustomInput from '../CustomInput/CustomInput';
@@ -16,11 +16,23 @@ type GeneralTabProps = {
 	values: IFormData
 	isViewMode: boolean
 	saveStateHandler: () => void
+	setActionHandlers: {
+		setAddHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>,
+		setEditHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>,
+		setDeleteHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
+	}
 }
 
 /** Вкладка Общее */
 function SidesTab(props: GeneralTabProps) {
-	const { handler, values, isViewMode, saveStateHandler } = props;
+	const { handler, values, isViewMode, saveStateHandler, setActionHandlers } = props;
+
+	useEffect(() => {
+		setActionHandlers.setAddHandler(() => () => { alert("add") })
+		setActionHandlers.setEditHandler(() => () => { alert("edit") })
+		setActionHandlers.setDeleteHandler(() => () => { alert("delete") })
+	}, [])
+
 	return (
 		<div className="sides-tab">
 			<div className="sides-tab__header">

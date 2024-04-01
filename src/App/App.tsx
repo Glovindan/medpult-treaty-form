@@ -15,10 +15,22 @@ import { localStorageDraftKey } from './shared/utils/constants'
 import SidesTab from './components/SidesTab/SidesTab'
 
 export default function App() {
-	const [values, setValues] = useState<IFormData>(new TreatyFormData());
 
 	const [isViewMode, setIsViewMode] = useState<boolean>(true);
 
+	// Обработчик нажатия на кнопку добавить
+	const [addHandler, setAddHandler] = useState<() => void>()
+	// Обработчик нажатия на кнопку редактировать
+	const [editHandler, setEditHandler] = useState<() => void>()
+	// Обработчик нажатия на кнопку удалить
+	const [deleteHandler, setDeleteHandler] = useState<() => void>()
+	const setActionHandlers = {
+		setAddHandler,
+		setEditHandler,
+		setDeleteHandler
+	}
+
+	const [values, setValues] = useState<IFormData>(new TreatyFormData());
 	// Установка значения поля формы
 	const setValue = (name: string, value: IInputData) => {
 		setValues({ ...values, [name]: value })
@@ -26,6 +38,7 @@ export default function App() {
 
 	// Получение данных договора
 	useEffect(() => {
+		console.log(deleteHandler)
 		// Получение данных из черновика
 		const draftData = localStorage.getItem(localStorageDraftKey)
 		localStorage.removeItem(localStorageDraftKey)
@@ -82,13 +95,13 @@ export default function App() {
 		<>
 			<div style={{ background: "#F2F4F6", padding: "10px", height: "100%" }}>
 				<Panel label={panelLabel}>
-					<TabsWrapper>
-						<TabItem code={"general"} name={"Общее"}>
-							<GeneralTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} />
+					<TabsWrapper addHandler={addHandler} editHandler={editHandler} deleteHandler={deleteHandler}>
+						<TabItem code={"general"} name={"Общее"} >
+							<GeneralTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
-						<TabItem code={"sides"} name={"Стороны"}>
-							<SidesTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} />
-						</TabItem>
+						{/* <TabItem code={"sides"} name={"Стороны"}>
+							<SidesTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
+						</TabItem> */}
 					</TabsWrapper>
 					<div style={{ padding: "0 18px 18px 18px", textAlign: "right", display: "flex", gap: "18px", flexDirection: "row", justifyContent: "flex-end" }}>
 						{formActionButton}

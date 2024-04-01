@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import LabledField from '../LabledField/LabledField';
 import CustomInput from '../CustomInput/CustomInput';
@@ -15,11 +15,24 @@ type GeneralTabProps = {
 	values: IFormData
 	isViewMode: boolean
 	saveStateHandler: () => void
+	setActionHandlers: {
+		setAddHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>,
+		setEditHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>,
+		setDeleteHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
+	}
 }
 
 /** Вкладка Общее */
 function GeneralTab(props: GeneralTabProps) {
-	const { handler, values, isViewMode, saveStateHandler } = props;
+	const { handler, values, isViewMode, saveStateHandler, setActionHandlers } = props;
+
+	useEffect(() => {
+		console.log("wtf")
+		setActionHandlers.setAddHandler(undefined)
+		setActionHandlers.setEditHandler(undefined)
+		setActionHandlers.setDeleteHandler(undefined)
+	}, [])
+
 	return (
 		<div className="general-tab general-tab__columns">
 			<div className="general-tab__column">
