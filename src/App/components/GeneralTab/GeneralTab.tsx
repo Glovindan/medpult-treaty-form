@@ -26,8 +26,8 @@ type GeneralTabProps = {
 function GeneralTab(props: GeneralTabProps) {
 	const { handler, values, isViewMode, saveStateHandler, setActionHandlers } = props;
 
+	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
 	useEffect(() => {
-		console.log("wtf")
 		setActionHandlers.setAddHandler(undefined)
 		setActionHandlers.setEditHandler(undefined)
 		setActionHandlers.setDeleteHandler(undefined)

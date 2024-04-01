@@ -186,6 +186,53 @@ async function getTreaty() {
 		'insurancePremiumRub': {
 			'value': '',
 		},
+		'sides': [
+			{
+				'isEdit': false,
+				'type': {
+					'value': 'Менеджер договора',
+					'data': {
+						'code': 'manager',
+					},
+				},
+				'contractor': {
+					'value': 'Иванов Иван Иванович',
+					'data': {
+						'code': '123456',
+					},
+				},
+			},
+			{
+				'isEdit': false,
+				'type': {
+					'value': 'Медицинский куратор',
+					'data': {
+						'code': 'medical',
+					},
+				},
+				'contractor': {
+					'value': 'Петров Петр Петрович',
+					'data': {
+						'code': '42515215',
+					},
+				},
+			},
+			{
+				'isEdit': true,
+				'type': {
+					'value': 'Технический куратор',
+					'data': {
+						'code': 'technical',
+					},
+				},
+				'contractor': {
+					'value': 'Плюшкин Лев Николаевич',
+					'data': {
+						'code': '4643645654',
+					},
+				},
+			},
+		],
 	}
 	await randomDelay()
 	return data
@@ -212,6 +259,32 @@ const getAddressSuggestion = async (value) => {
 	return addresses
 }
 
+/** Получение типов ответственного лица */
+const getResponsibleTypes = async (value) => {
+	const types = [
+		{
+			'value': 'Менеджер договора',
+			'data': {
+				'code': 'manager',
+			},
+		},
+		{
+			'value': 'Медицинский куратор',
+			'data': {
+				'code': 'medical',
+			},
+		},
+		{
+			'value': 'Технический куратор',
+			'data': {
+				'code': 'technical',
+			},
+		},
+	]
+	await randomDelay()
+	return types
+}
+
 export default {
 	getProducts,
 	getChannels,
@@ -221,4 +294,5 @@ export default {
 	getTreaty,
 	getSelectContractorPageLink,
 	getAddressSuggestion,
+	getResponsibleTypes,
 }

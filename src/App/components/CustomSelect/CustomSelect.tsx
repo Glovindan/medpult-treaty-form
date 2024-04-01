@@ -8,19 +8,28 @@ import icons from '../../shared/icons';
 
 interface CustomSelect extends CustomInputProps {
 	getDataHandler: () => Promise<IInputData[]>,
-	isViewMode: boolean
+	isViewMode?: boolean
 }
 
 function CustomSelect(props: CustomSelect) {
+	const {
+		isViewMode,
+		getDataHandler,
+		inputHandler,
+		name,
+		values,
+		...customInputProps
+	} = props;
+
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [listWidth, setListWidth] = useState<number>(100);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [values, setValues] = useState<IInputData[]>([]);
+	const [listValues, setListValues] = useState<IInputData[]>([]);
 	const rootRef = useRef<HTMLDivElement>(null);
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
 	const clickHandler = async () => {
-		if (props.isViewMode) return;
+		if (isViewMode) return;
 		if (isOpen) return;
 		// Показать список
 		setIsOpen(true)
@@ -28,10 +37,10 @@ function CustomSelect(props: CustomSelect) {
 		setIsLoading(true)
 
 		// Показать данные
-		setValues([]);
-		const values = await props.getDataHandler();
+		setListValues([]);
+		const values = await getDataHandler();
 		console.log(values);
-		setValues(values);
+		setListValues(values);
 
 		// Скрыть лоадер
 		setIsLoading(false)
@@ -39,7 +48,8 @@ function CustomSelect(props: CustomSelect) {
 
 	const handleOptionClick = ({ value, code }: { value: string, code: string }) => {
 		setIsOpen(false)
-		props.inputHandler(props.name, { value: value, data: { code: code } })
+		if (!inputHandler) return;
+		inputHandler(name, { value: value, data: { code: code } })
 	}
 
 	useEffect(() => {
@@ -67,14 +77,15 @@ function CustomSelect(props: CustomSelect) {
 	return (
 		<div className="custom-select" ref={rootRef}>
 			<CustomInput
-				values={props.values}
-				name={props.name}
+				values={values}
+				name={name}
 				clickHandler={clickHandler}
 				wrapperRef={wrapperRef}
-				cursor={props.isViewMode ? 'text' : 'pointer'}
+				cursor={isViewMode ? 'text' : 'pointer'}
 				isOpen={isOpen}
 				buttons={[<InputButton svg={buttonSvg} clickHandler={clickHandler} />]}
-				isViewMode={props.isViewMode}
+				isViewMode={isViewMode}
+				{...customInputProps}
 				readOnly
 			/>
 			<div
@@ -89,7 +100,7 @@ function CustomSelect(props: CustomSelect) {
 				}}
 			>
 				<div className="custom-select__list">
-					{values.map(value => <CustomSelectRow value={value.value} code={value.data.code} clickHandler={handleOptionClick} />)}
+					{listValues.map(value => <CustomSelectRow value={value.value} code={value.data.code} clickHandler={handleOptionClick} />)}
 					{isLoading && <Loader />}
 				</div>
 			</div>

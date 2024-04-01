@@ -1,8 +1,7 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react'
-import CustomSelectRow from '../CustomSelectRow/CustomSelectRow';
-import { CustomInputProps, IFormData } from '../../shared/types';
+import React, { ComponentProps, useEffect, useReducer, useRef, useState } from 'react'
+import { CustomInputProps, IFormData, IInputData } from '../../shared/types';
 
-function CustomInput(props) {
+function CustomInput(props: CustomInputProps) {
 	const {
 		values,
 		name,
@@ -16,9 +15,22 @@ function CustomInput(props) {
 		isViewMode = false,
 		placeholder = "",
 		maskFunction,
+		getValueHandler,
 		...inputStyles
 	} = props;
 
+	/** Поулчение значения поля */
+	const getValue = () => {
+		// Если есть кастомная функция получения значения - выполнить ее
+		if (getValueHandler) {
+			return getValueHandler(props)
+		}
+
+		// Иначе стандартный путь
+		return getValueByName();
+	}
+
+	/** Поулчение значения поля по имени */
 	const getValueByName = () => {
 		const value = values[name];
 		if (!value) return "";
@@ -26,23 +38,32 @@ function CustomInput(props) {
 		return value.value
 	}
 
+	/** Обработчик ввода в поле */
 	const onInput = (ev) => {
 		if (!inputHandler) return;
 
 		let value = ev.target.value;
+		// Обработка текста по маске
 		if (maskFunction) value = maskFunction(ev.target.value)
 
+		// Запись значения в состояние
 		inputHandler(name, { value: value })
 	}
 
-	let buttonsWrapper;
-
-	if (!isViewMode && buttons) {
-		buttonsWrapper =
-			<div className='custom-input__buttons'>
-				{buttons}
-			</div>
-	}
+	// Кнопки поля ввода
+	const [buttonsWrapper, setButtonsWrapper] = useState<React.JSX.Element>();
+	useEffect(() => {
+		// Если режим редактирования и указаны кнопки, то отрисовать кнопки
+		if (!isViewMode && buttons) {
+			setButtonsWrapper(
+				<div className='custom-input__buttons'>
+					{buttons}
+				</div>
+			)
+		} else {
+			setButtonsWrapper(undefined)
+		}
+	}, [buttons])
 
 	return (
 		<div
@@ -62,7 +83,7 @@ function CustomInput(props) {
 				}}
 				onInput={onInput}
 				onClick={clickHandler}
-				value={getValueByName()}
+				value={getValue()}
 				readOnly={readOnly || isViewMode}
 				placeholder={placeholder}
 				{...inputStyles}

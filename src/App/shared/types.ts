@@ -43,22 +43,41 @@ export interface IFormData {
 	insurancePremium: IInputData
 	/** Страховая премия по договору, руб */
 	insurancePremiumRub: IInputData
+	/** Стороны */
+	sides: SideData[]
 }
 
-export interface CustomInputProps {
+export interface CustomInputProps extends React.ComponentProps<'input'> {
+	values: IFormData
 	name: string
 	buttons?: any
-	values: IFormData
-	inputHandler?: any
+	inputHandler?: (name: string, value: IInputData) => void
 	clickHandler?: () => void
 	cursor?: string
 	isOpen?: boolean
 	wrapperRef?: React.RefObject<HTMLDivElement>
 	readOnly?: boolean
+	isViewMode?: boolean
+	placeholder?: string
+	maskFunction?: (value: string) => string
+	getValueHandler?: (props: CustomInputProps) => string
+}
+
+/** Сторона */
+export class SideData {
+	type: InputDataCategory
+	contractor: InputDataCategory
+	isEdit: boolean
+
+	constructor(isEdit?: boolean) {
+		this.isEdit = !!isEdit
+		this.type = new InputDataCategory()
+		this.contractor = new InputDataCategory()
+	}
 }
 
 /** Значение поля ввода типа Строка */
-class InputDataString implements IInputData {
+export class InputDataString implements IInputData {
 	value: string
 	data: null
 
@@ -68,7 +87,7 @@ class InputDataString implements IInputData {
 }
 
 /** Значение поля ввода типа Категория */
-class InputDataCategory implements IInputData {
+export class InputDataCategory implements IInputData {
 	value: string
 	data: {
 		code: string
@@ -87,6 +106,8 @@ export class TreatyFormData implements IFormData {
 	channel: InputDataCategory
 	currency: InputDataCategory
 	status: InputDataCategory
+
+	sides: SideData[]
 
 	number: IInputData
 	policyHolder: IInputData

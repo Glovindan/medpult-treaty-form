@@ -99,9 +99,9 @@ export default function App() {
 						<TabItem code={"general"} name={"Общее"} >
 							<GeneralTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
-						{/* <TabItem code={"sides"} name={"Стороны"}>
+						<TabItem code={"sides"} name={"Стороны"}>
 							<SidesTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
-						</TabItem> */}
+						</TabItem>
 					</TabsWrapper>
 					<div style={{ padding: "0 18px 18px 18px", textAlign: "right", display: "flex", gap: "18px", flexDirection: "row", justifyContent: "flex-end" }}>
 						{formActionButton}

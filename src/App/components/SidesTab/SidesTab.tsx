@@ -27,11 +27,24 @@ type GeneralTabProps = {
 function SidesTab(props: GeneralTabProps) {
 	const { handler, values, isViewMode, saveStateHandler, setActionHandlers } = props;
 
+	const [rows, setRows] = useState<React.JSX.Element[]>([])
+
+	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
 	useEffect(() => {
 		setActionHandlers.setAddHandler(() => () => { alert("add") })
 		setActionHandlers.setEditHandler(() => () => { alert("edit") })
 		setActionHandlers.setDeleteHandler(() => () => { alert("delete") })
 	}, [])
+
+	// Обновление строк при изменении значения
+	useEffect(() => {
+		const rows = values.sides.map((value, index) => {
+			return <SidesTabRow index={index} contractor={value.contractor} type={value.type} isEdit={value.isEdit} {...props} />
+		})
+
+		setRows(rows);
+	}, [values])
+
 
 	return (
 		<div className="sides-tab">
@@ -40,9 +53,7 @@ function SidesTab(props: GeneralTabProps) {
 				<div className="sides-tab__header-item">Ответственное лицо</div>
 			</div>
 			<div className="sides-tab__list">
-				<SidesTabRow {...props} />
-				<SidesTabRow {...props} />
-				<SidesTabRow {...props} />
+				{rows}
 			</div>
 		</div>
 	)
