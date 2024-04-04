@@ -11,4 +11,8 @@
 
 	cursor: pointer;
 	color: transparent;
+
+	&:active {
+		opacity: 0.6;
+	}
 }

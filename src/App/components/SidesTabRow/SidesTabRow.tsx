@@ -3,6 +3,8 @@ import { IFormData, IInputData, InputDataCategory } from '../../shared/types'
 import CustomSelect from '../CustomSelect/CustomSelect'
 import Scripts from '../../shared/utils/clientScripts'
 import CustomInputAppItem from '../CustomInputAppItem/CustomInputAppItem'
+import icons from '../../shared/icons'
+import InputButton from '../InputButton/InputButton'
 
 type SidesTabRowProps = {
 	index: number
@@ -10,41 +12,136 @@ type SidesTabRowProps = {
 	contractor: InputDataCategory
 	isEdit?: boolean
 	values: IFormData
-	handler: any
+	handler: (name: string, value: any) => void
+	saveStateHandler: () => void
+	setSelectedRowIndex: React.Dispatch<React.SetStateAction<number | undefined>>
+	selectedRowIndex: number | undefined
 }
 
 /** Вкладка Общее */
-function SidesTabRow({ index, type, contractor, isEdit, values, handler }: SidesTabRowProps) {
-	const selectHandler = (name: string, data: IInputData) => {
-		console.log(handler)
+function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveStateHandler, setSelectedRowIndex, selectedRowIndex }: SidesTabRowProps) {
+	/** Удалить строку */
+	const deleteRow = () => {
 		const sides = values.sides;
-		sides[index].type = new InputDataCategory(data.value, data.data.code);
+		sides.splice(index, 1);
+
+		handler("sides", sides)
+		setSelectedRowIndex(undefined);
+	}
+
+	/** Отменить изменения строки */
+	const denyRow = () => {
+		const sides = values.sides;
+
+		sides[index].actualData = sides[index].originalData
+		sides[index].isEdit = false;
 
 		handler("sides", sides)
 	}
 
-	const getValueHandler = () => {
+	/** Применить изменения строки */
+	const applyRow = () => {
 		const sides = values.sides;
-		return sides[index].type.value
+
+		sides[index].originalData = sides[index].actualData
+		sides[index].isEdit = false;
+
+		handler("sides", sides)
 	}
 
+	/** При нажатии на строку */
+	const onClickRow = (ev) => {
+		ev.stopPropagation();
+		setSelectedRowIndex(index);
+	}
+
+	const selectHandler = (name: string, data: IInputData) => {
+		const sides = values.sides;
+		sides[index].actualData.type = new InputDataCategory(data.value, data.data.code);
+
+		handler("sides", sides)
+	}
+
+	const getTypeValueHandler = () => {
+		const sides = values.sides;
+
+		return sides[index].actualData.type.value
+	}
+
+	const getContractorValueHandler = () => {
+		const sides = values.sides;
+		return sides[index].actualData.contractor.value
+	}
+
+	const removeContractorValueHandler = () => {
+		const sides = values.sides;
+		sides[index].actualData.contractor = new InputDataCategory();
+
+		handler("sides", sides)
+	}
+
+	/** При нажатии на галочку */
+	const onClickApply = (ev) => {
+		ev.stopPropagation();
+		const sides = values.sides;
+
+		if (!sides[index].actualData.contractor.data.code && !sides[index].actualData.type.data.code) {
+			deleteRow();
+			return;
+		}
+
+		applyRow();
+	}
+
+	/** При нажатии на крестик */
+	const onClickDeny = (ev) => {
+		ev.stopPropagation();
+		const sides = values.sides;
+
+		if (!sides[index].actualData.contractor.data.code && !sides[index].actualData.type.data.code) {
+			deleteRow();
+			return;
+		}
+
+		denyRow();
+	}
+
+	/** Кнопки строки в режиме редактирования */
+	const buttons = (
+		<div className='sides-tab-row__buttons'>
+			<InputButton svg={icons.Apply} clickHandler={onClickApply} />
+			<InputButton svg={icons.Deny} clickHandler={onClickDeny} />
+		</div>
+	)
+
+	/** Разметка режима редактирования */
 	const editLayout = ([
-		<CustomSelect getValueHandler={getValueHandler} getDataHandler={Scripts.getResponsibleTypes} name='sides' values={values} inputHandler={selectHandler} />,
-		<CustomInputAppItem getValueHandler={getValueHandler} getDataHandler={Scripts.getResponsibleTypes} name='sides' values={values} inputHandler={selectHandler} />
+		<CustomSelect getValueHandler={getTypeValueHandler} getDataHandler={Scripts.getResponsibleTypes} name={String(index)} values={values} inputHandler={selectHandler} />,
+		<CustomInputAppItem href={Scripts.getSelectContractorPageLinkResponsible(index)} removeValueHandler={removeContractorValueHandler} getValueHandler={getContractorValueHandler} name={String(index)} values={values} inputHandler={selectHandler} saveStateHandler={saveStateHandler} />,
+		buttons
 	])
 
+	/** Разметка режима просмотра */
 	const viewLayout = ([
 		<div className="sides-tab-row__type">{type.value}</div>,
 		<div className="sides-tab-row__contractor">{contractor.value}</div>
 	])
 
 	return (
-		<div className="sides-tab-row">
+		<div
+			className={
+				selectedRowIndex == index
+					? "sides-tab-row sides-tab-row_selected"
+					: "sides-tab-row"
+			}
+			onClick={onClickRow}
+		>
 			{
 				isEdit
 					? editLayout
 					: viewLayout
 			}
+
 		</div>
 	)
 }

@@ -5,9 +5,10 @@ import InputButton from '../InputButton/InputButton'
 import icons from '../../shared/icons'
 
 function CustomInputAppItem(props) {
-	const { href, values, name, inputHandler, saveStateHandler } = props
+	const { href, values, name, inputHandler, saveStateHandler, getValueHandler = undefined, removeValueHandler = undefined } = props
 
 	const getValueByName = () => {
+		if (getValueHandler) return getValueHandler();
 		const value = values[name];
 		if (!value) return "";
 
@@ -17,7 +18,8 @@ function CustomInputAppItem(props) {
 	const searchButtonSvg = icons.Search;
 	const removeButtonSvg = icons.Cross;
 
-	const onClickSearchButton = () => {
+	const onClickSearchButton = (ev) => {
+		ev.stopPropagation();
 		if (!href) return
 		// save state to localStorage
 		saveStateHandler();
@@ -25,8 +27,9 @@ function CustomInputAppItem(props) {
 		redirectSPA(href);
 	}
 
-	const onClickRemoveButton = () => {
-		// clear field
+	const onClickRemoveButton = (ev) => {
+		ev.stopPropagation();
+		if (removeValueHandler) return removeValueHandler()
 		if (!inputHandler) return;
 
 		inputHandler(name, { value: "", data: { code: "" } })
@@ -43,7 +46,7 @@ function CustomInputAppItem(props) {
 	const style = { "fontStyle": "normal", "fontWeight": "600", "fontSize": "14px", "lineHeight": "130%", "letterSpacing": "0.0025em", "color": "#4588E5" }
 
 	return (
-		<CustomInput {...props} buttons={button} style={style} />
+		<CustomInput {...props} buttons={button} style={style} readOnly />
 	)
 }
 

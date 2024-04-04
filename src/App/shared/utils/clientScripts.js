@@ -189,46 +189,94 @@ async function getTreaty() {
 		'sides': [
 			{
 				'isEdit': false,
-				'type': {
-					'value': 'Менеджер договора',
-					'data': {
-						'code': 'manager',
+				'originalData': {
+					'type': {
+						'value': 'Менеджер договора',
+						'data': {
+							'code': 'manager',
+						},
+					},
+					'contractor': {
+						'value': 'Иванов Иван Иванович',
+						'data': {
+							'code': '123456',
+						},
 					},
 				},
-				'contractor': {
-					'value': 'Иванов Иван Иванович',
-					'data': {
-						'code': '123456',
+				'actualData': {
+					'type': {
+						'value': 'Менеджер договора',
+						'data': {
+							'code': 'manager',
+						},
+					},
+					'contractor': {
+						'value': 'Иванов Иван Иванович',
+						'data': {
+							'code': '123456',
+						},
 					},
 				},
 			},
 			{
 				'isEdit': false,
-				'type': {
-					'value': 'Медицинский куратор',
-					'data': {
-						'code': 'medical',
+				'originalData': {
+					'type': {
+						'value': 'Медицинский куратор',
+						'data': {
+							'code': 'medical',
+						},
+					},
+					'contractor': {
+						'value': 'Петров Петр Петрович',
+						'data': {
+							'code': '42515215',
+						},
 					},
 				},
-				'contractor': {
-					'value': 'Петров Петр Петрович',
-					'data': {
-						'code': '42515215',
+				'actualData': {
+					'type': {
+						'value': 'Медицинский куратор',
+						'data': {
+							'code': 'medical',
+						},
+					},
+					'contractor': {
+						'value': 'Петров Петр Петрович',
+						'data': {
+							'code': '42515215',
+						},
 					},
 				},
 			},
 			{
 				'isEdit': true,
-				'type': {
-					'value': 'Технический куратор',
-					'data': {
-						'code': 'technical',
+				'originalData': {
+					'type': {
+						'value': 'Технический куратор',
+						'data': {
+							'code': 'technical',
+						},
+					},
+					'contractor': {
+						'value': 'Плюшкин Лев Николаевич',
+						'data': {
+							'code': '4643645654',
+						},
 					},
 				},
-				'contractor': {
-					'value': 'Плюшкин Лев Николаевич',
-					'data': {
-						'code': '4643645654',
+				'actualData': {
+					'type': {
+						'value': 'Технический куратор',
+						'data': {
+							'code': 'technical',
+						},
+					},
+					'contractor': {
+						'value': 'Плюшкин Лев Николаевич',
+						'data': {
+							'code': '4643645654',
+						},
 					},
 				},
 			},
@@ -240,7 +288,14 @@ async function getTreaty() {
 
 /** Получение ссылки на форму отбора контрагента */
 const getSelectContractorPageLink = () => {
-	return '#test'
+	const pageLink = '#test'
+	return pageLink + '?field_id=medpult-treaty-policy-holder'
+}
+
+/** Получение ссылки на форму отбора контрагента (Для выбора ответственного лица) */
+function getSelectContractorPageLinkResponsible(index) {
+	const pageLink = '#test'
+	return pageLink + `?field_id=medpult-treaty-responsible&&index=${index}`
 }
 
 /** Получение подсказок по адресу */
@@ -293,6 +348,7 @@ export default {
 	saveTreaty,
 	getTreaty,
 	getSelectContractorPageLink,
+	getSelectContractorPageLinkResponsible,
 	getAddressSuggestion,
 	getResponsibleTypes,
 }

@@ -1,14 +1,6 @@
-import React, { useDebugValue, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
-import LabledField from '../LabledField/LabledField';
-import CustomInput from '../CustomInput/CustomInput';
-import { IFormData, IInputData } from '../../shared/types';
-import CustomSelect from '../CustomSelect/CustomSelect';
-import Scripts from '../../shared/utils/clientScripts';
-import Masks from '../../shared/utils/masks';
-import CustomInputDate from '../CustomInputDate/CustomInputDate';
-import CustomInputAppItem from '../CustomInputAppItem/CustomInputAppItem';
-import CustomInputSearch from '../CustomInputSearch/CustomInputSearch';
+import { IFormData, SideDataExtended } from '../../shared/types';
 import SidesTabRow from '../SidesTabRow/SidesTabRow';
 
 type GeneralTabProps = {
@@ -29,21 +21,67 @@ function SidesTab(props: GeneralTabProps) {
 
 	const [rows, setRows] = useState<React.JSX.Element[]>([])
 
+	const [selectedRowIndex, setSelectedRowIndex] = useState<number>();
+
+	/** При выборе  */
+	useEffect(() => {
+		if (selectedRowIndex != undefined) {
+			setActionHandlers.setEditHandler(() => editRowHandler)
+			setActionHandlers.setDeleteHandler(() => deleteRowHandler)
+		} else {
+			setActionHandlers.setEditHandler(undefined)
+			setActionHandlers.setDeleteHandler(undefined)
+		}
+	}, [selectedRowIndex])
+
+	const editRowHandler = () => {
+		if (selectedRowIndex == undefined) return;
+
+		const sides = values.sides;
+		sides[selectedRowIndex].isEdit = true;
+
+		handler("sides", sides)
+	}
+
+	const deleteRowHandler = () => {
+		if (selectedRowIndex == undefined) return;
+
+		setSelectedRowIndex(undefined);
+		const sides = values.sides;
+		sides.splice(selectedRowIndex, 1);
+
+		handler("sides", sides)
+	}
+
+	const addRowHandler = () => {
+		const sides = values.sides;
+
+		sides.push(new SideDataExtended(true))
+
+		handler("sides", sides)
+	}
+
 	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
 	useEffect(() => {
-		setActionHandlers.setAddHandler(() => () => { alert("add") })
-		setActionHandlers.setEditHandler(() => () => { alert("edit") })
-		setActionHandlers.setDeleteHandler(() => () => { alert("delete") })
+		setActionHandlers.setAddHandler(() => addRowHandler)
 	}, [])
 
 	// Обновление строк при изменении значения
 	useEffect(() => {
 		const rows = values.sides.map((value, index) => {
-			return <SidesTabRow index={index} contractor={value.contractor} type={value.type} isEdit={value.isEdit} {...props} />
+			return <SidesTabRow
+				index={index}
+				contractor={value.actualData.contractor}
+				type={value.actualData.type}
+				isEdit={value.isEdit}
+				setSelectedRowIndex={setSelectedRowIndex}
+				selectedRowIndex={selectedRowIndex}
+				{...props}
+			/>
 		})
 
 		setRows(rows);
-	}, [values])
+	}, [values, selectedRowIndex])
 
 
 	return (

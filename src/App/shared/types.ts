@@ -44,7 +44,7 @@ export interface IFormData {
 	/** Страховая премия по договору, руб */
 	insurancePremiumRub: IInputData
 	/** Стороны */
-	sides: SideData[]
+	sides: SideDataExtended[]
 }
 
 export interface CustomInputProps extends React.ComponentProps<'input'> {
@@ -52,7 +52,7 @@ export interface CustomInputProps extends React.ComponentProps<'input'> {
 	name: string
 	buttons?: any
 	inputHandler?: (name: string, value: IInputData) => void
-	clickHandler?: () => void
+	clickHandler?: (ev) => void
 	cursor?: string
 	isOpen?: boolean
 	wrapperRef?: React.RefObject<HTMLDivElement>
@@ -63,14 +63,28 @@ export interface CustomInputProps extends React.ComponentProps<'input'> {
 	getValueHandler?: (props: CustomInputProps) => string
 }
 
+/** Сторона (С сохранением изначального состояния данных) */
+export class SideDataExtended {
+	originalData: SideData
+	actualData: SideData
+	isEdit: boolean
+
+	constructor(isEdit?: boolean) {
+		// this.isEdit = !!isEdit
+		this.originalData = new SideData()
+		this.actualData = new SideData()
+		this.isEdit = !!isEdit
+	}
+}
+
 /** Сторона */
 export class SideData {
 	type: InputDataCategory
 	contractor: InputDataCategory
-	isEdit: boolean
+	// isEdit: boolean
 
-	constructor(isEdit?: boolean) {
-		this.isEdit = !!isEdit
+	constructor(/* isEdit?: boolean */) {
+		// this.isEdit = !!isEdit
 		this.type = new InputDataCategory()
 		this.contractor = new InputDataCategory()
 	}
