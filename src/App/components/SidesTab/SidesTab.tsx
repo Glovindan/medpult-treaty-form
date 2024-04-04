@@ -23,16 +23,26 @@ function SidesTab(props: GeneralTabProps) {
 
 	const [selectedRowIndex, setSelectedRowIndex] = useState<number>();
 
-	/** При выборе  */
+	// Установка обработчика нажатия на кнопки удалить и редактировать в заголовке вкладок
 	useEffect(() => {
-		if (selectedRowIndex != undefined) {
+		if (!isViewMode && selectedRowIndex != undefined) {
 			setActionHandlers.setEditHandler(() => editRowHandler)
 			setActionHandlers.setDeleteHandler(() => deleteRowHandler)
 		} else {
 			setActionHandlers.setEditHandler(undefined)
 			setActionHandlers.setDeleteHandler(undefined)
 		}
-	}, [selectedRowIndex])
+	}, [selectedRowIndex, isViewMode])
+
+	// Установка обработчика нажатия на кнопку добавить в заголовке вкладок
+	useEffect(() => {
+		if (!isViewMode) {
+			setActionHandlers.setAddHandler(() => addRowHandler)
+		} else {
+			setActionHandlers.setAddHandler(undefined)
+		}
+	}, [isViewMode])
+
 
 	const editRowHandler = () => {
 		if (selectedRowIndex == undefined) return;
@@ -60,12 +70,6 @@ function SidesTab(props: GeneralTabProps) {
 
 		handler("sides", sides)
 	}
-
-	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
-	useEffect(() => {
-		setActionHandlers.setAddHandler(() => addRowHandler)
-	}, [])
-
 	// Обновление строк при изменении значения
 	useEffect(() => {
 		const rows = values.sides.map((value, index) => {
@@ -83,6 +87,17 @@ function SidesTab(props: GeneralTabProps) {
 		setRows(rows);
 	}, [values, selectedRowIndex])
 
+	// Сбросить значения при переключении в режим просмотра
+	useEffect(() => {
+		if (!isViewMode) return;
+		const sides = values.sides;
+		for (const side of sides) {
+			side.actualData = JSON.parse(JSON.stringify(side.originalData));
+			side.isEdit = false;
+		}
+
+		handler("sides", sides.filter(side => !!side.actualData.contractor.data.code || !!side.actualData.type.data.code))
+	}, [isViewMode])
 
 	return (
 		<div className="sides-tab">

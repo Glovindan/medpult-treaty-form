@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IFormData, IInputData, InputDataCategory } from '../../shared/types'
 import CustomSelect from '../CustomSelect/CustomSelect'
 import Scripts from '../../shared/utils/clientScripts'
@@ -16,10 +16,11 @@ type SidesTabRowProps = {
 	saveStateHandler: () => void
 	setSelectedRowIndex: React.Dispatch<React.SetStateAction<number | undefined>>
 	selectedRowIndex: number | undefined
+	isViewMode?: boolean
 }
 
 /** Вкладка Общее */
-function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveStateHandler, setSelectedRowIndex, selectedRowIndex }: SidesTabRowProps) {
+function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveStateHandler, setSelectedRowIndex, selectedRowIndex, isViewMode }: SidesTabRowProps) {
 	/** Удалить строку */
 	const deleteRow = () => {
 		const sides = values.sides;
@@ -84,7 +85,7 @@ function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveSta
 	const onClickApply = (ev) => {
 		ev.stopPropagation();
 		const sides = values.sides;
-
+		console.log(sides[index]);
 		if (!sides[index].actualData.contractor.data.code && !sides[index].actualData.type.data.code) {
 			deleteRow();
 			return;
@@ -98,7 +99,7 @@ function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveSta
 		ev.stopPropagation();
 		const sides = values.sides;
 
-		if (!sides[index].actualData.contractor.data.code && !sides[index].actualData.type.data.code) {
+		if (!sides[index].originalData.contractor.data.code && !sides[index].originalData.type.data.code) {
 			deleteRow();
 			return;
 		}
