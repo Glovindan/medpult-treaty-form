@@ -1,46 +1,354 @@
-async function generateDataForRender() {
+/** Заглушка ожидания ответа сервера */
+function randomDelay() {
+	const delay = Math.random() * 1000
+	return new Promise((resolve) => {
+		setTimeout(resolve, delay)
+	})
+}
+
+/** Получение списка продуктов */
+async function getProducts() {
 	const data = [
 		{
-			'projectName': 'Project 1',
-			'id': '018ce89d-6c2c-7e38-af4b-f3b634009f27',
-			'projectManager': {
-				'name': 'User 1',
-				'id': '018ce89d-ca9a-7aac-ab95-21106993be8b',
+			'value': 'placeholder 1',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
 			},
-			'team': [
-				{
-					'name': 'User 4',
-					'id': '018ce89e-34db-7083-ac5b-4f98069dbbdf',
-				},
-				{
-					'name': 'User 5',
-					'id': '018ce89e-4699-7f2d-88dc-3b3400fac811',
-				},
-			],
 		},
 		{
-			'projectName': 'Project 2',
-			'id': '018ce8a2-2927-7684-9a65-ade564f344e3',
-			'projectManager': {
-				'name': 'User 2',
-				'id': '018ce89e-0879-7372-8abc-87ef29db5a96',
+			'value': 'placeholder 2',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
 			},
-			'team': [
-				{
-					'name': 'User 1',
-					'id': '018ce89d-ca9a-7aac-ab95-21106993be8b',
-				},
-				{
-					'name': 'User 3',
-					'id': '018ce89e-1f89-75cc-a356-e44f6d03dd30',
-				},
-			],
+		},
+		{
+			'value': 'placeholder 3',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
 		},
 	]
 
+	await randomDelay()
 	return data
 }
 
+/** Получение списка каналов */
+async function getChannels() {
+	const data = [
+		{
+			'value': 'СБОЛ',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'БУБУБУ',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+		{
+			'value': 'ВСТАВИТЬ ТЕКСТ',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение списка валют */
+async function getCurrencies() {
+	const data = [
+		{
+			'value': 'RUB',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'USD',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+		{
+			'value': 'EUR',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение списка статусов */
+async function getStatuses() {
+	const data = [
+		{
+			'value': 'RUB',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'USD',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+		{
+			'value': 'EUR',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение списка статусов */
+async function saveTreaty(data) {
+	await randomDelay()
+	console.log(data)
+}
+
+/** Получение списка статусов */
+async function getTreaty() {
+	const data = {
+		'treaty': {
+			'value': 'test',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+		'number': {
+			'value': 'test',
+		},
+		'policyHolder': {
+			'value': 'test',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+		'objProduct': {
+			'value': 'Aenean tellus elit leo consectetur',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+		'channel': {
+			'value': 'channelTest',
+			'data': {
+				'code': 'channelTest',
+			},
+		},
+		'region': {
+			'value': 'test',
+		},
+		'currency': {
+			'value': 'currencyTest',
+			'data': {
+				'code': 'currencyTest',
+			},
+		},
+		'status': {
+			'value': 'Еще статус',
+			'data': {
+				'code': 'eshe_status',
+			},
+		},
+		'conclusionDate': {
+			'value': '28.03.2024',
+		},
+		'startDate': {
+			'value': '28.03.2024',
+		},
+		'endDate': {
+			'value': '28.03.2024',
+		},
+		'insuranceAmount': {
+			'value': '',
+		},
+		'insuranceAmountRub': {
+			'value': '',
+		},
+		'insurancePremium': {
+			'value': '',
+		},
+		'insurancePremiumRub': {
+			'value': '',
+		},
+		'sides': [
+			{
+				'isEdit': false,
+				'originalData': {
+					'type': {
+						'value': 'Менеджер договора',
+						'data': {
+							'code': 'manager',
+						},
+					},
+					'contractor': {
+						'value': 'Иванов Иван Иванович',
+						'data': {
+							'code': '123456',
+						},
+					},
+				},
+				'actualData': {
+					'type': {
+						'value': 'Менеджер договора',
+						'data': {
+							'code': 'manager',
+						},
+					},
+					'contractor': {
+						'value': 'Иванов Иван Иванович',
+						'data': {
+							'code': '123456',
+						},
+					},
+				},
+			},
+			{
+				'isEdit': false,
+				'originalData': {
+					'type': {
+						'value': 'Медицинский куратор',
+						'data': {
+							'code': 'medical',
+						},
+					},
+					'contractor': {
+						'value': 'Петров Петр Петрович',
+						'data': {
+							'code': '42515215',
+						},
+					},
+				},
+				'actualData': {
+					'type': {
+						'value': 'Медицинский куратор',
+						'data': {
+							'code': 'medical',
+						},
+					},
+					'contractor': {
+						'value': 'Петров Петр Петрович',
+						'data': {
+							'code': '42515215',
+						},
+					},
+				},
+			},
+			{
+				'isEdit': true,
+				'originalData': {
+					'type': {
+						'value': 'Технический куратор',
+						'data': {
+							'code': 'technical',
+						},
+					},
+					'contractor': {
+						'value': 'Плюшкин Лев Николаевич',
+						'data': {
+							'code': '4643645654',
+						},
+					},
+				},
+				'actualData': {
+					'type': {
+						'value': 'Технический куратор',
+						'data': {
+							'code': 'technical',
+						},
+					},
+					'contractor': {
+						'value': 'Плюшкин Лев Николаевич',
+						'data': {
+							'code': '4643645654',
+						},
+					},
+				},
+			},
+		],
+	}
+	await randomDelay()
+	return data
+}
+
+/** Получение ссылки на форму отбора контрагента */
+const getSelectContractorPageLink = () => {
+	const pageLink = '#test'
+	return pageLink + '?field_id=medpult-treaty-policy-holder'
+}
+
+/** Получение ссылки на форму отбора контрагента (Для выбора ответственного лица) */
+function getSelectContractorPageLinkResponsible(index) {
+	const pageLink = '#test'
+	return pageLink + `?field_id=medpult-treaty-responsible&&index=${index}`
+}
+
+/** Получение подсказок по адресу */
+const getAddressSuggestion = async (value) => {
+	const addresses = [
+		{
+			'value': 'г Полный адрес, улица Полная, д12 кв34',
+			'isFull': true,
+		},
+		{
+			'value': 'г Неполный адрес',
+			'isFull': false,
+		},
+	]
+	await randomDelay()
+	return addresses
+}
+
+/** Получение типов ответственного лица */
+const getResponsibleTypes = async (value) => {
+	const types = [
+		{
+			'value': 'Менеджер договора',
+			'data': {
+				'code': 'manager',
+			},
+		},
+		{
+			'value': 'Медицинский куратор',
+			'data': {
+				'code': 'medical',
+			},
+		},
+		{
+			'value': 'Технический куратор',
+			'data': {
+				'code': 'technical',
+			},
+		},
+	]
+	await randomDelay()
+	return types
+}
+
 export default {
-	generateDataForRender,
+	getProducts,
+	getChannels,
+	getCurrencies,
+	getStatuses,
+	saveTreaty,
+	getTreaty,
+	getSelectContractorPageLink,
+	getSelectContractorPageLinkResponsible,
+	getAddressSuggestion,
+	getResponsibleTypes,
 }
