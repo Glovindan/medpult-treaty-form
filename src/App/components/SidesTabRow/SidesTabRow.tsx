@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { IFormData, IInputData, InputDataCategory } from '../../shared/types'
-import CustomSelect from '../CustomSelect/CustomSelect'
+import CustomSelectList from '../CustomSelect/CustomSelect'
 import Scripts from '../../shared/utils/clientScripts'
 import CustomInputAppItem from '../CustomInputAppItem/CustomInputAppItem'
 import icons from '../../shared/icons'
@@ -117,7 +117,7 @@ function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveSta
 
 	/** Разметка режима редактирования */
 	const editLayout = ([
-		<CustomSelect getValueHandler={getTypeValueHandler} getDataHandler={Scripts.getResponsibleTypes} name={String(index)} values={values} inputHandler={selectHandler} />,
+		<CustomSelectList getValueHandler={getTypeValueHandler} getDataHandler={Scripts.getResponsibleTypes} name={String(index)} values={values} inputHandler={selectHandler} />,
 		<CustomInputAppItem href={Scripts.getSelectContractorPageLinkResponsible(index)} removeValueHandler={removeContractorValueHandler} getValueHandler={getContractorValueHandler} name={String(index)} values={values} inputHandler={selectHandler} saveStateHandler={saveStateHandler} />,
 		buttons
 	])

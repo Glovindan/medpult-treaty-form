@@ -5,6 +5,7 @@ import { CustomInputProps, IInputData } from '../../shared/types';
 import InputButton from '../InputButton/InputButton';
 import Loader from '../Loader/Loader';
 import icons from '../../shared/icons';
+import CustomSelectList from '../CustomSelectList/CustomSelectList';
 
 interface CustomSelect extends CustomInputProps {
 	getDataHandler: () => Promise<IInputData[]>,
@@ -58,21 +59,6 @@ function CustomSelect(props: CustomSelect) {
 		setListWidth(wrapper.getBoundingClientRect().width);
 	}, [isOpen])
 
-	useEffect(() => {
-		const handleClick = (event: MouseEvent) => {
-			const { target } = event;
-			if (target instanceof Node && !rootRef.current?.contains(target)) {
-				setIsOpen(false);
-			}
-		};
-
-		window.addEventListener("click", handleClick);
-
-		return () => {
-			window.removeEventListener("click", handleClick);
-		};
-	}, [isOpen])
-
 	const buttonSvg = icons.Triangle;
 
 	return (
@@ -89,22 +75,23 @@ function CustomSelect(props: CustomSelect) {
 				{...customInputProps}
 				readOnly
 			/>
-			<div
-				className={
-					isOpen
-						? 'custom-select__list-wrapper custom-select__list-wrapper_open'
-						: 'custom-select__list-wrapper'
-				}
-
-				style={{
-					width: listWidth + "px"
-				}}
-			>
-				<div className="custom-select__list">
-					{listValues.map(value => <CustomSelectRow value={value.value} code={value.data.code} clickHandler={handleOptionClick} />)}
-					{isLoading && <Loader />}
-				</div>
-			</div>
+			{isOpen &&
+				<CustomSelectList
+					rootRef={rootRef}
+					isOpen={isOpen}
+					closeHandler={() => setIsOpen(false)}
+					isLoading={isLoading}
+					listWidth={listWidth}
+				>
+					{listValues.map(value =>
+						<CustomSelectRow
+							value={value.value}
+							code={value.data.code}
+							clickHandler={handleOptionClick}
+						/>
+					)}
+				</CustomSelectList>
+			}
 		</div>
 	)
 }

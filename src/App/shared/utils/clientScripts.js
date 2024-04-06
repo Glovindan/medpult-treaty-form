@@ -340,6 +340,60 @@ const getResponsibleTypes = async (value) => {
 	return types
 }
 
+/** Получение контрагентов */
+const getContractors = async (page) => {
+	const mockData = {
+		'fullname': {
+			'value': 'Иванов Иван Иванович',
+			'data': {
+				'code': 'test',
+			},
+		},
+		'birthDate': {
+			'value': '22.22.2222',
+		},
+		'policyNumber': {
+			'value': '22.22.2222',
+		},
+		'category': {
+			'value': 'Gold',
+			'data': {
+				'code': 'test',
+			},
+		},
+		'startDate': {
+			'value': '22.22.2222',
+		},
+		'endDate': {
+			'value': '22.22.2222',
+		},
+		'plan': {
+			'value': 'ОНКО-ТКМ-МИР-Г-0-17',
+		},
+		'additionalAgreement': {
+			'value': '001СБС00123456/2023ДМС-00',
+		},
+	}
+
+	await randomDelay()
+	return [
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+		mockData,
+	]
+}
+
 export default {
 	getProducts,
 	getChannels,
@@ -351,4 +405,5 @@ export default {
 	getSelectContractorPageLinkResponsible,
 	getAddressSuggestion,
 	getResponsibleTypes,
+	getContractors,
 }

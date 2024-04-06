@@ -152,6 +152,12 @@ const Deny = (
 	</svg>
 )
 
+const SortArrow = (
+	<svg width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M13 6H3L8 0L13" fill="#45B0E6" />
+	</svg>
+)
+
 export default {
 	/** Лупа */
 	Search,
@@ -171,4 +177,6 @@ export default {
 	Apply,
 	/** Кнопка отменить изменения */
 	Deny,
+	/** Кнопка сортировки */
+	SortArrow,
 }

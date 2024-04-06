@@ -5,6 +5,7 @@ import { CustomInputProps, IInputData } from '../../shared/types';
 import InputButton from '../InputButton/InputButton';
 import Loader from '../Loader/Loader';
 import icons from '../../shared/icons';
+import CustomSelectList from '../CustomSelectList/CustomSelectList';
 
 interface CustomInputSearch extends CustomInputProps {
 	getDataHandler: (query?: any) => Promise<any>,
@@ -39,7 +40,7 @@ function CustomInputSearch(props: CustomInputSearch) {
 	}
 
 	const inputHandler = async (name: string, data: IInputData) => {
-
+		if (!props.inputHandler) return
 		props.inputHandler(props.name, data)
 		// Показать список
 		setIsOpen(true)
@@ -50,6 +51,8 @@ function CustomInputSearch(props: CustomInputSearch) {
 	const handleOptionClick = async ({ value, data }: { value: string, data?: any }) => {
 		console.log(data);
 		setIsOpen(false)
+
+		if (!props.inputHandler) return
 		props.inputHandler(props.name, { value: value, data: data })
 	}
 
@@ -66,22 +69,6 @@ function CustomInputSearch(props: CustomInputSearch) {
 		setListWidth(wrapper.getBoundingClientRect().width);
 	}, [isOpen])
 
-	useEffect(() => {
-		const handleClick = (event) => {
-			const { target } = event;
-			console.log(target.className)
-			if (!rootRef.current?.contains(target)) {
-				setIsOpen(false);
-			}
-		};
-
-		window.addEventListener("click", handleClick);
-
-		return () => {
-			window.removeEventListener("click", handleClick);
-		};
-	}, [])
-
 	const buttonSvg = icons.Triangle;
 
 	return (
@@ -97,22 +84,23 @@ function CustomInputSearch(props: CustomInputSearch) {
 				buttons={[<InputButton svg={buttonSvg} clickHandler={clickHandler} />]}
 				isViewMode={props.isViewMode}
 			/>
-			<div
-				className={
-					isOpen
-						? 'custom-select__list-wrapper custom-select__list-wrapper_open'
-						: 'custom-select__list-wrapper'
-				}
-
-				style={{
-					width: listWidth + "px"
-				}}
-			>
-				<div className="custom-select__list">
-					{values.map(value => <CustomSelectRow value={value.value} data={{ isFull: value.isFull }} clickHandler={handleOptionClick} />)}
-					{isLoading && <Loader />}
-				</div>
-			</div>
+			{isOpen &&
+				<CustomSelectList
+					rootRef={rootRef}
+					isOpen={isOpen}
+					closeHandler={() => setIsOpen(false)}
+					isLoading={isLoading}
+					listWidth={listWidth}
+				>
+					{values.map(value =>
+						<CustomSelectRow
+							value={value.value}
+							data={{ isFull: value.isFull }}
+							clickHandler={handleOptionClick}
+						/>
+					)}
+				</CustomSelectList>
+			}
 		</div>
 	)
 }
