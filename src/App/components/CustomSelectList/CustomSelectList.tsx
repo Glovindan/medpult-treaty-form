@@ -1,10 +1,5 @@
-import React, { PropsWithChildren, useEffect, useReducer, useRef, useState } from 'react'
-import CustomSelectRow from '../CustomSelectRow/CustomSelectRow';
-import CustomInput from '../CustomInput/CustomInput';
-import { CustomInputProps, IInputData } from '../../shared/types';
-import InputButton from '../InputButton/InputButton';
+import React, { PropsWithChildren, useEffect } from 'react'
 import Loader from '../Loader/Loader';
-import icons from '../../shared/icons';
 
 interface CustomSelectListProps {
 	rootRef: React.RefObject<HTMLDivElement>,
@@ -27,6 +22,10 @@ function CustomSelectList({
 	useEffect(() => {
 		const handleClick = (event: MouseEvent) => {
 			const { target } = event;
+
+			console.log(rootRef.current)
+			console.log(target)
+
 			if (target instanceof Node && !rootRef.current?.contains(target)) {
 				closeHandler();
 			}
@@ -37,7 +36,7 @@ function CustomSelectList({
 		return () => {
 			window.removeEventListener("click", handleClick);
 		};
-	}, [isOpen])
+	}, [])
 
 	return (
 		<div

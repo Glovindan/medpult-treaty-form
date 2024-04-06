@@ -29,8 +29,7 @@ function CustomSelect(props: CustomSelect) {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
-	const clickHandler = async (ev) => {
-		ev.stopPropagation();
+	const clickHandler = async () => {
 		if (isViewMode) return;
 		if (isOpen) return;
 		// Показать список
