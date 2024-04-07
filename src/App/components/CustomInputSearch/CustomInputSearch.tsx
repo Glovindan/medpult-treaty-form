@@ -57,7 +57,7 @@ function CustomInputSearch(props: CustomInputSearch) {
 	}
 
 	/** Не закрывать список подсказок, если адрес неполный */
-	useEffect(() => {
+	React.useLayoutEffect(() => {
 		if (props.values[props.name].data && !props.values[props.name].data.isFull) {
 			setIsOpen(true)
 			loadData(props.values[props.name].value)
