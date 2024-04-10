@@ -116,7 +116,7 @@ export default function App() {
 							<InsuredTab handler={setValueSearch} values={insuredValues} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
 						<TabItem code={"insurancePlans"} name={"Планы страхования"}>
-							<PlansTab handler={setValueSearch} values={insuredValues} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
+							<PlansTab handler={setValueSearch} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
 						{/* <TabItem code={"agreementsAdditional"} name={"Доп соглашения"}>
 							TODO

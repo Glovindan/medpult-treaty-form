@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { InsuredSearchData, ListColumnData, TabProps } from '../../shared/types';
 import Scripts from '../../shared/utils/clientScripts';
 import CustomList from '../CustomList/CustomList';
+import PlanDetails from '../PlanDetails/PlanDetails';
 
 /** Вкладка Общее */
 function PlansTab({ values, handler, setActionHandlers, saveStateHandler }: TabProps) {
@@ -28,6 +29,7 @@ function PlansTab({ values, handler, setActionHandlers, saveStateHandler }: TabP
 
 	return (
 		<div className="plans-tab">
+			<PlanDetails />
 			<div className="plans-tab__list">
 				<CustomList columnsSettings={columns} searchData={values} getDataHandler={Scripts.getPlans} />
 			</div>

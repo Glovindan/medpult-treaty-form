@@ -1,0 +1,46 @@
+.plan-details-general {
+	padding: 18px;
+	padding-bottom: 0;
+
+	&__columns {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+		column-gap: 16px;
+	}
+
+	&__column {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	&__actions {
+		padding: 0 18px 18px 18px;
+		text-align: right;
+		display: flex;
+		gap: 18px;
+		flex-direction: row;
+		justify-content: flex-end;
+	}
+}
+
+.plan-age-input {
+	display: flex;
+	gap: 8px;
+	height: 100%;
+	&__column {
+		display: flex;
+		gap: 16px;
+
+		& > * {
+			flex: 1;
+		}
+	}
+
+	&__separator {
+		user-select: none;
+		height: 100%;
+		display: flex;
+		align-items: center;
+	}
+}

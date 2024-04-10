@@ -19,7 +19,12 @@ const applyDateMask = (value: string): string => {
 }
 
 const applyNumbersMask = (value: string): string => {
-	return value.match(/\d/g)?.join('') ?? ''
+	return (
+		value
+			.match(/\d+[,|\.]?\d*/g)
+			?.join('')
+			.replace('.', ',') ?? ''
+	)
 }
 
 export default {
