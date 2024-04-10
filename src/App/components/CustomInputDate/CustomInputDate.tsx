@@ -57,7 +57,7 @@ function CustomInputDate(props) {
 			<CustomInput
 				{...props}
 				buttons={<InputButton svg={buttonSvg} clickHandler={openPicker} />}
-				placeholder={"ДД.ММ.ГГГГ"}
+				placeholder={props.placeholder ?? "ДД.ММ.ГГГГ"}
 				maskFunction={Masks.applyDateMask}
 			/>
 		</div>

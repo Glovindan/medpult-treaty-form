@@ -1,17 +1,19 @@
-import React, { ReactNode, useEffect, useReducer, useRef, useState } from 'react'
+import React, { ButtonHTMLAttributes, ReactNode, useEffect, useReducer, useRef, useState } from 'react'
 import Loader from '../Loader/Loader';
 
-interface ButtonData {
-	title: string,
+interface ButtonData extends React.ComponentProps<'button'> {
+	title: any,
 	clickHandler: any
-	type?: string,
+	buttonType?: string,
 }
 
-function Button({
-	title,
-	type,
-	clickHandler
-}: ButtonData) {
+function Button(props: ButtonData) {
+	const {
+		title,
+		buttonType,
+		clickHandler,
+		...buttonProps
+	} = props
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const [loader, setLoader] = useState<ReactNode>(<div><Loader /></div>)
@@ -33,13 +35,14 @@ function Button({
 	return (
 		<button
 			className={
-				type == ""
+				buttonType == ""
 					? `button`
-					: `button button_${type}`
+					: `button button_${buttonType}`
 			}
 			disabled={isLoading}
 			onClick={loadOnClick}
 			ref={buttonRef}
+			{...buttonProps}
 		>
 			{buttonContent}
 		</button>

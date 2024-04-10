@@ -47,8 +47,49 @@ export interface IFormData {
 	sides: SideDataExtended[]
 }
 
+/** Данные столбца таблицы */
+export class ListColumnData {
+	/** Коэффициент соотношения ширины столбца */
+	fr: number
+	/** Можно ли по этому столбцу сортировать */
+	isSortable: boolean
+	/** Хранит ли по столбец ссылки */
+	isLink: boolean
+	/** Название столбца */
+	name: string
+	/** Код значения */
+	code: string
+	/** Обработчик нажатия */
+	onClick?: (props: any) => any
+
+	constructor({
+		name,
+		code,
+		fr,
+		isSortable,
+		isLink,
+		onClick,
+	}: {
+		name: string
+		code: string
+		fr?: number
+		isSortable?: boolean
+		isLink?: boolean
+		onClick?: (props: any) => any
+	}) {
+		this.fr = fr ?? 1
+		this.isSortable = isSortable ?? false
+		this.isLink = isLink ?? false
+
+		if (onClick) this.onClick = onClick
+
+		this.name = name
+		this.code = code
+	}
+}
+
 export interface CustomInputProps extends React.ComponentProps<'input'> {
-	values: IFormData
+	values: IFormData | InsuredSearchData
 	name: string
 	buttons?: any
 	inputHandler?: (name: string, value: IInputData) => void
@@ -121,7 +162,7 @@ export class TreatyFormData implements IFormData {
 	currency: InputDataCategory
 	status: InputDataCategory
 
-	sides: SideData[]
+	sides: SideDataExtended[]
 
 	number: IInputData
 	policyHolder: IInputData
@@ -151,5 +192,60 @@ export class TreatyFormData implements IFormData {
 		this.insuranceAmountRub = new InputDataString()
 		this.insurancePremium = new InputDataString()
 		this.insurancePremiumRub = new InputDataString()
+	}
+}
+
+/** Значения полей формы с уточненными типами полей */
+export class InsuredSearchData {
+	/** Категория */
+	category: InputDataCategory
+
+	/** ФИО */
+	fullname: InputDataString
+	/** Дата рождения */
+	birthDate: InputDataString
+	/** Номер полиса */
+	policyNumber: InputDataString
+	/** Дата начала */
+	startDate: InputDataString
+	/** Дата окончания */
+	endDate: InputDataString
+	/** План */
+	plan: InputDataString
+	/** ДС */
+	additionalAgreement: InputDataString
+
+	constructor() {
+		this.category = new InputDataCategory()
+		this.fullname = new InputDataString()
+		this.birthDate = new InputDataString()
+		this.policyNumber = new InputDataString()
+		this.startDate = new InputDataString()
+		this.endDate = new InputDataString()
+		this.plan = new InputDataString()
+		this.additionalAgreement = new InputDataString()
+	}
+}
+
+/** Данные сортировки */
+export class SortData {
+	code: string
+	isAscending: boolean
+
+	constructor({ code, isAscending }: { code?: string; isAscending?: boolean }) {
+		this.code = code ?? ''
+		this.isAscending = isAscending ?? true
+	}
+}
+
+export interface TabProps {
+	handler: any
+	values: IFormData
+	isViewMode: boolean
+	saveStateHandler: () => void
+	setActionHandlers: {
+		setAddHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
+		setEditHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
+		setDeleteHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
 	}
 }

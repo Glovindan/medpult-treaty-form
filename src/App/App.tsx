@@ -8,11 +8,13 @@ import TabItem from './components/TabItem/TabItem'
 import TabsWrapper from './components/TabsWrapper/TabsWrapper'
 import GeneralTab from './components/GeneralTab/GeneralTab'
 import Button from './components/Button/Button'
-import { IFormData, IInputData, TreatyFormData } from './shared/types'
+import { IFormData, IInputData, InsuredSearchData, TreatyFormData } from './shared/types'
 import Loader from './components/Loader/Loader'
 import Scripts from './shared/utils/clientScripts'
-import { localStorageDraftKey } from './shared/utils/constants'
+import { localStorageDraftKey, localStorageIdKey } from './shared/utils/constants'
 import SidesTab from './components/SidesTab/SidesTab'
+import InsuredTab from './components/InsuredTab/InsuredTab'
+import PlansTab from './components/PlansTab/PlansTab'
 
 export default function App() {
 
@@ -31,14 +33,21 @@ export default function App() {
 	}
 
 	const [values, setValues] = useState<IFormData>(new TreatyFormData());
+	const [insuredValues, setInsuredValues] = useState<InsuredSearchData>(new InsuredSearchData());
+
+
 	// Установка значения поля формы
 	const setValue = (name: string, value: IInputData) => {
 		setValues({ ...values, [name]: value })
 	}
 
+	// Установка значения поля поиска застрахованного
+	const setValueSearch = (name: string, value: IInputData) => {
+		setInsuredValues({ ...insuredValues, [name]: value })
+	}
+
 	// Получение данных договора
 	useEffect(() => {
-		console.log(deleteHandler)
 		// Получение данных из черновика
 		const draftData = localStorage.getItem(localStorageDraftKey)
 		localStorage.removeItem(localStorageDraftKey)
@@ -76,13 +85,14 @@ export default function App() {
 	const saveState = () => {
 		const data = JSON.stringify(values)
 		localStorage.setItem(localStorageDraftKey, data);
+		localStorage.setItem(localStorageIdKey, values.treaty.data.code);
 	}
 
 	/** Кнопка Изменить или Сохранить взависимости от режима формы */
 	const formActionButton = (
 		isViewMode
-			? <Button clickHandler={onClickEdit} type='outline' title='ИЗМЕНИТЬ' />
-			: <Button clickHandler={onClickSave} type='outline' title='СОХРАНИТЬ' />
+			? <Button clickHandler={onClickEdit} buttonType='outline' title='ИЗМЕНИТЬ' />
+			: <Button clickHandler={onClickSave} buttonType='outline' title='СОХРАНИТЬ' />
 	)
 
 	/** Заголовок панели */
@@ -102,6 +112,18 @@ export default function App() {
 						<TabItem code={"sides"} name={"Стороны"}>
 							<SidesTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
+						<TabItem code={"insured"} name={"Застрахованные"}>
+							<InsuredTab handler={setValueSearch} values={insuredValues} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
+						</TabItem>
+						<TabItem code={"insurancePlans"} name={"Планы страхования"}>
+							<PlansTab handler={setValueSearch} values={insuredValues} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
+						</TabItem>
+						{/* <TabItem code={"agreementsAdditional"} name={"Доп соглашения"}>
+							TODO
+						</TabItem>
+						<TabItem code={"files"} name={"Вложения"}>
+							TODO
+						</TabItem> */}
 					</TabsWrapper>
 					<div style={{ padding: "0 18px 18px 18px", textAlign: "right", display: "flex", gap: "18px", flexDirection: "row", justifyContent: "flex-end" }}>
 						{formActionButton}
