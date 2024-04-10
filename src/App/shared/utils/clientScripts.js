@@ -298,6 +298,12 @@ function getSelectContractorPageLinkResponsible(index) {
 	return pageLink + `?field_id=medpult-treaty-responsible&&index=${index}`
 }
 
+/** Получение ссылки на форму контрагента */
+function getContractorPageLink() {
+	const pageLink = '#test'
+	return pageLink
+}
+
 /** Получение подсказок по адресу */
 const getAddressSuggestion = async (value) => {
 	const addresses = [
@@ -376,22 +382,85 @@ const getContractors = async (page) => {
 	}
 
 	await randomDelay()
-	return [
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-		mockData,
-	]
+	return {
+		data: [
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+		],
+		hasMore: true,
+	}
+}
+
+/** Получение планов страхования */
+const getPlans = async (page) => {
+	const mockData = {
+		'number': {
+			'value': 'План 12345',
+			'data': {
+				'code': 'test',
+			},
+		},
+		'title': {
+			'value': 'ОНКО-ТКМ-МИР-Г-0-17',
+		},
+		'type': {
+			'value': 'Родительский',
+			'data': {
+				'code': 'parent',
+			},
+		},
+		'age': {
+			'value': 'от 18 до 48 лет',
+		},
+		'startDate': {
+			'value': '22.22.2222',
+		},
+		'endDate': {
+			'value': '22.22.2222',
+		},
+		'parentPlan': {
+			'value': 'ОНКО-ТКМ-МИР-Г-0-17',
+			'data': {
+				'code': 'test',
+			},
+		},
+		'additionalAgreement': {
+			'value': '001СБС00123456/2023ДМС',
+		},
+	}
+
+	await randomDelay()
+	return {
+		data: [
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+			mockData,
+		],
+		hasMore: false,
+	}
 }
 
 export default {
@@ -406,4 +475,6 @@ export default {
 	getAddressSuggestion,
 	getResponsibleTypes,
 	getContractors,
+	getContractorPageLink,
+	getPlans,
 }

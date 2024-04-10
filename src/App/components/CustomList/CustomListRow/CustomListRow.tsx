@@ -10,24 +10,20 @@ interface ListRowProps {
 
 function CustomListRow(props: ListRowProps) {
 	const { columnsSettings, data } = props;
-	const [columns, setColumns] = useState<React.JSX.Element[]>();
-
-	useEffect(() => {
-		const columns = columnsSettings.map(settings => {
-			const columnData = data[settings.code];
-
-			console.log(data)
-			return (
-				<CustomListRowColumn value={columnData.value} {...settings} />
-			)
-		})
-
-		setColumns(columns)
-	}, [])
 
 	return (
 		<div className="custom-list-row">
-			{columns}
+			{columnsSettings.map(settings => {
+				if (data == undefined) {
+					console.log(data)
+					return;
+				}
+				const columnData = data[settings.code];
+
+				return (
+					<CustomListRowColumn data={columnData} {...settings} />
+				)
+			})}
 		</div>
 	)
 }

@@ -3,11 +3,13 @@ import { IInputData, ListColumnData, SortData } from '../../../shared/types'
 import icons from '../../../shared/icons'
 
 interface ListColumnProps extends ListColumnData {
-	value: string
+	data: IInputData
 }
 
 function CustomListRowColumn(props: ListColumnProps) {
-	const { code, fr, isSortable, name, value, isLink } = props;
+	const { fr, data, isLink, onClick } = props;
+
+	const onClickColumn = isLink && onClick ? () => { onClick(data) } : () => { };
 
 	return (
 		<div className={
@@ -15,7 +17,9 @@ function CustomListRowColumn(props: ListColumnProps) {
 				? "custom-list-row-column custom-list-row-column__link"
 				: "custom-list-row-column"
 		} style={{ flex: fr }}>
-			{value}
+			<span title={data.value} onClick={onClickColumn}>
+				{data.value}
+			</span>
 		</div>
 	)
 }

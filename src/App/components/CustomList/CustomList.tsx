@@ -8,35 +8,46 @@ import CustomListRow from './CustomListRow/CustomListRow'
 type ListProps = {
 	columnsSettings: ListColumnData[]
 	getDataHandler: any
+	searchData?: any
+	setSearchHandler?: any
 }
 
 function CustomList(props: ListProps) {
-	const { columnsSettings, getDataHandler } = props;
+	const { columnsSettings, getDataHandler, searchData, setSearchHandler } = props;
 
 	const [page, setPage] = useState<number>(0);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [hasMore, setHasMore] = useState<boolean>(true);
 	const [sortData, setSortData] = useState<SortData>();
-	const [columnsLayout, setColumnsLayout] = useState<React.JSX.Element[]>();
-	const [rowsLayout, setRowsLayout] = useState<React.JSX.Element[]>();
+	const [items, setItems] = useState<any[]>([]);
 	const bodyRef = useRef<HTMLDivElement>(null);
 
-	// Обновление оглавления при изменении сортировки
 	useEffect(() => {
-		loadData()
-	}, [])
+		console.log(searchData)
+	}, [searchData])
 
-	const loadData = async () => {
+	const reloadData = () => {
+		setIsLoading(false);
+		setItems([])
+
+		loadData();
+	}
+
+	useEffect(() => {
+		console.log(items);
+	}, [items])
+
+	const loadData = async (items: any[] = [], page: number = 0, hasMore: boolean = true) => {
 		if (isLoading) return;
+		if (!hasMore) return;
 
 		setIsLoading(true);
 
-		const data = await getDataHandler(page);
-		const rows = data.map(data => (
-			<CustomListRow data={data} columnsSettings={columnsSettings} />
-		))
-		setRowsLayout([rowsLayout, ...rows])
+		const fetchData = await getDataHandler(page, sortData, searchData);
+		setHasMore(fetchData.hasMore)
 
+		setItems([...items, ...fetchData.data])
+		setPage(page + 1);
 		setIsLoading(false);
 	}
 
@@ -45,26 +56,21 @@ function CustomList(props: ListProps) {
 		const height = body.scrollHeight - body.offsetHeight;
 		const scrollPosition = body.scrollTop;
 
-		if ((height - scrollPosition) / height < 0.05 && (height - scrollPosition) / height > 0.01) {
-			loadData()
+		if ((height - scrollPosition) / height < 0.05 && !isLoading) {
+			loadData(items, page, hasMore)
 		}
 	}
 
+	// Установить обработчик нажатия на кнопку поиск
+	useEffect(() => {
+		if (!setSearchHandler) return;
+
+		setSearchHandler(() => () => { reloadData() });
+	}, [searchData])
 
 	// Обновление оглавления при изменении сортировки
 	useEffect(() => {
-		const data = getDataHandler();
-		// Оглавление списка
-		const columnsLayout = columnsSettings.map(columnSettings =>
-			<CustomListColumn
-				sortData={sortData}
-				handleSortClick={handleSortClick}
-				{...columnSettings}
-			/>
-		)
-
-		setColumnsLayout(columnsLayout)
-		setPage(0)
+		reloadData();
 	}, [sortData])
 
 	// Нажатие на сортировку
@@ -72,24 +78,19 @@ function CustomList(props: ListProps) {
 		setSortData(sortDataNew);
 	}
 
-	// const mockData = {
-	// 	fullname: new InputDataCategory("Иванов Иван Иванович", "test"),
-	// 	birthDate: new InputDataString("22.22.2222"),
-	// 	policyNumber: new InputDataString("22.22.2222"),
-	// 	category: new InputDataCategory("Gold", "test"),
-	// 	startDate: new InputDataString("22.22.2222"),
-	// 	endDate: new InputDataString("22.22.2222"),
-	// 	plan: new InputDataString("ОНКО-ТКМ-МИР-Г-0-17"),
-	// 	additionalAgreement: new InputDataString("001СБС00123456/2023ДМС-00"),
-	// }
-
 	return (
 		<div className='custom-list'>
 			<div className="custom-list__header">
-				{columnsLayout}
+				{columnsSettings.map(columnSettings =>
+					<CustomListColumn
+						sortData={sortData}
+						handleSortClick={handleSortClick}
+						{...columnSettings}
+					/>
+				)}
 			</div>
 			<div className="custom-list__body" ref={bodyRef} onScroll={onScroll}>
-				{rowsLayout}
+				{items.map(data => <CustomListRow data={data} columnsSettings={columnsSettings} />)}
 				{isLoading && <Loader />}
 			</div>
 		</div>

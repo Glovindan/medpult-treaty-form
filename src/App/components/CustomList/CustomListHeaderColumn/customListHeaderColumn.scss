@@ -28,10 +28,12 @@
 		cursor: pointer;
 
 		&_up {
+			display: flex;
 			width: 16px;
 			height: 8px;
 		}
 		&_down {
+			display: flex;
 			transform: rotate(180deg);
 			width: 16px;
 			height: 8px;

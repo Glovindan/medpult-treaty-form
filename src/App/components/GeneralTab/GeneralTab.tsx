@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import LabledField from '../LabledField/LabledField';
 import CustomInput from '../CustomInput/CustomInput';
-import { IFormData, IInputData } from '../../shared/types';
+import { IFormData, IInputData, TabProps } from '../../shared/types';
 import CustomSelect from '../CustomSelect/CustomSelect';
 import Scripts from '../../shared/utils/clientScripts';
 import Masks from '../../shared/utils/masks';
@@ -10,20 +10,8 @@ import CustomInputDate from '../CustomInputDate/CustomInputDate';
 import CustomInputAppItem from '../CustomInputAppItem/CustomInputAppItem';
 import CustomInputSearch from '../CustomInputSearch/CustomInputSearch';
 
-type GeneralTabProps = {
-	handler: any
-	values: IFormData
-	isViewMode: boolean
-	saveStateHandler: () => void
-	setActionHandlers: {
-		setAddHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>,
-		setEditHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>,
-		setDeleteHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
-	}
-}
-
 /** Вкладка Общее */
-function GeneralTab(props: GeneralTabProps) {
+function GeneralTab(props: TabProps) {
 	const { handler, values, isViewMode, saveStateHandler, setActionHandlers } = props;
 
 	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок

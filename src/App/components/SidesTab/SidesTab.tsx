@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { IFormData, SideDataExtended } from '../../shared/types';
+import { IFormData, SideDataExtended, TabProps } from '../../shared/types';
 import SidesTabRow from '../SidesTabRow/SidesTabRow';
 
 type GeneralTabProps = {
@@ -16,7 +16,7 @@ type GeneralTabProps = {
 }
 
 /** Вкладка Общее */
-function SidesTab(props: GeneralTabProps) {
+function SidesTab(props: TabProps) {
 	const { handler, values, isViewMode, saveStateHandler, setActionHandlers } = props;
 
 	const [rows, setRows] = useState<React.JSX.Element[]>([])

@@ -59,6 +59,8 @@ export class ListColumnData {
 	name: string
 	/** Код значения */
 	code: string
+	/** Обработчик нажатия */
+	onClick?: (props: any) => any
 
 	constructor({
 		name,
@@ -66,16 +68,20 @@ export class ListColumnData {
 		fr,
 		isSortable,
 		isLink,
+		onClick,
 	}: {
 		name: string
 		code: string
 		fr?: number
 		isSortable?: boolean
 		isLink?: boolean
+		onClick?: (props: any) => any
 	}) {
 		this.fr = fr ?? 1
 		this.isSortable = isSortable ?? false
 		this.isLink = isLink ?? false
+
+		if (onClick) this.onClick = onClick
 
 		this.name = name
 		this.code = code
@@ -229,5 +235,17 @@ export class SortData {
 	constructor({ code, isAscending }: { code?: string; isAscending?: boolean }) {
 		this.code = code ?? ''
 		this.isAscending = isAscending ?? true
+	}
+}
+
+export interface TabProps {
+	handler: any
+	values: IFormData
+	isViewMode: boolean
+	saveStateHandler: () => void
+	setActionHandlers: {
+		setAddHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
+		setEditHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
+		setDeleteHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
 	}
 }

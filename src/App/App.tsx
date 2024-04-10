@@ -11,9 +11,10 @@ import Button from './components/Button/Button'
 import { IFormData, IInputData, InsuredSearchData, TreatyFormData } from './shared/types'
 import Loader from './components/Loader/Loader'
 import Scripts from './shared/utils/clientScripts'
-import { localStorageDraftKey } from './shared/utils/constants'
+import { localStorageDraftKey, localStorageIdKey } from './shared/utils/constants'
 import SidesTab from './components/SidesTab/SidesTab'
 import InsuredTab from './components/InsuredTab/InsuredTab'
+import PlansTab from './components/PlansTab/PlansTab'
 
 export default function App() {
 
@@ -47,7 +48,6 @@ export default function App() {
 
 	// Получение данных договора
 	useEffect(() => {
-		console.log(deleteHandler)
 		// Получение данных из черновика
 		const draftData = localStorage.getItem(localStorageDraftKey)
 		localStorage.removeItem(localStorageDraftKey)
@@ -85,6 +85,7 @@ export default function App() {
 	const saveState = () => {
 		const data = JSON.stringify(values)
 		localStorage.setItem(localStorageDraftKey, data);
+		localStorage.setItem(localStorageIdKey, values.treaty.data.code);
 	}
 
 	/** Кнопка Изменить или Сохранить взависимости от режима формы */
@@ -115,14 +116,14 @@ export default function App() {
 							<InsuredTab handler={setValueSearch} values={insuredValues} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
 						<TabItem code={"insurancePlans"} name={"Планы страхования"}>
-							TODO
+							<PlansTab handler={setValueSearch} values={insuredValues} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
-						<TabItem code={"agreementsAdditional"} name={"Доп соглашения"}>
+						{/* <TabItem code={"agreementsAdditional"} name={"Доп соглашения"}>
 							TODO
 						</TabItem>
 						<TabItem code={"files"} name={"Вложения"}>
 							TODO
-						</TabItem>
+						</TabItem> */}
 					</TabsWrapper>
 					<div style={{ padding: "0 18px 18px 18px", textAlign: "right", display: "flex", gap: "18px", flexDirection: "row", justifyContent: "flex-end" }}>
 						{formActionButton}
