@@ -1,3 +1,5 @@
+import { InputDataString } from '../types'
+
 /** Заглушка ожидания ответа сервера */
 function randomDelay() {
 	const delay = Math.random() * 1000
@@ -349,6 +351,7 @@ const getResponsibleTypes = async (value) => {
 /** Получение контрагентов */
 const getContractors = async (page) => {
 	const mockData = {
+		'id': '1',
 		'fullname': {
 			'value': 'Иванов Иван Иванович',
 			'data': {
@@ -383,22 +386,11 @@ const getContractors = async (page) => {
 
 	await randomDelay()
 	return {
-		data: [
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-			mockData,
-		],
+		data: Array(20)
+			.fill()
+			.map((data, index) => {
+				return { ...mockData, 'id': index }
+			}),
 		hasMore: true,
 	}
 }
@@ -443,24 +435,151 @@ const getPlans = async (page) => {
 
 	await randomDelay()
 	return {
+		data: Array(20)
+			.fill()
+			.map((data, index) => {
+				return { ...mockData, 'id': index }
+			}),
+		hasMore: false,
+	}
+}
+
+/** Получение программ по идентификатору плана */
+async function getPrograms(planId) {
+	await randomDelay()
+
+	return {
 		data: [
-			mockData,
-			mockData,
-			// mockData,
-			// mockData,
-			// mockData,
-			// mockData,
-			// mockData,
-			// mockData,
-			// mockData,
-			// mockData,
-			// mockData,
-			// mockData,
-			// mockData,
-			// mockData,
+			{
+				'number': {
+					'value': 'IP000169/23',
+				},
+				'title': {
+					'value': 'Онко ТКМ',
+				},
+				'marketingTitle': {
+					'value': 'Лечение онкологии и трансплантация костного мозга',
+				},
+			},
+			{
+				'number': {
+					'value': 'IP000169/22',
+				},
+				'title': {
+					'value': 'Онко ТКМ',
+				},
+				'marketingTitle': {
+					'value': 'Лечение онкологии',
+				},
+			},
 		],
 		hasMore: false,
 	}
+}
+
+/** Получить единицы измерения возраста */
+async function getAgeMeasurements() {
+	return [new InputDataString('лет'), new InputDataString('мес')]
+}
+
+/** Получение полных данных плана по идентификатору */
+async function getPlanFulldata(id) {
+	const data = {
+		'planNumber': {
+			'value': 'План 654321',
+		},
+		'startDate': {
+			'value': '10.01.2024',
+		},
+		'endDate': {
+			'value': '31.12.2024',
+		},
+		'insuranceType': {
+			'value': '',
+			'data': {
+				'code': '',
+			},
+		},
+		'ageFactor': {
+			'value': '',
+		},
+		'startAge': {
+			'value': '0',
+		},
+		'startAgeMeasurement': {
+			'value': 'лет',
+			'data': {},
+		},
+		'endAge': {
+			'value': '17',
+		},
+		'endAgeMeasurement': {
+			'value': 'лет',
+			'data': {},
+		},
+		'insurancePremium': {
+			'value': '820,22',
+		},
+		'name': {
+			'value': 'ОНКО-ТКМ-МИР-Г-0-18',
+		},
+		'previousPlan': {
+			'value': '',
+		},
+		'relativeFactor': {
+			'value': '',
+		},
+		'insuranceAmount': {
+			'value': '26000000,00',
+		},
+		'type': {
+			'value': '',
+		},
+		'parentPlan': {
+			'value': '',
+		},
+		'region': {
+			'value': 'г Полный адрес, улица Полная, д12 кв34',
+			'data': {
+				'isFull': true,
+			},
+		},
+		'medicalFactor': {
+			'value': '',
+		},
+	}
+
+	await randomDelay()
+	return data
+}
+
+/** Получение типов ЗХ */
+async function getInsuranceTypes() {
+	const data = [new InputDataString('Дети, Взрослые')]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение типов плана */
+async function getPlanTypes() {
+	const data = [new InputDataString('Индивидуальный'), new InputDataString('Родительский')]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение Родительских планов */
+async function getParentPlans() {
+	const data = [new InputDataString('ОНКО-ТКМ-МИР-Г-0-17')]
+
+	await randomDelay()
+	return data
+}
+
+/** Сохранение Плана страхования */
+async function savePlan(id, values) {
+	await randomDelay()
 }
 
 export default {
@@ -477,4 +596,11 @@ export default {
 	getContractors,
 	getContractorPageLink,
 	getPlans,
+	savePlan,
+	getPrograms,
+	getAgeMeasurements,
+	getPlanFulldata,
+	getInsuranceTypes,
+	getPlanTypes,
+	getParentPlans,
 }

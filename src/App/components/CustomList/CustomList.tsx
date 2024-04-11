@@ -1,17 +1,27 @@
 import React, { ButtonHTMLAttributes, ReactNode, useEffect, useReducer, useRef, useState } from 'react'
-import { InputDataCategory, InputDataString, ListColumnData, SortData } from '../../shared/types'
+import { InputDataCategory, InputDataString, ListColumnData, SortData, getDetailsLayoutAttributes } from '../../shared/types'
 import icons from '../../shared/icons'
 import CustomListColumn from './CustomListHeaderColumn/CustomListHeaderColumn'
 import Loader from '../Loader/Loader'
 import CustomListRow from './CustomListRow/CustomListRow'
 
 type ListProps = {
+	/** Основные настройки */
+	/** Настройки отображения колонок */
 	columnsSettings: ListColumnData[]
+	/** Получение данных */
 	getDataHandler: any
+	/** Есть прокрутка? */
 	isScrollable?: boolean
+
+	/** Настройки поиска */
+	/** Данные поиска */
 	searchData?: any
+	/** Установка обработчика нажатия на поиск */
 	setSearchHandler?: any
-	getDetailsLayout?: () => any
+
+	/** Получение формы детальной информации по вкладке */
+	getDetailsLayout?: ({ rowData, onClickRowHandler }: getDetailsLayoutAttributes) => any
 }
 
 function CustomList(props: ListProps) {
@@ -64,19 +74,19 @@ function CustomList(props: ListProps) {
 		}
 	}
 
-	// Установить обработчик нажатия на кнопку поиск
+	/** Установить обработчик нажатия на кнопку поиск */
 	useEffect(() => {
 		if (!setSearchHandler) return;
 
 		setSearchHandler(() => () => { reloadData() });
 	}, [searchData])
 
-	// Обновление оглавления при изменении сортировки
+	/** Обновление оглавления при изменении сортировки */
 	useEffect(() => {
 		reloadData();
 	}, [sortData])
 
-	// Нажатие на сортировку
+	/** Нажатие на сортировку */
 	const handleSortClick = (sortDataNew: SortData | undefined) => {
 		setSortData(sortDataNew);
 	}
@@ -101,24 +111,25 @@ function CustomList(props: ListProps) {
 				ref={bodyRef}
 				onScroll={onScroll}
 			>
-				{items.map((data, index) => {
+				{items.map(data => {
 					/** Обработчик нажатия на строку */
 					const toggleShowDetails = () => {
-						if (index === openRowIndex) {
+						if (data.id === undefined) return;
+
+						if (data.id === openRowIndex) {
 							setOpenRowIndex(undefined)
 							return
 						}
 
-						setOpenRowIndex(index)
+						setOpenRowIndex(data.id)
 					}
 
-					console.log(getDetailsLayout);
-
 					return <CustomListRow
+						key={data.id}
 						data={data}
 						columnsSettings={columnsSettings}
 						getDetailsLayout={getDetailsLayout}
-						isShowDetails={index === openRowIndex}
+						isShowDetails={getDetailsLayout && data.id === openRowIndex}
 						setOpenRowIndex={toggleShowDetails}
 					/>
 				})}
