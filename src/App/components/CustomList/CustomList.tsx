@@ -8,18 +8,21 @@ import CustomListRow from './CustomListRow/CustomListRow'
 type ListProps = {
 	columnsSettings: ListColumnData[]
 	getDataHandler: any
+	isScrollable?: boolean
 	searchData?: any
 	setSearchHandler?: any
+	getDetailsLayout?: () => any
 }
 
 function CustomList(props: ListProps) {
-	const { columnsSettings, getDataHandler, searchData, setSearchHandler } = props;
+	const { columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout } = props;
 
 	const [page, setPage] = useState<number>(0);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [hasMore, setHasMore] = useState<boolean>(true);
 	const [sortData, setSortData] = useState<SortData>();
 	const [items, setItems] = useState<any[]>([]);
+	const [openRowIndex, setOpenRowIndex] = useState<number>();
 	const bodyRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -89,8 +92,36 @@ function CustomList(props: ListProps) {
 					/>
 				)}
 			</div>
-			<div className="custom-list__body" ref={bodyRef} onScroll={onScroll}>
-				{items.map(data => <CustomListRow data={data} columnsSettings={columnsSettings} />)}
+			<div
+				className={
+					isScrollable
+						? "custom-list__body_scrollable"
+						: "custom-list__body"
+				}
+				ref={bodyRef}
+				onScroll={onScroll}
+			>
+				{items.map((data, index) => {
+					/** Обработчик нажатия на строку */
+					const toggleShowDetails = () => {
+						if (index === openRowIndex) {
+							setOpenRowIndex(undefined)
+							return
+						}
+
+						setOpenRowIndex(index)
+					}
+
+					console.log(getDetailsLayout);
+
+					return <CustomListRow
+						data={data}
+						columnsSettings={columnsSettings}
+						getDetailsLayout={getDetailsLayout}
+						isShowDetails={index === openRowIndex}
+						setOpenRowIndex={toggleShowDetails}
+					/>
+				})}
 				{isLoading && <Loader />}
 			</div>
 		</div>

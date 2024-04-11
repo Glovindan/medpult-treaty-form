@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 
-import { InsuredSearchData, ListColumnData, TabProps } from '../../shared/types';
+import { ListColumnData, TabProps } from '../../shared/types';
 import Scripts from '../../shared/utils/clientScripts';
 import CustomList from '../CustomList/CustomList';
 import PlanDetails from '../PlanDetails/PlanDetails';
 
 /** Вкладка Общее */
-function PlansTab({ values, handler, setActionHandlers, saveStateHandler }: TabProps) {
+function PlansTab({ values, setActionHandlers }: TabProps) {
 
 	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
 	useEffect(() => {
@@ -27,11 +27,14 @@ function PlansTab({ values, handler, setActionHandlers, saveStateHandler }: TabP
 		new ListColumnData({ name: "ДС", code: "additionalAgreement", fr: 1 }),
 	]
 
+	const getPlanDetailsLayout = () => {
+		return <PlanDetails />
+	}
+
 	return (
 		<div className="plans-tab">
-			<PlanDetails />
 			<div className="plans-tab__list">
-				<CustomList columnsSettings={columns} searchData={values} getDataHandler={Scripts.getPlans} />
+				<CustomList columnsSettings={columns} searchData={values} getDataHandler={Scripts.getPlans} getDetailsLayout={getPlanDetailsLayout} />
 			</div>
 		</div>
 	)
