@@ -85,7 +85,7 @@ function CustomSelect(props: CustomSelect) {
 					{listValues.map(value =>
 						<CustomSelectRow
 							value={value.value}
-							code={value.data.code}
+							code={value.data?.code}
 							clickHandler={handleOptionClick}
 						/>
 					)}

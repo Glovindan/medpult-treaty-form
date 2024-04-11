@@ -89,7 +89,7 @@ export class ListColumnData {
 }
 
 export interface CustomInputProps extends React.ComponentProps<'input'> {
-	values: IFormData | InsuredSearchData
+	values: { [key: string]: any }
 	name: string
 	buttons?: any
 	inputHandler?: (name: string, value: IInputData) => void
@@ -247,5 +247,84 @@ export interface TabProps {
 		setAddHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
 		setEditHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
 		setDeleteHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
+	}
+}
+
+export interface DetailsProps {
+	data: any
+	values: any
+}
+
+/** Атрибуты функции получения разметки деталей строки динамического списка */
+export interface getDetailsLayoutAttributes {
+	/** Сокращенные данные строки */
+	rowData: any
+	/** Обработчик нажатия на строку */
+	onClickRowHandler: any
+	/** Перезагрузка списка */
+	reloadData: () => void
+}
+
+/** Детальные данные Плана страхования */
+export class PlanDetailsData {
+	/** Номер */
+	planNumber: InputDataString
+	/** Дата начала */
+	startDate: InputDataString
+	/** Дата окончания */
+	endDate: InputDataString
+	/** Тип ЗХ */
+	insuranceType: InputDataCategory
+
+	/** Возрастной коэффициент */
+	ageFactor: InputDataString
+
+	/** Возраст, от */
+	startAge: InputDataString
+	/** Единица измерения возраста от */
+	startAgeMeasurement: InputDataString
+	/** Возраст, до */
+	endAge: InputDataString
+	/** Единица измерения возраста, до */
+	endAgeMeasurement: InputDataString
+
+	/** Страховая премия по плану на 1 ЗХ, год */
+	insurancePremium: InputDataString
+	/** Наименование */
+	name: InputDataString
+	/** Предыдущий план */
+	previousPlan: InputDataString
+	/** Коэффициент на родственника */
+	relativeFactor: InputDataString
+	/** Страховая сумма по плану на 1 ЗХ, год */
+	insuranceAmount: InputDataString
+	/** Тип плана */
+	type: InputDataString
+	/** Родительский план */
+	parentPlan: InputDataString
+	/** Основной регион */
+	region: InputDataString
+	/** Медицинский коэффициент */
+	medicalFactor: InputDataString
+
+	constructor() {
+		this.planNumber = new InputDataString()
+		this.startDate = new InputDataString()
+		this.endDate = new InputDataString()
+		this.insuranceType = new InputDataCategory()
+		this.ageFactor = new InputDataString()
+		this.startAge = new InputDataString()
+		this.startAgeMeasurement = new InputDataString()
+		this.endAge = new InputDataString()
+		this.endAgeMeasurement = new InputDataString()
+		this.insurancePremium = new InputDataString()
+		this.name = new InputDataString()
+		this.previousPlan = new InputDataString()
+		this.relativeFactor = new InputDataString()
+		this.insuranceAmount = new InputDataString()
+		this.type = new InputDataString()
+		this.parentPlan = new InputDataString()
+		this.region = new InputDataString()
+		this.medicalFactor = new InputDataString()
 	}
 }

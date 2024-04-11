@@ -1,25 +1,38 @@
 import React, { ButtonHTMLAttributes, ReactNode, useEffect, useReducer, useRef, useState } from 'react'
-import { InputDataCategory, InputDataString, ListColumnData, SortData } from '../../shared/types'
+import { InputDataCategory, InputDataString, ListColumnData, SortData, getDetailsLayoutAttributes } from '../../shared/types'
 import icons from '../../shared/icons'
 import CustomListColumn from './CustomListHeaderColumn/CustomListHeaderColumn'
 import Loader from '../Loader/Loader'
 import CustomListRow from './CustomListRow/CustomListRow'
 
 type ListProps = {
+	/** Основные настройки */
+	/** Настройки отображения колонок */
 	columnsSettings: ListColumnData[]
+	/** Получение данных */
 	getDataHandler: any
+	/** Есть прокрутка? */
+	isScrollable?: boolean
+
+	/** Настройки поиска */
+	/** Данные поиска */
 	searchData?: any
+	/** Установка обработчика нажатия на поиск */
 	setSearchHandler?: any
+
+	/** Получение формы детальной информации по вкладке */
+	getDetailsLayout?: ({ rowData, onClickRowHandler }: getDetailsLayoutAttributes) => any
 }
 
 function CustomList(props: ListProps) {
-	const { columnsSettings, getDataHandler, searchData, setSearchHandler } = props;
+	const { columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout } = props;
 
 	const [page, setPage] = useState<number>(0);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [hasMore, setHasMore] = useState<boolean>(true);
 	const [sortData, setSortData] = useState<SortData>();
 	const [items, setItems] = useState<any[]>([]);
+	const [openRowIndex, setOpenRowIndex] = useState<number>();
 	const bodyRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -61,26 +74,32 @@ function CustomList(props: ListProps) {
 		}
 	}
 
-	// Установить обработчик нажатия на кнопку поиск
+	/** Установить обработчик нажатия на кнопку поиск */
 	useEffect(() => {
 		if (!setSearchHandler) return;
 
 		setSearchHandler(() => () => { reloadData() });
 	}, [searchData])
 
-	// Обновление оглавления при изменении сортировки
+	/** Обновление оглавления при изменении сортировки */
 	useEffect(() => {
 		reloadData();
 	}, [sortData])
 
-	// Нажатие на сортировку
+	/** Нажатие на сортировку */
 	const handleSortClick = (sortDataNew: SortData | undefined) => {
 		setSortData(sortDataNew);
 	}
 
 	return (
 		<div className='custom-list'>
-			<div className="custom-list__header">
+			<div
+				className={
+					isScrollable
+						? "custom-list__header custom-list__header_scrollable"
+						: "custom-list__header"
+				}
+			>
 				{columnsSettings.map(columnSettings =>
 					<CustomListColumn
 						sortData={sortData}
@@ -89,8 +108,38 @@ function CustomList(props: ListProps) {
 					/>
 				)}
 			</div>
-			<div className="custom-list__body" ref={bodyRef} onScroll={onScroll}>
-				{items.map(data => <CustomListRow data={data} columnsSettings={columnsSettings} />)}
+			<div
+				className={
+					isScrollable
+						? "custom-list__body_scrollable"
+						: "custom-list__body"
+				}
+				ref={bodyRef}
+				onScroll={onScroll}
+			>
+				{items.map(data => {
+					/** Обработчик нажатия на строку */
+					const toggleShowDetails = () => {
+						if (data.id === undefined) return;
+
+						if (data.id === openRowIndex) {
+							setOpenRowIndex(undefined)
+							return
+						}
+
+						setOpenRowIndex(data.id)
+					}
+
+					return <CustomListRow
+						key={data.id}
+						data={data}
+						columnsSettings={columnsSettings}
+						getDetailsLayout={getDetailsLayout}
+						isShowDetails={getDetailsLayout && data.id === openRowIndex}
+						setOpenRowIndex={toggleShowDetails}
+						reloadData={reloadData}
+					/>
+				})}
 				{isLoading && <Loader />}
 			</div>
 		</div>

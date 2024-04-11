@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { InsuredSearchData, ListColumnData, TabProps } from '../../shared/types';
+import { ListColumnData, PlanDetailsData, TabProps, getDetailsLayoutAttributes } from '../../shared/types';
 import Scripts from '../../shared/utils/clientScripts';
 import CustomList from '../CustomList/CustomList';
+import PlanDetails from '../PlanDetails/PlanDetails';
+import { useMapState } from '../../shared/utils/utils';
 
 /** Вкладка Общее */
-function PlansTab({ values, handler, setActionHandlers, saveStateHandler }: TabProps) {
+function PlansTab({ values, setActionHandlers, saveStateHandler }: TabProps) {
 
 	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
 	useEffect(() => {
@@ -26,10 +28,18 @@ function PlansTab({ values, handler, setActionHandlers, saveStateHandler }: TabP
 		new ListColumnData({ name: "ДС", code: "additionalAgreement", fr: 1 }),
 	]
 
+	// Данные формы деталей плана
+	const [planValues, setPlanValue, setPlanValues] = useMapState<PlanDetailsData>(new PlanDetailsData());
+
+	/** Получение формы детальной информации по строке списка Планов страхования */
+	const getPlanDetailsLayout = ({ rowData, reloadData, onClickRowHandler }: getDetailsLayoutAttributes) => {
+		return <PlanDetails reloadData={reloadData} columnsSettings={columns} data={rowData} values={planValues} setValue={setPlanValue} setValues={setPlanValues} onClickRowHandler={onClickRowHandler} />
+	}
+
 	return (
 		<div className="plans-tab">
 			<div className="plans-tab__list">
-				<CustomList columnsSettings={columns} searchData={values} getDataHandler={Scripts.getPlans} />
+				<CustomList columnsSettings={columns} getDataHandler={Scripts.getPlans} getDetailsLayout={getPlanDetailsLayout} isScrollable={false} />
 			</div>
 		</div>
 	)

@@ -15,6 +15,7 @@ import { localStorageDraftKey, localStorageIdKey } from './shared/utils/constant
 import SidesTab from './components/SidesTab/SidesTab'
 import InsuredTab from './components/InsuredTab/InsuredTab'
 import PlansTab from './components/PlansTab/PlansTab'
+import { useMapState } from './shared/utils/utils'
 
 export default function App() {
 
@@ -32,14 +33,8 @@ export default function App() {
 		setDeleteHandler
 	}
 
-	const [values, setValues] = useState<IFormData>(new TreatyFormData());
+	const [values, setValue, setValues] = useMapState<IFormData>(new TreatyFormData());
 	const [insuredValues, setInsuredValues] = useState<InsuredSearchData>(new InsuredSearchData());
-
-
-	// Установка значения поля формы
-	const setValue = (name: string, value: IInputData) => {
-		setValues({ ...values, [name]: value })
-	}
 
 	// Установка значения поля поиска застрахованного
 	const setValueSearch = (name: string, value: IInputData) => {
@@ -103,7 +98,7 @@ export default function App() {
 
 	return (
 		<>
-			<div style={{ background: "#F2F4F6", padding: "10px", height: "100%" }}>
+			<div style={{ background: "#F2F4F6", padding: "10px", minHeight: "100%" }}>
 				<Panel label={panelLabel}>
 					<TabsWrapper addHandler={addHandler} editHandler={editHandler} deleteHandler={deleteHandler}>
 						<TabItem code={"general"} name={"Общее"} >
@@ -116,7 +111,7 @@ export default function App() {
 							<InsuredTab handler={setValueSearch} values={insuredValues} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
 						<TabItem code={"insurancePlans"} name={"Планы страхования"}>
-							<PlansTab handler={setValueSearch} values={insuredValues} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
+							<PlansTab handler={setValueSearch} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
 						{/* <TabItem code={"agreementsAdditional"} name={"Доп соглашения"}>
 							TODO
