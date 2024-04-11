@@ -261,6 +261,8 @@ export interface getDetailsLayoutAttributes {
 	rowData: any
 	/** Обработчик нажатия на строку */
 	onClickRowHandler: any
+	/** Перезагрузка списка */
+	reloadData: () => void
 }
 
 /** Детальные данные Плана страхования */

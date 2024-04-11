@@ -16,10 +16,11 @@ class PlanDetailsProps implements DetailsProps {
 	setValues: (values: PlanDetailsData) => void
 	columnsSettings: ListColumnData[];
 	onClickRowHandler: () => any
+	reloadData: () => void
 }
 
 /** Форма редактирования/просмотра плана страхования */
-function PlanDetails({ data, values, setValue, setValues, columnsSettings, onClickRowHandler }: PlanDetailsProps) {
+function PlanDetails({ data, values, setValue, setValues, columnsSettings, onClickRowHandler, reloadData }: PlanDetailsProps) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isViewMode, setIsViewMode] = useState<boolean>(true);
 
@@ -32,6 +33,10 @@ function PlanDetails({ data, values, setValue, setValues, columnsSettings, onCli
 			setValues(fullData as any)
 		})
 	}, [])
+
+	React.useLayoutEffect(() => {
+
+	}, [values])
 
 	/** Колонки списка программ */
 	const columns = [
@@ -55,6 +60,7 @@ function PlanDetails({ data, values, setValue, setValues, columnsSettings, onCli
 	const onClickSave = async () => {
 		await Scripts.savePlan(data.id, values);
 		setIsViewMode(true)
+		reloadData()
 	}
 
 	const formActionButton = (

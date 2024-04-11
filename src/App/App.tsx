@@ -98,7 +98,7 @@ export default function App() {
 
 	return (
 		<>
-			<div style={{ background: "#F2F4F6", padding: "10px", height: "100%" }}>
+			<div style={{ background: "#F2F4F6", padding: "10px", minHeight: "100%" }}>
 				<Panel label={panelLabel}>
 					<TabsWrapper addHandler={addHandler} editHandler={editHandler} deleteHandler={deleteHandler}>
 						<TabItem code={"general"} name={"Общее"} >

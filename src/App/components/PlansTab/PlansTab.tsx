@@ -32,14 +32,14 @@ function PlansTab({ values, setActionHandlers, saveStateHandler }: TabProps) {
 	const [planValues, setPlanValue, setPlanValues] = useMapState<PlanDetailsData>(new PlanDetailsData());
 
 	/** Получение формы детальной информации по строке списка Планов страхования */
-	const getPlanDetailsLayout = ({ rowData, onClickRowHandler }: getDetailsLayoutAttributes) => {
-		return <PlanDetails columnsSettings={columns} data={rowData} values={planValues} setValue={setPlanValue} setValues={setPlanValues} onClickRowHandler={onClickRowHandler} />
+	const getPlanDetailsLayout = ({ rowData, reloadData, onClickRowHandler }: getDetailsLayoutAttributes) => {
+		return <PlanDetails reloadData={reloadData} columnsSettings={columns} data={rowData} values={planValues} setValue={setPlanValue} setValues={setPlanValues} onClickRowHandler={onClickRowHandler} />
 	}
 
 	return (
 		<div className="plans-tab">
 			<div className="plans-tab__list">
-				<CustomList columnsSettings={columns} getDataHandler={Scripts.getPlans} getDetailsLayout={getPlanDetailsLayout} />
+				<CustomList columnsSettings={columns} getDataHandler={Scripts.getPlans} getDetailsLayout={getPlanDetailsLayout} isScrollable={false} />
 			</div>
 		</div>
 	)

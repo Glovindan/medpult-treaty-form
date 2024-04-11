@@ -23,11 +23,13 @@ interface ListRowProps {
 	isOpen?: boolean
 	/** Кликабельна */
 	isClickable?: boolean
+
+	reloadData: () => void
 }
 
 /** Строка динамического списка */
 function CustomListRow(props: ListRowProps) {
-	const { isShowDetails, columnsSettings, data, getDetailsLayout, setOpenRowIndex, isOpen, isClickable } = props;
+	const { isShowDetails, columnsSettings, data, getDetailsLayout, setOpenRowIndex, isOpen, isClickable, reloadData } = props;
 
 	/** Получение значения класса строки */
 	const getRowClassname = (): string => {
@@ -57,7 +59,7 @@ function CustomListRow(props: ListRowProps) {
 				</div>
 			}
 			{/* Заменять строку на разметку деталей строки списка */}
-			{isShowDetails && getDetailsLayout && getDetailsLayout({ rowData: data, onClickRowHandler: setOpenRowIndex })}
+			{isShowDetails && getDetailsLayout && getDetailsLayout({ rowData: data, reloadData: reloadData, onClickRowHandler: setOpenRowIndex })}
 		</>
 	)
 }

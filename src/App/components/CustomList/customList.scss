@@ -8,10 +8,13 @@
 		height: 52px;
 		align-items: center;
 		padding: 0px 20px;
-		overflow-y: scroll;
 
 		&::-webkit-scrollbar {
 			visibility: hidden;
+		}
+
+		&_scrollable {
+			overflow-y: scroll;
 		}
 	}
 

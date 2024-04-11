@@ -93,7 +93,13 @@ function CustomList(props: ListProps) {
 
 	return (
 		<div className='custom-list'>
-			<div className="custom-list__header">
+			<div
+				className={
+					isScrollable
+						? "custom-list__header custom-list__header_scrollable"
+						: "custom-list__header"
+				}
+			>
 				{columnsSettings.map(columnSettings =>
 					<CustomListColumn
 						sortData={sortData}
@@ -131,6 +137,7 @@ function CustomList(props: ListProps) {
 						getDetailsLayout={getDetailsLayout}
 						isShowDetails={getDetailsLayout && data.id === openRowIndex}
 						setOpenRowIndex={toggleShowDetails}
+						reloadData={reloadData}
 					/>
 				})}
 				{isLoading && <Loader />}
