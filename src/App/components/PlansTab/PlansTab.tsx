@@ -20,12 +20,12 @@ function PlansTab({ values, setActionHandlers, saveStateHandler }: TabProps) {
 	const columns = [
 		new ListColumnData({ name: "Номер", code: "number", fr: 1, isSortable: true }),
 		new ListColumnData({ name: "Наименование", code: "title", fr: 1, isSortable: true }),
-		new ListColumnData({ name: "Тип плана", code: "type", fr: 1 }),
-		new ListColumnData({ name: "Возраст", code: "age", fr: 1 }),
-		new ListColumnData({ name: "Дата начала", code: "startDate", fr: 0.5 }),
-		new ListColumnData({ name: "Дата окончания", code: "endDate", fr: 0.5 }),
-		new ListColumnData({ name: "Родительский план", code: "parentPlan", fr: 1 }),
-		new ListColumnData({ name: "ДС", code: "additionalAgreement", fr: 1 }),
+		new ListColumnData({ name: "Тип плана", code: "type", fr: 1, isSortable: true }),
+		new ListColumnData({ name: "Возраст", code: "age", fr: 1, isSortable: true }),
+		new ListColumnData({ name: "Дата начала", code: "startDate", fr: 0.5, isSortable: true }),
+		new ListColumnData({ name: "Дата окончания", code: "endDate", fr: 0.5, isSortable: true }),
+		new ListColumnData({ name: "Родительский план", code: "parentPlan", fr: 1, isSortable: true }),
+		new ListColumnData({ name: "ДС", code: "additionalAgreement", fr: 1, isSortable: true }),
 	]
 
 	// Данные формы деталей плана

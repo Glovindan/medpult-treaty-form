@@ -9,6 +9,7 @@ import Masks from '../../shared/utils/masks';
 import CustomInputDate from '../CustomInputDate/CustomInputDate';
 import CustomInputAppItem from '../CustomInputAppItem/CustomInputAppItem';
 import CustomInputSearch from '../CustomInputSearch/CustomInputSearch';
+import { openContractorPage } from '../../shared/utils/utils';
 
 /** Вкладка Общее */
 function GeneralTab(props: TabProps) {
@@ -21,6 +22,13 @@ function GeneralTab(props: TabProps) {
 		setActionHandlers.setDeleteHandler(undefined)
 	}, [])
 
+	/** Нажатие на контрагента */
+	const onClickContractor = () => {
+		saveStateHandler();
+		const contractorId = values.policyHolder.data.code
+		if (contractorId) openContractorPage(contractorId)
+	}
+
 	return (
 		<div className="general-tab general-tab__columns">
 			<div className="general-tab__column">
@@ -28,7 +36,7 @@ function GeneralTab(props: TabProps) {
 					<CustomInput isViewMode={isViewMode} name='number' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Страхователь"}>
-					<CustomInputAppItem href={Scripts.getSelectContractorPageLink()} saveStateHandler={saveStateHandler} isViewMode={isViewMode} name='policyHolder' inputHandler={handler} values={values} />
+					<CustomInputAppItem clickHandler={onClickContractor} href={Scripts.getSelectContractorPageLink()} saveStateHandler={saveStateHandler} isViewMode={isViewMode} name='policyHolder' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Продукт"}>
 					<CustomSelect isViewMode={isViewMode} getDataHandler={Scripts.getProducts} name='objProduct' inputHandler={handler} values={values} />

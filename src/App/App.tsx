@@ -27,6 +27,9 @@ export default function App() {
 	const [editHandler, setEditHandler] = useState<() => void>()
 	// Обработчик нажатия на кнопку удалить
 	const [deleteHandler, setDeleteHandler] = useState<() => void>()
+	// Код активной вкладки
+	const [activeTabCode, setActiveTabCode] = useState<string>()
+
 	const setActionHandlers = {
 		setAddHandler,
 		setEditHandler,
@@ -42,14 +45,17 @@ export default function App() {
 	}
 
 	// Получение данных договора
-	useEffect(() => {
+	React.useLayoutEffect(() => {
 		// Получение данных из черновика
 		const draftData = localStorage.getItem(localStorageDraftKey)
 		localStorage.removeItem(localStorageDraftKey)
 		if (draftData) {
 			const data = JSON.parse(draftData);
-			setValues(data)
-			setIsViewMode(false);
+
+			setValues(data.values);
+			setIsViewMode(data.isViewMode);
+			setActiveTabCode(data.activeTabCode);
+
 			return;
 		}
 
@@ -78,8 +84,18 @@ export default function App() {
 
 	/** Сохранить состояние в localStorage */
 	const saveState = () => {
-		const data = JSON.stringify(values)
+		const dataValues = values
+		const dataIsViewMode = isViewMode;
+		const dataActiveTabCode = activeTabCode;
+
+		const data = JSON.stringify({
+			values: dataValues,
+			isViewMode: dataIsViewMode,
+			activeTabCode: dataActiveTabCode
+		})
+
 		localStorage.setItem(localStorageDraftKey, data);
+
 		localStorage.setItem(localStorageIdKey, values.treaty.data.code);
 	}
 
@@ -93,14 +109,14 @@ export default function App() {
 	/** Заголовок панели */
 	const panelLabel =
 		values.number.value
-			? `Договор ${values.number.value} от 01.12.2023`
+			? `Договор ${values.number.value} от ${values.conclusionDate.value}`
 			: "Новый договор"
 
 	return (
 		<>
 			<div style={{ background: "#F2F4F6", padding: "10px", minHeight: "100%" }}>
-				<Panel label={panelLabel}>
-					<TabsWrapper addHandler={addHandler} editHandler={editHandler} deleteHandler={deleteHandler}>
+				<Panel label={panelLabel} isRollable={false}>
+					<TabsWrapper setActiveTabCodeGlobal={setActiveTabCode} activeTabCodeGlobal={activeTabCode} addHandler={addHandler} editHandler={editHandler} deleteHandler={deleteHandler}>
 						<TabItem code={"general"} name={"Общее"} >
 							<GeneralTab handler={setValue} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>

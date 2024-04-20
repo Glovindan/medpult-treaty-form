@@ -445,7 +445,7 @@ const getPlans = async (page) => {
 }
 
 /** Получение программ по идентификатору плана */
-async function getPrograms(planId) {
+async function getPrograms(planId, sortData) {
 	await randomDelay()
 
 	return {

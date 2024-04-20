@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { IFormData, IInputData } from '../types'
+import Scripts from './clientScripts'
 
 /** Маршрутизация по SPA */
 export const redirectSPA = (href: string) => {
@@ -35,4 +36,13 @@ export const useMapState = <T>(
 	}, [])
 
 	return [state, setValue, setValues]
+}
+
+/** Открыть карточку контрагента */
+export const openContractorPage = (id?: string) => {
+	id
+		? localStorage.setItem('medpultContractorId', id)
+		: localStorage.removeItem('medpultContractorId')
+
+	redirectSPA(Scripts.getContractorPageLink())
 }

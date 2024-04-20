@@ -102,6 +102,8 @@ export interface CustomInputProps extends React.ComponentProps<'input'> {
 	placeholder?: string
 	maskFunction?: (value: string) => string
 	getValueHandler?: (props: CustomInputProps) => string
+	isInvalid?: boolean
+	customClassname?: string
 }
 
 /** Сторона (С сохранением изначального состояния данных) */
