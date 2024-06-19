@@ -128,6 +128,7 @@ function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveSta
 
 	/** Нажатие на контрагента */
 	const onClickContractor = () => {
+		saveStateHandler();
 		const contractorId = values.sides[index].actualData.contractor.data.code;
 		if (contractorId)
 			openContractorPage(contractorId)

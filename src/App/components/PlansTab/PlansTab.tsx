@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ListColumnData, PlanDetailsData, TabProps, getDetailsLayoutAttributes } from '../../shared/types';
 import Scripts from '../../shared/utils/clientScripts';
 import CustomList from '../CustomList/CustomList';
-import PlanDetails from '../PlanDetails/PlanDetails';
+import PlanDetails from './PlanDetails/PlanDetails';
 import { useMapState } from '../../shared/utils/utils';
 
 /** Вкладка Общее */

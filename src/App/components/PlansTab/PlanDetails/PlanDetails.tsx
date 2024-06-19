@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import TabsWrapper from '../TabsWrapper/TabsWrapper';
-import TabItem from '../TabItem/TabItem';
+import React, { useState } from 'react';
+import TabsWrapper from '../../TabsWrapper/TabsWrapper';
+import TabItem from '../../TabItem/TabItem';
 import PlanDetailsGeneralTab from '../PlanDetailsGeneralTab/PlanDetailsGeneralTab';
-import { DetailsProps, IInputData, ListColumnData, PlanDetailsData, SortData } from '../../shared/types';
-import CustomList from '../CustomList/CustomList';
-import CustomListRow from '../CustomList/CustomListRow/CustomListRow';
-import Scripts from '../../shared/utils/clientScripts';
-import Button from '../Button/Button';
-import Loader from '../Loader/Loader';
+import { DetailsProps, ListColumnData, PlanDetailsData, SortData } from '../../../shared/types';
+import CustomList from '../../CustomList/CustomList';
+import CustomListRow from '../../CustomList/CustomListRow/CustomListRow';
+import Scripts from '../../../shared/utils/clientScripts';
+import Button from '../../Button/Button';
+import Loader from '../../Loader/Loader';
 
 class PlanDetailsProps implements DetailsProps {
 	data: any;
@@ -80,6 +80,7 @@ function PlanDetails({ data, values, setValue, setValues, columnsSettings, onCli
 							setOpenRowIndex={onClickRowHandler}
 							isClickable
 							isOpen
+							reloadData={function () { }}
 						/>
 						< Loader />
 					</div>)
@@ -91,6 +92,7 @@ function PlanDetails({ data, values, setValue, setValues, columnsSettings, onCli
 								setOpenRowIndex={onClickRowHandler}
 								isOpen
 								isClickable
+								reloadData={function () { }}
 							/>
 							<TabsWrapper>
 								<TabItem code={"general"} name={"Общее"} >

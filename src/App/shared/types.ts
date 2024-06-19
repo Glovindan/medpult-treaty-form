@@ -11,8 +11,19 @@ export interface IInputData {
 	data?: any
 }
 
+/** Значения полей формы общие*/
+export interface IFormDataGeneral {
+	treaty: IInputData
+	number: IInputData
+	status: IInputData
+	sides: SideDataExtended[]
+	conclusionDate: IInputData
+	startDate: IInputData
+	endDate: IInputData
+}
+
 /** Значения полей формы */
-export interface IFormData {
+export interface IFormData extends IFormDataGeneral {
 	/** Договор */
 	treaty: IInputData
 	/** Номер */
@@ -43,6 +54,28 @@ export interface IFormData {
 	insurancePremium: IInputData
 	/** Страховая премия по договору, руб */
 	insurancePremiumRub: IInputData
+	/** Стороны */
+	sides: SideDataExtended[]
+}
+
+/** Значения полей формы ЛПУ */
+export interface IFormDataLPU extends IFormDataGeneral {
+	/** Договор */
+	treaty: IInputData
+	/** Номер */
+	number: IInputData
+	/** ЛПУ */
+	lpu: IInputData
+	/** Тип договора */
+	type: IInputData
+	/** Статус */
+	status: IInputData
+	/** Дата заключения */
+	conclusionDate: IInputData
+	/** Дата начала действия */
+	startDate: IInputData
+	/** Дата окончания действия */
+	endDate: IInputData
 	/** Стороны */
 	sides: SideDataExtended[]
 }
@@ -197,7 +230,32 @@ export class TreatyFormData implements IFormData {
 	}
 }
 
-/** Значения полей формы с уточненными типами полей */
+/** Значения полей формы ЛПУ с уточненными типами полей */
+export class TreatyFormLPUData implements IFormDataLPU {
+	treaty: IInputData
+	number: IInputData
+	lpu: IInputData
+	status: IInputData
+	conclusionDate: IInputData
+	startDate: IInputData
+	endDate: IInputData
+	sides: SideDataExtended[]
+	type: IInputData
+
+	constructor() {
+		this.treaty = new InputDataCategory()
+		this.status = new InputDataCategory()
+
+		this.number = new InputDataString()
+		this.lpu = new InputDataString()
+		this.conclusionDate = new InputDataString()
+		this.startDate = new InputDataString()
+		this.endDate = new InputDataString()
+		this.type = new InputDataString()
+	}
+}
+
+/** Значение поискового запроса */
 export class InsuredSearchData {
 	/** Категория */
 	category: InputDataCategory

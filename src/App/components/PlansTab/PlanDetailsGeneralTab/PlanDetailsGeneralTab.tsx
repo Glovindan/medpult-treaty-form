@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import TabsWrapper from '../TabsWrapper/TabsWrapper';
-import TabItem from '../TabItem/TabItem';
-import CustomInput from '../CustomInput/CustomInput';
-import LabledField from '../LabledField/LabledField';
-import { IInputData, InputDataString, PlanDetailsData } from '../../shared/types';
-import CustomInputDate from '../CustomInputDate/CustomInputDate';
-import CustomSelect from '../CustomSelect/CustomSelect';
-import masks from '../../shared/utils/masks';
-import Button from '../Button/Button';
-import Scripts from '../../shared/utils/clientScripts';
-import CustomInputSearch from '../CustomInputSearch/CustomInputSearch';
+import React from 'react';
+import CustomInput from '../../CustomInput/CustomInput';
+import LabledField from '../../LabledField/LabledField';
+import { PlanDetailsData } from '../../../shared/types';
+import CustomInputDate from '../../CustomInputDate/CustomInputDate';
+import CustomSelect from '../../CustomSelect/CustomSelect';
+import masks from '../../../shared/utils/masks';
+import Scripts from '../../../shared/utils/clientScripts';
+import CustomInputSearch from '../../CustomInputSearch/CustomInputSearch';
 
 interface PlanDetailsGeneralTabProps {
 	isViewMode: boolean

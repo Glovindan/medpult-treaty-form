@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { IFormData, SideDataExtended, TabProps } from '../../shared/types';
+import { IFormData, IFormDataGeneral, SideDataExtended, TabProps } from '../../shared/types';
 import SidesTabRow from '../SidesTabRow/SidesTabRow';
 
 /** Вкладка Общее */
