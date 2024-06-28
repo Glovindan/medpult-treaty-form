@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import TabsWrapper from '../../TabsWrapper/TabsWrapper';
 import TabItem from '../../TabItem/TabItem';
 import PlanDetailsGeneralTab from '../PlanDetailsGeneralTab/PlanDetailsGeneralTab';
-import { DetailsProps, ListColumnData, PlanDetailsData, SortData } from '../../../shared/types';
+import { DetailsProps, ListColumnData, PlanDetailsData, ProgramDetailsData, SortData, getDetailsLayoutAttributes } from '../../../shared/types';
 import CustomList from '../../CustomList/CustomList';
 import CustomListRow from '../../CustomList/CustomListRow/CustomListRow';
 import Scripts from '../../../shared/utils/clientScripts';
 import Button from '../../Button/Button';
 import Loader from '../../Loader/Loader';
 import PlanDetailsLayout from '../PlanDetailsLayout/planDetailsLayout';
+import { useMapState } from '../../../shared/utils/utils';
+import ProgramDetails from '../ProgramDetails/ProgramDetails';
 
 class PlanDetailsProps implements DetailsProps {
 	data: any;
@@ -71,6 +73,14 @@ function PlanDetails(props: PlanDetailsProps) {
 			: <Button clickHandler={onClickSave} buttonType='outline' title='СОХРАНИТЬ' />
 	)
 
+	// Данные формы деталей плана
+	const [programValues, setProgramValue, setProgramValues] = useMapState<ProgramDetailsData>(new ProgramDetailsData());
+
+	/** Получение формы детальной информации по строке списка Программ страхования */
+	const getProgramDetailsLayout = ({ rowData, reloadData, onClickRowHandler }: getDetailsLayoutAttributes) => {
+		return <ProgramDetails reloadData={reloadData} columnsSettings={columns} data={rowData} values={programValues} setValue={setProgramValue} setValues={setProgramValues} onClickRowHandler={onClickRowHandler} />
+	}
+
 	return (
 		<>
 			<CustomListRow
@@ -98,7 +108,7 @@ function PlanDetails(props: PlanDetailsProps) {
 							<div className="plan-details__programs-title">
 								<span>программы</span>
 							</div>
-							<CustomList columnsSettings={columns} getDataHandler={getProgramms} isScrollable={false} />
+							<CustomList getDetailsLayout={getProgramDetailsLayout} columnsSettings={columns} getDataHandler={getProgramms} isScrollable={false} />
 						</div>
 					</div>)
 			}

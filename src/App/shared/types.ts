@@ -388,3 +388,29 @@ export class PlanDetailsData {
 		this.medicalFactor = new InputDataString()
 	}
 }
+
+/** Детальные данные Программы страхования */
+export class ProgramDetailsData {
+	/** Наименование */
+	name: InputDataString
+	/** Номер */
+	number: InputDataString
+	/** Риск / Спец.Риск */
+	riskType: InputDataCategory
+	/** Тип программы страхования */
+	type: InputDataCategory
+	/** Маркетинговое наименование */
+	marketingName: InputDataString
+	/** Валюта ответственности */
+	currency: InputDataCategory
+
+	constructor() {
+		this.name = new InputDataString()
+		this.number = new InputDataString()
+		this.marketingName = new InputDataString()
+
+		this.riskType = new InputDataCategory()
+		this.type = new InputDataCategory()
+		this.currency = new InputDataCategory()
+	}
+}

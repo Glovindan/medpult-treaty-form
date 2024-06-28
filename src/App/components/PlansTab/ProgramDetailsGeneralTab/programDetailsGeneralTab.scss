@@ -1,0 +1,16 @@
+.program-details-general {
+	padding: 18px;
+	padding-bottom: 0;
+
+	&__columns {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+		column-gap: 16px;
+	}
+
+	&__column {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+}

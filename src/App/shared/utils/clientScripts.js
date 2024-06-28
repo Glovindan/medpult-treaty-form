@@ -619,32 +619,24 @@ const getPlans = async (page) => {
 /** Получение программ по идентификатору плана */
 async function getPrograms(planId, sortData) {
 	await randomDelay()
+	const mockData = {
+		'number': {
+			'value': 'IP000169/23',
+		},
+		'title': {
+			'value': 'Онко ТКМ',
+		},
+		'marketingTitle': {
+			'value': 'Лечение онкологии и трансплантация костного мозга',
+		},
+	}
 
 	return {
-		data: [
-			{
-				'number': {
-					'value': 'IP000169/23',
-				},
-				'title': {
-					'value': 'Онко ТКМ',
-				},
-				'marketingTitle': {
-					'value': 'Лечение онкологии и трансплантация костного мозга',
-				},
-			},
-			{
-				'number': {
-					'value': 'IP000169/22',
-				},
-				'title': {
-					'value': 'Онко ТКМ',
-				},
-				'marketingTitle': {
-					'value': 'Лечение онкологии',
-				},
-			},
-		],
+		data: Array(20)
+			.fill()
+			.map((data, index) => {
+				return { ...mockData, 'id': index }
+			}),
 		hasMore: false,
 	}
 }
@@ -767,19 +759,19 @@ async function savePlan(id, values) {
 async function getContractTypes() {
 	const data = [
 		{
-			'value': 'RUB',
+			'value': 'contractTyp1',
 			'data': {
 				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
 			},
 		},
 		{
-			'value': 'USD',
+			'value': 'contractTyp11',
 			'data': {
 				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
 			},
 		},
 		{
-			'value': 'EUR',
+			'value': 'contractTyp111',
 			'data': {
 				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
 			},
@@ -788,6 +780,126 @@ async function getContractTypes() {
 
 	await randomDelay()
 	return data
+}
+
+/** Получение типов риска */
+async function getRiskTypes() {
+	const data = [
+		{
+			'value': 'Риск',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'Спец.риск',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение типов программы страхования */
+async function getProgramTypes() {
+	const data = [
+		{
+			'value': 'Фактический',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'Тест',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+		{
+			'value': 'Тест2',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3102',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение рисков по идентификатору программы */
+async function getRisks(planId, sortData) {
+	await randomDelay()
+	const mockData = {
+		'name': {
+			'value': 'Онко',
+		},
+		'riskAmount': {
+			'value': '2 622,06',
+		},
+		'insuranceAmount': {
+			'value': '6 000 000,00',
+		},
+		'timeFranchise': {
+			'value': '90',
+		},
+		'riskFranchise': {
+			'value': '0,00',
+		},
+	}
+
+	return {
+		data: Array(2)
+			.fill()
+			.map((data, index) => {
+				return { ...mockData, 'id': index }
+			}),
+		hasMore: false,
+	}
+}
+
+/** Получение полных данных программы по идентификатору */
+async function getProgramFulldata(id) {
+	const data = {
+		'name': {
+			'value': 'Онко ТКМ',
+		},
+		'number': {
+			'value': 'IP000169/23',
+		},
+		'marketingName': {
+			'value': 'testMarketingName',
+		},
+		'riskType': {
+			'value': 'Риск',
+			'data': {
+				'code': '1234124',
+			},
+		},
+		'type': {
+			'value': '',
+			'data': {
+				'code': '',
+			},
+		},
+		'currency': {
+			'value': 'RUB',
+			'data': {
+				'code': 'lable',
+			},
+		},
+	}
+
+	await randomDelay()
+	return data
+}
+
+/** Сохранение Программы страхования */
+async function saveProgram(id, values) {
+	await randomDelay()
 }
 
 export default {
@@ -815,4 +927,10 @@ export default {
 	getParentPlans,
 	getTreatyLPU,
 	getContractTypes,
+
+	getRiskTypes,
+	getProgramTypes,
+	getProgramFulldata,
+	getRisks,
+	saveProgram,
 }
