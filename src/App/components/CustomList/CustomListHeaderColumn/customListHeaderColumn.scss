@@ -4,6 +4,7 @@
 	flex-direction: row;
 	gap: 8px;
 	align-items: center;
+	overflow: hidden;
 
 	&__name {
 		text-overflow: ellipsis;

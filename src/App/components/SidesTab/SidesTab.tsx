@@ -1,19 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import { IFormData, SideDataExtended, TabProps } from '../../shared/types';
+import { IFormData, IFormDataGeneral, SideDataExtended, TabProps } from '../../shared/types';
 import SidesTabRow from '../SidesTabRow/SidesTabRow';
-
-type GeneralTabProps = {
-	handler: any
-	values: IFormData
-	isViewMode: boolean
-	saveStateHandler: () => void
-	setActionHandlers: {
-		setAddHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>,
-		setEditHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>,
-		setDeleteHandler: React.Dispatch<React.SetStateAction<(() => void) | undefined>>
-	}
-}
 
 /** Вкладка Общее */
 function SidesTab(props: TabProps) {

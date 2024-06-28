@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import TabsWrapper from '../TabsWrapper/TabsWrapper';
-import TabItem from '../TabItem/TabItem';
+import React, { useState } from 'react';
+import TabsWrapper from '../../TabsWrapper/TabsWrapper';
+import TabItem from '../../TabItem/TabItem';
 import PlanDetailsGeneralTab from '../PlanDetailsGeneralTab/PlanDetailsGeneralTab';
-import { DetailsProps, IInputData, ListColumnData, PlanDetailsData, SortData } from '../../shared/types';
-import CustomList from '../CustomList/CustomList';
-import CustomListRow from '../CustomList/CustomListRow/CustomListRow';
-import Scripts from '../../shared/utils/clientScripts';
-import Button from '../Button/Button';
-import Loader from '../Loader/Loader';
+import { DetailsProps, ListColumnData, PlanDetailsData, ProgramDetailsData, SortData, getDetailsLayoutAttributes } from '../../../shared/types';
+import CustomList from '../../CustomList/CustomList';
+import CustomListRow from '../../CustomList/CustomListRow/CustomListRow';
+import Scripts from '../../../shared/utils/clientScripts';
+import Button from '../../Button/Button';
+import Loader from '../../Loader/Loader';
+import PlanDetailsLayout from '../PlanDetailsLayout/planDetailsLayout';
+import { useMapState } from '../../../shared/utils/utils';
+import ProgramDetails from '../ProgramDetails/ProgramDetails';
 
 class PlanDetailsProps implements DetailsProps {
 	data: any;
@@ -20,7 +23,8 @@ class PlanDetailsProps implements DetailsProps {
 }
 
 /** Форма редактирования/просмотра плана страхования */
-function PlanDetails({ data, values, setValue, setValues, columnsSettings, onClickRowHandler, reloadData }: PlanDetailsProps) {
+function PlanDetails(props: PlanDetailsProps) {
+	const { data, values, setValue, setValues, columnsSettings, onClickRowHandler, reloadData } = props;
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isViewMode, setIsViewMode] = useState<boolean>(true);
 
@@ -69,37 +73,32 @@ function PlanDetails({ data, values, setValue, setValues, columnsSettings, onCli
 			: <Button clickHandler={onClickSave} buttonType='outline' title='СОХРАНИТЬ' />
 	)
 
+	// Данные формы деталей плана
+	const [programValues, setProgramValue, setProgramValues] = useMapState<ProgramDetailsData>(new ProgramDetailsData());
+
+	/** Получение формы детальной информации по строке списка Программ страхования */
+	const getProgramDetailsLayout = ({ rowData, reloadData, onClickRowHandler }: getDetailsLayoutAttributes) => {
+		return <ProgramDetails reloadData={reloadData} columnsSettings={columns} data={rowData} values={programValues} setValue={setProgramValue} setValues={setProgramValues} onClickRowHandler={onClickRowHandler} />
+	}
+
 	return (
 		<>
+			<CustomListRow
+				data={data}
+				columnsSettings={columnsSettings}
+				setOpenRowIndex={onClickRowHandler}
+				isClickable
+				isOpen
+				reloadData={function () { }}
+			/>
 			{
 				isLoading
 					? (<div className="plan-details">
-						<CustomListRow
-							data={data}
-							columnsSettings={columnsSettings}
-							setOpenRowIndex={onClickRowHandler}
-							isClickable
-							isOpen
-						/>
 						< Loader />
 					</div>)
 					: (<div className="plan-details">
 						<div className="plan-details__tabs">
-							<CustomListRow
-								data={data}
-								columnsSettings={columnsSettings}
-								setOpenRowIndex={onClickRowHandler}
-								isOpen
-								isClickable
-							/>
-							<TabsWrapper>
-								<TabItem code={"general"} name={"Общее"} >
-									<PlanDetailsGeneralTab isViewMode={isViewMode} values={values} setValue={setValue} />
-								</TabItem>
-								<TabItem code={"tou"} name={"ТОУ"}>
-									TODO
-								</TabItem>
-							</TabsWrapper>
+							<PlanDetailsLayout {...props} isViewMode={isViewMode} />
 						</div>
 						<div className="plan-details__actions">
 							{formActionButton}
@@ -109,7 +108,7 @@ function PlanDetails({ data, values, setValue, setValues, columnsSettings, onCli
 							<div className="plan-details__programs-title">
 								<span>программы</span>
 							</div>
-							<CustomList columnsSettings={columns} getDataHandler={getProgramms} isScrollable={false} />
+							<CustomList getDetailsLayout={getProgramDetailsLayout} columnsSettings={columns} getDataHandler={getProgramms} isScrollable={false} />
 						</div>
 					</div>)
 			}

@@ -5,7 +5,7 @@ import InputButton from '../InputButton/InputButton'
 import icons from '../../shared/icons'
 
 function CustomInputAppItem(props) {
-	const { href, values, name, inputHandler, saveStateHandler, getValueHandler = undefined, removeValueHandler = undefined } = props
+	const { href, values, name, inputHandler, saveStateHandler, getValueHandler = undefined, removeValueHandler = undefined, isInvalid, clickHandler } = props
 
 	const getValueByName = () => {
 		if (getValueHandler) return getValueHandler();
@@ -43,10 +43,10 @@ function CustomInputAppItem(props) {
 			? removeButton
 			: searchButton
 
-	const style = { "fontStyle": "normal", "fontWeight": "600", "fontSize": "14px", "lineHeight": "130%", "letterSpacing": "0.0025em", "color": "#4588E5" }
+	// const style = { "fontStyle": "normal", "fontWeight": "600", "fontSize": "14px", "lineHeight": "130%", "letterSpacing": "0.0025em", "color": "#4588E5", "cursor": "pointer" }
 
 	return (
-		<CustomInput {...props} buttons={button} style={style} readOnly />
+		<CustomInput cursor='pointer' {...props} buttons={button} customClassname={"custom-input__wrapper_link"} isInvalid={isInvalid} readOnly />
 	)
 }
 

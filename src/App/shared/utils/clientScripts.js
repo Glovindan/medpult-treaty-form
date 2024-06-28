@@ -1,4 +1,4 @@
-import { InputDataString } from '../types'
+import { InputDataCategory, InputDataString } from '../types'
 
 /** Заглушка ожидания ответа сервера */
 function randomDelay() {
@@ -288,10 +288,182 @@ async function getTreaty() {
 	return data
 }
 
+/** Получение списка статусов */
+async function getTreatyLPU() {
+	const data = {
+		'treaty': {
+			'value': 'test',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+		'number': {
+			'value': 'test',
+		},
+		'policyHolder': {
+			'value': 'test',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+		'objProduct': {
+			'value': 'Aenean tellus elit leo consectetur',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+		'channel': {
+			'value': 'channelTest',
+			'data': {
+				'code': 'channelTest',
+			},
+		},
+		'region': {
+			'value': 'test',
+		},
+		'currency': {
+			'value': 'currencyTest',
+			'data': {
+				'code': 'currencyTest',
+			},
+		},
+		'status': {
+			'value': 'Еще статус',
+			'data': {
+				'code': 'eshe_status',
+			},
+		},
+		'conclusionDate': {
+			'value': '28.03.2024',
+		},
+		'startDate': {
+			'value': '28.03.2024',
+		},
+		'endDate': {
+			'value': '28.03.2024',
+		},
+		'insuranceAmount': {
+			'value': '',
+		},
+		'insuranceAmountRub': {
+			'value': '',
+		},
+		'insurancePremium': {
+			'value': '',
+		},
+		'insurancePremiumRub': {
+			'value': '',
+		},
+		'sides': [
+			{
+				'isEdit': false,
+				'originalData': {
+					'type': {
+						'value': 'Менеджер договора',
+						'data': {
+							'code': 'manager',
+						},
+					},
+					'contractor': {
+						'value': 'Иванов Иван Иванович',
+						'data': {
+							'code': '123456',
+						},
+					},
+				},
+				'actualData': {
+					'type': {
+						'value': 'Менеджер договора',
+						'data': {
+							'code': 'manager',
+						},
+					},
+					'contractor': {
+						'value': 'Иванов Иван Иванович',
+						'data': {
+							'code': '123456',
+						},
+					},
+				},
+			},
+			{
+				'isEdit': false,
+				'originalData': {
+					'type': {
+						'value': 'Медицинский куратор',
+						'data': {
+							'code': 'medical',
+						},
+					},
+					'contractor': {
+						'value': 'Петров Петр Петрович',
+						'data': {
+							'code': '42515215',
+						},
+					},
+				},
+				'actualData': {
+					'type': {
+						'value': 'Медицинский куратор',
+						'data': {
+							'code': 'medical',
+						},
+					},
+					'contractor': {
+						'value': 'Петров Петр Петрович',
+						'data': {
+							'code': '42515215',
+						},
+					},
+				},
+			},
+			{
+				'isEdit': true,
+				'originalData': {
+					'type': {
+						'value': 'Технический куратор',
+						'data': {
+							'code': 'technical',
+						},
+					},
+					'contractor': {
+						'value': 'Плюшкин Лев Николаевич',
+						'data': {
+							'code': '4643645654',
+						},
+					},
+				},
+				'actualData': {
+					'type': {
+						'value': 'Технический куратор',
+						'data': {
+							'code': 'technical',
+						},
+					},
+					'contractor': {
+						'value': 'Плюшкин Лев Николаевич',
+						'data': {
+							'code': '4643645654',
+						},
+					},
+				},
+			},
+		],
+	}
+	await randomDelay()
+	return data
+}
+
 /** Получение ссылки на форму отбора контрагента */
 const getSelectContractorPageLink = () => {
 	const pageLink = '#test'
 	return pageLink + '?field_id=medpult-treaty-policy-holder'
+}
+
+/** Получение ссылки на форму отбора контрагента (Для выбора ЛПУ) */
+const getSelectLPULink = () => {
+	const pageLink = '#test'
+	return pageLink + '?field_id=medpult-treaty-lpu'
 }
 
 /** Получение ссылки на форму отбора контрагента (Для выбора ответственного лица) */
@@ -445,34 +617,26 @@ const getPlans = async (page) => {
 }
 
 /** Получение программ по идентификатору плана */
-async function getPrograms(planId) {
+async function getPrograms(planId, sortData) {
 	await randomDelay()
+	const mockData = {
+		'number': {
+			'value': 'IP000169/23',
+		},
+		'title': {
+			'value': 'Онко ТКМ',
+		},
+		'marketingTitle': {
+			'value': 'Лечение онкологии и трансплантация костного мозга',
+		},
+	}
 
 	return {
-		data: [
-			{
-				'number': {
-					'value': 'IP000169/23',
-				},
-				'title': {
-					'value': 'Онко ТКМ',
-				},
-				'marketingTitle': {
-					'value': 'Лечение онкологии и трансплантация костного мозга',
-				},
-			},
-			{
-				'number': {
-					'value': 'IP000169/22',
-				},
-				'title': {
-					'value': 'Онко ТКМ',
-				},
-				'marketingTitle': {
-					'value': 'Лечение онкологии',
-				},
-			},
-		],
+		data: Array(20)
+			.fill()
+			.map((data, index) => {
+				return { ...mockData, 'id': index }
+			}),
 		hasMore: false,
 	}
 }
@@ -563,7 +727,10 @@ async function getInsuranceTypes() {
 
 /** Получение типов плана */
 async function getPlanTypes() {
-	const data = [new InputDataString('Индивидуальный'), new InputDataString('Родительский')]
+	const data = [
+		new InputDataCategory('Индивидуальный', 'individual'),
+		new InputDataCategory('Родительский', 'parent'),
+	]
 
 	await randomDelay()
 	return data
@@ -577,8 +744,161 @@ async function getParentPlans() {
 	return data
 }
 
+/** Создание Плана страхования */
+async function createPlan(values) {
+	console.log(values)
+	await randomDelay()
+}
+
 /** Сохранение Плана страхования */
 async function savePlan(id, values) {
+	await randomDelay()
+}
+
+/** Получение типов договора */
+async function getContractTypes() {
+	const data = [
+		{
+			'value': 'contractTyp1',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'contractTyp11',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+		{
+			'value': 'contractTyp111',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение типов риска */
+async function getRiskTypes() {
+	const data = [
+		{
+			'value': 'Риск',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'Спец.риск',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение типов программы страхования */
+async function getProgramTypes() {
+	const data = [
+		{
+			'value': 'Фактический',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'Тест',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+		{
+			'value': 'Тест2',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3102',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение рисков по идентификатору программы */
+async function getRisks(planId, sortData) {
+	await randomDelay()
+	const mockData = {
+		'name': {
+			'value': 'Онко',
+		},
+		'riskAmount': {
+			'value': '2 622,06',
+		},
+		'insuranceAmount': {
+			'value': '6 000 000,00',
+		},
+		'timeFranchise': {
+			'value': '90',
+		},
+		'riskFranchise': {
+			'value': '0,00',
+		},
+	}
+
+	return {
+		data: Array(2)
+			.fill()
+			.map((data, index) => {
+				return { ...mockData, 'id': index }
+			}),
+		hasMore: false,
+	}
+}
+
+/** Получение полных данных программы по идентификатору */
+async function getProgramFulldata(id) {
+	const data = {
+		'name': {
+			'value': 'Онко ТКМ',
+		},
+		'number': {
+			'value': 'IP000169/23',
+		},
+		'marketingName': {
+			'value': 'testMarketingName',
+		},
+		'riskType': {
+			'value': 'Риск',
+			'data': {
+				'code': '1234124',
+			},
+		},
+		'type': {
+			'value': '',
+			'data': {
+				'code': '',
+			},
+		},
+		'currency': {
+			'value': 'RUB',
+			'data': {
+				'code': 'lable',
+			},
+		},
+	}
+
+	await randomDelay()
+	return data
+}
+
+/** Сохранение Программы страхования */
+async function saveProgram(id, values) {
 	await randomDelay()
 }
 
@@ -591,16 +911,26 @@ export default {
 	getTreaty,
 	getSelectContractorPageLink,
 	getSelectContractorPageLinkResponsible,
+	getSelectLPULink,
 	getAddressSuggestion,
 	getResponsibleTypes,
 	getContractors,
 	getContractorPageLink,
 	getPlans,
 	savePlan,
+	createPlan,
 	getPrograms,
 	getAgeMeasurements,
 	getPlanFulldata,
 	getInsuranceTypes,
 	getPlanTypes,
 	getParentPlans,
+	getTreatyLPU,
+	getContractTypes,
+
+	getRiskTypes,
+	getProgramTypes,
+	getProgramFulldata,
+	getRisks,
+	saveProgram,
 }

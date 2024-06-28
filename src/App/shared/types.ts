@@ -11,8 +11,19 @@ export interface IInputData {
 	data?: any
 }
 
+/** Значения полей формы общие*/
+export interface IFormDataGeneral {
+	treaty: IInputData
+	number: IInputData
+	status: IInputData
+	sides: SideDataExtended[]
+	conclusionDate: IInputData
+	startDate: IInputData
+	endDate: IInputData
+}
+
 /** Значения полей формы */
-export interface IFormData {
+export interface IFormData extends IFormDataGeneral {
 	/** Договор */
 	treaty: IInputData
 	/** Номер */
@@ -43,6 +54,28 @@ export interface IFormData {
 	insurancePremium: IInputData
 	/** Страховая премия по договору, руб */
 	insurancePremiumRub: IInputData
+	/** Стороны */
+	sides: SideDataExtended[]
+}
+
+/** Значения полей формы ЛПУ */
+export interface IFormDataLPU extends IFormDataGeneral {
+	/** Договор */
+	treaty: IInputData
+	/** Номер */
+	number: IInputData
+	/** ЛПУ */
+	lpu: IInputData
+	/** Тип договора */
+	type: IInputData
+	/** Статус */
+	status: IInputData
+	/** Дата заключения */
+	conclusionDate: IInputData
+	/** Дата начала действия */
+	startDate: IInputData
+	/** Дата окончания действия */
+	endDate: IInputData
 	/** Стороны */
 	sides: SideDataExtended[]
 }
@@ -102,6 +135,8 @@ export interface CustomInputProps extends React.ComponentProps<'input'> {
 	placeholder?: string
 	maskFunction?: (value: string) => string
 	getValueHandler?: (props: CustomInputProps) => string
+	isInvalid?: boolean
+	customClassname?: string
 }
 
 /** Сторона (С сохранением изначального состояния данных) */
@@ -195,7 +230,32 @@ export class TreatyFormData implements IFormData {
 	}
 }
 
-/** Значения полей формы с уточненными типами полей */
+/** Значения полей формы ЛПУ с уточненными типами полей */
+export class TreatyFormLPUData implements IFormDataLPU {
+	treaty: IInputData
+	number: IInputData
+	lpu: IInputData
+	status: IInputData
+	conclusionDate: IInputData
+	startDate: IInputData
+	endDate: IInputData
+	sides: SideDataExtended[]
+	type: IInputData
+
+	constructor() {
+		this.treaty = new InputDataCategory()
+		this.status = new InputDataCategory()
+
+		this.number = new InputDataString()
+		this.lpu = new InputDataString()
+		this.conclusionDate = new InputDataString()
+		this.startDate = new InputDataString()
+		this.endDate = new InputDataString()
+		this.type = new InputDataString()
+	}
+}
+
+/** Значение поискового запроса */
 export class InsuredSearchData {
 	/** Категория */
 	category: InputDataCategory
@@ -258,9 +318,9 @@ export interface DetailsProps {
 /** Атрибуты функции получения разметки деталей строки динамического списка */
 export interface getDetailsLayoutAttributes {
 	/** Сокращенные данные строки */
-	rowData: any
+	rowData?: any
 	/** Обработчик нажатия на строку */
-	onClickRowHandler: any
+	onClickRowHandler?: any
 	/** Перезагрузка списка */
 	reloadData: () => void
 }
@@ -299,7 +359,7 @@ export class PlanDetailsData {
 	/** Страховая сумма по плану на 1 ЗХ, год */
 	insuranceAmount: InputDataString
 	/** Тип плана */
-	type: InputDataString
+	type: InputDataCategory
 	/** Родительский план */
 	parentPlan: InputDataString
 	/** Основной регион */
@@ -322,9 +382,35 @@ export class PlanDetailsData {
 		this.previousPlan = new InputDataString()
 		this.relativeFactor = new InputDataString()
 		this.insuranceAmount = new InputDataString()
-		this.type = new InputDataString()
+		this.type = new InputDataCategory()
 		this.parentPlan = new InputDataString()
 		this.region = new InputDataString()
 		this.medicalFactor = new InputDataString()
+	}
+}
+
+/** Детальные данные Программы страхования */
+export class ProgramDetailsData {
+	/** Наименование */
+	name: InputDataString
+	/** Номер */
+	number: InputDataString
+	/** Риск / Спец.Риск */
+	riskType: InputDataCategory
+	/** Тип программы страхования */
+	type: InputDataCategory
+	/** Маркетинговое наименование */
+	marketingName: InputDataString
+	/** Валюта ответственности */
+	currency: InputDataCategory
+
+	constructor() {
+		this.name = new InputDataString()
+		this.number = new InputDataString()
+		this.marketingName = new InputDataString()
+
+		this.riskType = new InputDataCategory()
+		this.type = new InputDataCategory()
+		this.currency = new InputDataCategory()
 	}
 }

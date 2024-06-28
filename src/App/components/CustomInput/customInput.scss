@@ -28,6 +28,10 @@
 			border-bottom-left-radius: 0;
 			box-shadow: none;
 		}
+
+		&_invalid {
+			border-color: var(--medpult-alert-color);
+		}
 	}
 
 	&__input {

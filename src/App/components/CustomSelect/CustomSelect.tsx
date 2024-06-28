@@ -7,18 +7,20 @@ import Loader from '../Loader/Loader';
 import icons from '../../shared/icons';
 import CustomSelectList from '../CustomSelectList/CustomSelectList';
 
-interface CustomSelect extends CustomInputProps {
+interface CustomSelectProps extends CustomInputProps {
 	getDataHandler: () => Promise<IInputData[]>,
 	isViewMode?: boolean
+	isInvalid?: boolean
 }
 
-function CustomSelect(props: CustomSelect) {
+function CustomSelect(props: CustomSelectProps) {
 	const {
 		isViewMode,
 		getDataHandler,
 		inputHandler,
 		name,
 		values,
+		isInvalid,
 		...customInputProps
 	} = props;
 
@@ -71,6 +73,7 @@ function CustomSelect(props: CustomSelect) {
 				isOpen={isOpen}
 				buttons={[<InputButton svg={buttonSvg} clickHandler={clickHandler} />]}
 				isViewMode={isViewMode}
+				isInvalid={isInvalid}
 				{...customInputProps}
 				readOnly
 			/>

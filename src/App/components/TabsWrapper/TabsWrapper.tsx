@@ -5,14 +5,24 @@ import TabButton from '../TabButton/TabButton'
 
 interface TabsWrapperProps {
 	children: any,
-	defaultTabCode?: string,
 	addHandler?: () => void,
 	editHandler?: () => void,
 	deleteHandler?: () => void
+	activeTabCodeGlobal?: string,
+	setActiveTabCodeGlobal?: any
 }
 
-function TabsWrapper({ children, defaultTabCode, addHandler, editHandler, deleteHandler }: TabsWrapperProps) {
+function TabsWrapper({ children, activeTabCodeGlobal, addHandler, editHandler, deleteHandler, setActiveTabCodeGlobal }: TabsWrapperProps) {
 	const [activeTabCode, setActiveTabCode] = useState<string>("")
+
+	useEffect(() => {
+		if (setActiveTabCodeGlobal) setActiveTabCodeGlobal(activeTabCode)
+		console.log(activeTabCode)
+	}, [activeTabCode])
+
+	useEffect(() => {
+		if (activeTabCodeGlobal) setActiveTabCode(activeTabCodeGlobal)
+	}, [activeTabCodeGlobal])
 
 	const handleSelectorItemClick = (code: string) => {
 		console.log(code)
@@ -46,10 +56,10 @@ function TabsWrapper({ children, defaultTabCode, addHandler, editHandler, delete
 			setActiveTabCode(children.props.code)
 			return
 		}
-		if (!defaultTabCode) {
+		if (!activeTabCodeGlobal) {
 			setActiveTabCode(children[0].props.code)
 		} else {
-			setActiveTabCode(defaultTabCode)
+			setActiveTabCode(activeTabCodeGlobal)
 		}
 	}, [])
 

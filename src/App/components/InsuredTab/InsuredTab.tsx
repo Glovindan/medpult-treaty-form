@@ -8,7 +8,7 @@ import CustomSelectList from '../CustomSelect/CustomSelect';
 import icons from '../../shared/icons';
 import CustomList from '../CustomList/CustomList';
 import Scripts from '../../shared/utils/clientScripts';
-import utils, { redirectSPA } from '../../shared/utils/utils';
+import utils, { openContractorPage, redirectSPA } from '../../shared/utils/utils';
 
 interface InsuredTabProps extends Omit<TabProps, "values"> {
 	values: InsuredSearchData
@@ -38,24 +38,14 @@ function InsuredTab({ values, handler, setActionHandlers, saveStateHandler }: In
 
 	/** Создание контрагента */
 	const onClickCreateContractor = () => {
-		// Запись текущего url в localStorage
-		localStorage.setItem("medpultPathBefore", window.location.pathname + window.location.search)
-		// Очистить contractorId в localStorage
-		localStorage.removeItem("medpultContractorId")
-
 		saveStateHandler();
-		redirectSPA(Scripts.getContractorPageLink())
+		openContractorPage()
 	}
 
 	/** Нажатие на контрагента */
 	const onClickContractor = (data: InputDataCategory) => {
-		console.log(data);
-
-		localStorage.setItem("medpultPathBefore", window.location.pathname + window.location.search)
-		localStorage.setItem("medpultContractorId", data.data.code);
-
 		saveStateHandler();
-		redirectSPA(Scripts.getContractorPageLink())
+		openContractorPage(data.data.code)
 	}
 
 	/** Колонки списка */

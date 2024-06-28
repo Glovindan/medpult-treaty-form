@@ -25,8 +25,7 @@
 @import url('./App/components/CustomList/CustomListRowColumn/customListRowColumn.scss');
 @import url('./App/components/CustomSelectList/customSelectList.scss');
 @import url('./App/components/PlansTab/plansTab.scss');
-@import url('./App/components/PlanDetails/planDetails.scss');
-@import url('./App/components/PlanDetailsGeneralTab/planDetailsGeneralTab.scss');
+@import url('./App/components/TreatyForm/treatyForm.scss');
 
 :root {
 	--medpult-bg-color: #f2f4f6;
@@ -35,6 +34,7 @@
 	--medpult-field-border-color: #d9d9d9;
 	--medpult-blue-active-color: #64c3f4;
 	--medpult-blue-link-color: #5295fa;
+	--medpult-alert-color: #ff0505;
 }
 
 // Панель фильтрации

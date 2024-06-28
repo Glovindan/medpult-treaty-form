@@ -40,5 +40,11 @@
 		align-items: center;
 		letter-spacing: 0.0025em;
 		color: #4588e5;
+		width: fit-content;
+
+		&:hover {
+			border-bottom: 2px solid #4588e5;
+			margin-top: 2px;
+		}
 	}
 }

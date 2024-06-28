@@ -16,9 +16,12 @@ function CustomInput(props: CustomInputProps) {
 		placeholder = "",
 		maskFunction,
 		getValueHandler,
+		isInvalid,
+		customClassname,
 		...inputStyles
 	} = props;
 
+	const [isValid, setIsValid] = useState<boolean>(false);
 	/** Поулчение значения поля */
 	const getValue = () => {
 		// Если есть кастомная функция получения значения - выполнить ее
@@ -67,11 +70,7 @@ function CustomInput(props: CustomInputProps) {
 
 	return (
 		<div
-			className={
-				isOpen
-					? 'custom-input__wrapper custom-input__wrapper_open'
-					: 'custom-input__wrapper'
-			}
+			className={`custom-input__wrapper ${isOpen ? "custom-input__wrapper_open" : ""} ${isInvalid ? "custom-input__wrapper_invalid" : ""} ${customClassname ? customClassname : ""}`}
 
 			ref={wrapperRef}
 		>
