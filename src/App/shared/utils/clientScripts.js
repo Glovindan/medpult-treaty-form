@@ -1,4 +1,4 @@
-import { InputDataString } from '../types'
+import { InputDataCategory, InputDataString } from '../types'
 
 /** Заглушка ожидания ответа сервера */
 function randomDelay() {
@@ -460,6 +460,12 @@ const getSelectContractorPageLink = () => {
 	return pageLink + '?field_id=medpult-treaty-policy-holder'
 }
 
+/** Получение ссылки на форму отбора контрагента (Для выбора ЛПУ) */
+const getSelectLPULink = () => {
+	const pageLink = '#test'
+	return pageLink + '?field_id=medpult-treaty-lpu'
+}
+
 /** Получение ссылки на форму отбора контрагента (Для выбора ответственного лица) */
 function getSelectContractorPageLinkResponsible(index) {
 	const pageLink = '#test'
@@ -729,7 +735,10 @@ async function getInsuranceTypes() {
 
 /** Получение типов плана */
 async function getPlanTypes() {
-	const data = [new InputDataString('Индивидуальный'), new InputDataString('Родительский')]
+	const data = [
+		new InputDataCategory('Индивидуальный', 'individual'),
+		new InputDataCategory('Родительский', 'parent'),
+	]
 
 	await randomDelay()
 	return data
@@ -743,9 +752,42 @@ async function getParentPlans() {
 	return data
 }
 
+/** Создание Плана страхования */
+async function createPlan(values) {
+	console.log(values)
+	await randomDelay()
+}
+
 /** Сохранение Плана страхования */
 async function savePlan(id, values) {
 	await randomDelay()
+}
+
+/** Получение типов договора */
+async function getContractTypes() {
+	const data = [
+		{
+			'value': 'RUB',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'USD',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+		{
+			'value': 'EUR',
+			'data': {
+				'code': '018e7fa6-5a9f-7ee2-a81c-1b7ec10031f3',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
 }
 
 export default {
@@ -757,12 +799,14 @@ export default {
 	getTreaty,
 	getSelectContractorPageLink,
 	getSelectContractorPageLinkResponsible,
+	getSelectLPULink,
 	getAddressSuggestion,
 	getResponsibleTypes,
 	getContractors,
 	getContractorPageLink,
 	getPlans,
 	savePlan,
+	createPlan,
 	getPrograms,
 	getAgeMeasurements,
 	getPlanFulldata,
@@ -770,4 +814,5 @@ export default {
 	getPlanTypes,
 	getParentPlans,
 	getTreatyLPU,
+	getContractTypes,
 }

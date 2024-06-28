@@ -22,10 +22,17 @@ type ListProps = {
 
 	/** Получение формы детальной информации по вкладке */
 	getDetailsLayout?: ({ rowData, onClickRowHandler }: getDetailsLayoutAttributes) => any
+	/** Получение формы создания */
+	getCreateLayout?: ({ reloadData, onClickRowHandler }: getDetailsLayoutAttributes) => any
+
+	/** Режим создания */
+	isCreateMode?: boolean;
+	/** toggle Режим создания */
+	closeCreateMode?: () => any;
 }
 
 function CustomList(props: ListProps) {
-	const { columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout } = props;
+	const { columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout, getCreateLayout, isCreateMode, closeCreateMode } = props;
 
 	const [page, setPage] = useState<number>(0);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -86,6 +93,11 @@ function CustomList(props: ListProps) {
 		reloadData();
 	}, [sortData])
 
+	/** Обновление оглавления при изменении сортировки */
+	useEffect(() => {
+		if (isCreateMode) setOpenRowIndex(undefined)
+	}, [isCreateMode])
+
 	/** Нажатие на сортировку */
 	const handleSortClick = (sortDataNew: SortData | undefined) => {
 		setSortData(sortDataNew);
@@ -93,13 +105,8 @@ function CustomList(props: ListProps) {
 
 	return (
 		<div className='custom-list'>
-			<div
-				className={
-					isScrollable
-						? "custom-list__header custom-list__header_scrollable"
-						: "custom-list__header"
-				}
-			>
+			{/* Заголовок */}
+			<div className={`custom-list__header${isScrollable ? ' custom-list__header_scrollable' : ''}`}>
 				{columnsSettings.map(columnSettings =>
 					<CustomListColumn
 						sortData={sortData}
@@ -108,19 +115,16 @@ function CustomList(props: ListProps) {
 					/>
 				)}
 			</div>
-			<div
-				className={
-					isScrollable
-						? "custom-list__body_scrollable"
-						: "custom-list__body"
-				}
-				ref={bodyRef}
-				onScroll={onScroll}
-			>
+			{/* Тело */}
+			<div className={`custom-list__body${isScrollable ? ' custom-list__body_scrollable' : ''}`} ref={bodyRef} onScroll={onScroll}>
+				{/* Форма создания */}
+				{isCreateMode && getCreateLayout && getCreateLayout({ reloadData: reloadData, onClickRowHandler: () => { } })}
+				{/* Данные */}
 				{items.map(data => {
 					/** Обработчик нажатия на строку */
 					const toggleShowDetails = () => {
 						if (data.id === undefined) return;
+						closeCreateMode && closeCreateMode();
 
 						if (data.id === openRowIndex) {
 							setOpenRowIndex(undefined)

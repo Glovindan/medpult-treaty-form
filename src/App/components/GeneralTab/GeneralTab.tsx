@@ -36,7 +36,7 @@ function GeneralTab(props: TabProps) {
 					<CustomInput isViewMode={isViewMode} name='number' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Страхователь"}>
-					<CustomInputAppItem clickHandler={onClickContractor} href={Scripts.getSelectContractorPageLink()} saveStateHandler={saveStateHandler} isViewMode={isViewMode} name='policyHolder' inputHandler={handler} values={values} />
+					<CustomInputAppItem clickHandler={onClickContractor} href={Scripts.getSelectLPULink()} saveStateHandler={saveStateHandler} isViewMode={isViewMode} name='policyHolder' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Продукт"}>
 					<CustomSelect isViewMode={isViewMode} getDataHandler={Scripts.getProducts} name='objProduct' inputHandler={handler} values={values} />

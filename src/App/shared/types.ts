@@ -318,9 +318,9 @@ export interface DetailsProps {
 /** Атрибуты функции получения разметки деталей строки динамического списка */
 export interface getDetailsLayoutAttributes {
 	/** Сокращенные данные строки */
-	rowData: any
+	rowData?: any
 	/** Обработчик нажатия на строку */
-	onClickRowHandler: any
+	onClickRowHandler?: any
 	/** Перезагрузка списка */
 	reloadData: () => void
 }
@@ -359,7 +359,7 @@ export class PlanDetailsData {
 	/** Страховая сумма по плану на 1 ЗХ, год */
 	insuranceAmount: InputDataString
 	/** Тип плана */
-	type: InputDataString
+	type: InputDataCategory
 	/** Родительский план */
 	parentPlan: InputDataString
 	/** Основной регион */
@@ -382,7 +382,7 @@ export class PlanDetailsData {
 		this.previousPlan = new InputDataString()
 		this.relativeFactor = new InputDataString()
 		this.insuranceAmount = new InputDataString()
-		this.type = new InputDataString()
+		this.type = new InputDataCategory()
 		this.parentPlan = new InputDataString()
 		this.region = new InputDataString()
 		this.medicalFactor = new InputDataString()

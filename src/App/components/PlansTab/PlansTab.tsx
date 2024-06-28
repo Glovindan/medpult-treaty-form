@@ -5,13 +5,15 @@ import Scripts from '../../shared/utils/clientScripts';
 import CustomList from '../CustomList/CustomList';
 import PlanDetails from './PlanDetails/PlanDetails';
 import { useMapState } from '../../shared/utils/utils';
+import PlanDetailsLayout from './PlanDetailsLayout/planDetailsLayout';
+import PlanCreate from '../PlanCreate/PlanCreate';
 
 /** Вкладка Общее */
 function PlansTab({ values, setActionHandlers, saveStateHandler }: TabProps) {
 
 	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
 	useEffect(() => {
-		setActionHandlers.setAddHandler(undefined)
+		setActionHandlers.setAddHandler(() => () => { setIsCreateMode(true) })
 		setActionHandlers.setEditHandler(undefined)
 		setActionHandlers.setDeleteHandler(undefined)
 	}, [])
@@ -36,10 +38,20 @@ function PlansTab({ values, setActionHandlers, saveStateHandler }: TabProps) {
 		return <PlanDetails reloadData={reloadData} columnsSettings={columns} data={rowData} values={planValues} setValue={setPlanValue} setValues={setPlanValues} onClickRowHandler={onClickRowHandler} />
 	}
 
+	const [isCreateMode, setIsCreateMode] = useState<boolean>(false);
+	const closeCreateMode = () => {
+		setIsCreateMode(false);
+	}
+	/** Получение формы детальной информации по строке списка Планов страхования */
+	const getCreatePlanLayout = ({ reloadData, onClickRowHandler }: getDetailsLayoutAttributes) => {
+		return <PlanCreate reloadData={reloadData} values={planValues} setValue={setPlanValue} setValues={setPlanValues} closeHandler={closeCreateMode} />
+	}
+
+
 	return (
 		<div className="plans-tab">
 			<div className="plans-tab__list">
-				<CustomList columnsSettings={columns} getDataHandler={Scripts.getPlans} getDetailsLayout={getPlanDetailsLayout} isScrollable={false} />
+				<CustomList columnsSettings={columns} getDataHandler={Scripts.getPlans} getDetailsLayout={getPlanDetailsLayout} isCreateMode={isCreateMode} getCreateLayout={getCreatePlanLayout} closeCreateMode={closeCreateMode} isScrollable={false} />
 			</div>
 		</div>
 	)

@@ -8,6 +8,7 @@ import CustomListRow from '../../CustomList/CustomListRow/CustomListRow';
 import Scripts from '../../../shared/utils/clientScripts';
 import Button from '../../Button/Button';
 import Loader from '../../Loader/Loader';
+import PlanDetailsLayout from '../PlanDetailsLayout/planDetailsLayout';
 
 class PlanDetailsProps implements DetailsProps {
 	data: any;
@@ -20,7 +21,8 @@ class PlanDetailsProps implements DetailsProps {
 }
 
 /** Форма редактирования/просмотра плана страхования */
-function PlanDetails({ data, values, setValue, setValues, columnsSettings, onClickRowHandler, reloadData }: PlanDetailsProps) {
+function PlanDetails(props: PlanDetailsProps) {
+	const { data, values, setValue, setValues, columnsSettings, onClickRowHandler, reloadData } = props;
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isViewMode, setIsViewMode] = useState<boolean>(true);
 
@@ -71,37 +73,22 @@ function PlanDetails({ data, values, setValue, setValues, columnsSettings, onCli
 
 	return (
 		<>
+			<CustomListRow
+				data={data}
+				columnsSettings={columnsSettings}
+				setOpenRowIndex={onClickRowHandler}
+				isClickable
+				isOpen
+				reloadData={function () { }}
+			/>
 			{
 				isLoading
 					? (<div className="plan-details">
-						<CustomListRow
-							data={data}
-							columnsSettings={columnsSettings}
-							setOpenRowIndex={onClickRowHandler}
-							isClickable
-							isOpen
-							reloadData={function () { }}
-						/>
 						< Loader />
 					</div>)
 					: (<div className="plan-details">
 						<div className="plan-details__tabs">
-							<CustomListRow
-								data={data}
-								columnsSettings={columnsSettings}
-								setOpenRowIndex={onClickRowHandler}
-								isOpen
-								isClickable
-								reloadData={function () { }}
-							/>
-							<TabsWrapper>
-								<TabItem code={"general"} name={"Общее"} >
-									<PlanDetailsGeneralTab isViewMode={isViewMode} values={values} setValue={setValue} />
-								</TabItem>
-								<TabItem code={"tou"} name={"ТОУ"}>
-									TODO
-								</TabItem>
-							</TabsWrapper>
+							<PlanDetailsLayout {...props} isViewMode={isViewMode} />
 						</div>
 						<div className="plan-details__actions">
 							{formActionButton}
