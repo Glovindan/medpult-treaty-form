@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { InputDataCategory, InsuredSearchData, ListColumnData, TabProps } from '../../shared/types';
+import { InputDataCategory, InsuredDetailsData, InsuredSearchData, ListColumnData, TabProps, getDetailsLayoutAttributes } from '../../shared/types';
 import CustomInput from '../CustomInput/CustomInput';
 import CustomInputDate from '../CustomInputDate/CustomInputDate';
 import Button from '../Button/Button';
@@ -8,7 +8,9 @@ import CustomSelectList from '../CustomSelect/CustomSelect';
 import icons from '../../shared/icons';
 import CustomList from '../CustomList/CustomList';
 import Scripts from '../../shared/utils/clientScripts';
-import utils, { openContractorPage, redirectSPA } from '../../shared/utils/utils';
+import utils, { openContractorPage, redirectSPA, useMapState } from '../../shared/utils/utils';
+import InsuredDetails from './InsuredDetails/InsuredDetails';
+import { localStorageDraftKeyInsuredId } from '../../shared/utils/constants';
 
 interface InsuredTabProps extends Omit<TabProps, "values"> {
 	values: InsuredSearchData
@@ -17,6 +19,17 @@ interface InsuredTabProps extends Omit<TabProps, "values"> {
 /** Вкладка Общее */
 function InsuredTab({ values, handler, setActionHandlers, saveStateHandler }: InsuredTabProps) {
 	const [onClickSearch, setOnClickSearch] = useState<any>();
+
+	/** Получить идентификатор строки из черновика */
+	const getDefaultRowIdFromDraft = (): string | undefined => {
+		// Получение данных из черновика
+		const draftData = localStorage.getItem(localStorageDraftKeyInsuredId);
+		console.log(draftData)
+		if (!draftData) return undefined
+
+		localStorage.removeItem(localStorageDraftKeyInsuredId)
+		return draftData
+	}
 
 	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
 	useEffect(() => {
@@ -60,6 +73,14 @@ function InsuredTab({ values, handler, setActionHandlers, saveStateHandler }: In
 		new ListColumnData({ name: "ДС", code: "additionalAgreement", fr: 1 }),
 	]
 
+	// Данные формы деталей плана
+	const [insuredValues, setInsuredValue, setInsuredValues] = useMapState<InsuredDetailsData>(new InsuredDetailsData());
+
+	/** Получение формы детальной информации по строке списка Застрахованных */
+	const getInsuredDetailsLayout = ({ rowData, reloadData, onClickRowHandler }: getDetailsLayoutAttributes) => {
+		return <InsuredDetails saveStateHandler={saveStateHandler} reloadData={reloadData} columnsSettings={columns} data={rowData} values={insuredValues} setValue={setInsuredValue} setValues={setInsuredValues} onClickRowHandler={onClickRowHandler} />
+	}
+
 	return (
 		<div className="insured-tab">
 			<div className="insured-tab__search">
@@ -74,7 +95,7 @@ function InsuredTab({ values, handler, setActionHandlers, saveStateHandler }: In
 				<Button clickHandler={onClickSearch} title={buttonTitle} style={{ height: "100%" }} />
 			</div>
 			<div className="insured-tab-list">
-				<CustomList columnsSettings={columns} searchData={values} setSearchHandler={setOnClickSearch} getDataHandler={Scripts.getContractors} />
+				<CustomList defaultOpenRowId={() => getDefaultRowIdFromDraft()} columnsSettings={columns} searchData={values} setSearchHandler={setOnClickSearch} getDetailsLayout={getInsuredDetailsLayout} getDataHandler={Scripts.getContractors} />
 			</div>
 		</div>
 	)

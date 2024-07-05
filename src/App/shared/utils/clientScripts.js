@@ -1,4 +1,4 @@
-import { InputDataCategory, InputDataString } from '../types'
+import { InputDataCategory, InputDataString, InsuredDetailsData } from '../types'
 
 /** Заглушка ожидания ответа сервера */
 function randomDelay() {
@@ -902,6 +902,126 @@ async function saveProgram(id, values) {
 	await randomDelay()
 }
 
+/** Получение полных данных застрахованного по идентификатору */
+async function getInsuredFulldata(id) {
+	const data = {
+		'fullname': {
+			'value': 'Иванов Иван Иванович',
+		},
+		'startDate': {
+			'value': '12.12.1212',
+		},
+		'endDate': {
+			'value': '12.12.1212',
+		},
+		'attach': {
+			'value': '001СБС00123456/2023ДМС',
+		},
+		'policyNumber': {
+			'value': '001СБС00123456/2021-02',
+		},
+		'policyStartDate': {
+			'value': '01.01.2024',
+		},
+		'policyEndDate': {
+			'value': '31.12.2024',
+		},
+		'detach': {
+			'value': '001СБС00123456/2023ДМС',
+		},
+		'category': {
+			'value': 'Gold',
+			'data': {
+				'code': 'test',
+			},
+		},
+		'currentPlan': {
+			'value': 'ОНКО-ТКМ-МИР-Г-0-17',
+			'data': {
+				'code': 'test',
+			},
+		},
+		'contractNumber': {
+			'value': '001СБС00123456/2023ДМС',
+			'data': {
+				'code': 'test',
+			},
+		},
+	}
+
+	await randomDelay()
+	return data
+}
+
+/** Сохранение Застрахованного */
+async function saveInsured(id, values) {
+	await randomDelay()
+}
+
+/** Получение ссылки на форму отбора застрахованных */
+function getSelectInsuredPageLinkResponsible() {
+	const pageLink = '#testInsured'
+	return pageLink + `?field_id=medpult-treaty-contractor`
+}
+
+/** Получение списка категорий полисов */
+async function getPolicyCategories() {
+	const data = [
+		{
+			'value': 'Gold',
+			'data': {
+				'code': '018e7fa6-010e-712b-aecd-d07441142e97',
+			},
+		},
+		{
+			'value': 'Silver',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3107',
+			},
+		},
+		{
+			'value': 'Bronze',
+			'data': {
+				'code': '018e7fa6-46b6-7345-927e-d07cb06e3102',
+			},
+		},
+	]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение рисков по идентификатору застрахованного */
+async function getRisksInsured(insuredId, sortData) {
+	await randomDelay()
+	const mockData = {
+		'name': {
+			'value': 'Онко',
+		},
+		'riskAmount': {
+			'value': '2 622,06',
+		},
+		'insuranceAmount': {
+			'value': '6 000 000,00',
+		},
+		'timeFranchise': {
+			'value': '90',
+		},
+		'riskFranchise': {
+			'value': '0,00',
+		},
+	}
+
+	return {
+		data: Array(2)
+			.fill()
+			.map((data, index) => {
+				return { ...mockData, 'id': index }
+			}),
+		hasMore: false,
+	}
+}
+
 export default {
 	getProducts,
 	getChannels,
@@ -933,4 +1053,10 @@ export default {
 	getProgramFulldata,
 	getRisks,
 	saveProgram,
+
+	getInsuredFulldata,
+	saveInsured,
+	getSelectInsuredPageLinkResponsible,
+	getPolicyCategories,
+	getRisksInsured,
 }

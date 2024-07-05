@@ -414,3 +414,44 @@ export class ProgramDetailsData {
 		this.currency = new InputDataCategory()
 	}
 }
+
+/** Детальные данные Застрахованного */
+export class InsuredDetailsData {
+	/** ФИО */
+	fullname: InputDataString
+	/** Категория */
+	category: InputDataCategory
+	/** Текущий план */
+	currentPlan: InputDataCategory
+	/** Номер договора */
+	contractNumber: InputDataCategory
+	/** Дата прикрепления */
+	startDate: InputDataString
+	/** Дата открепления */
+	endDate: InputDataString
+	/** Прикреплен */
+	attach: InputDataString
+	/** Номер полиса */
+	policyNumber: InputDataString
+	/** Дата начала действия полиса */
+	policyStartDate: InputDataString
+	/** Дата окончания действия полиса */
+	policyEndDate: InputDataString
+	/** Откреплен */
+	detach: InputDataString
+
+	constructor() {
+		this.fullname = new InputDataString()
+		this.startDate = new InputDataString()
+		this.endDate = new InputDataString()
+		this.attach = new InputDataString()
+		this.policyNumber = new InputDataString()
+		this.policyStartDate = new InputDataString()
+		this.policyEndDate = new InputDataString()
+		this.detach = new InputDataString()
+
+		this.category = new InputDataCategory()
+		this.currentPlan = new InputDataCategory()
+		this.contractNumber = new InputDataCategory()
+	}
+}

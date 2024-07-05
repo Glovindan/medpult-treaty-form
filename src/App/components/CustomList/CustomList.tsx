@@ -29,22 +29,20 @@ type ListProps = {
 	isCreateMode?: boolean;
 	/** toggle Режим создания */
 	closeCreateMode?: () => any;
+	/** Открытая строка по-умолчанию */
+	defaultOpenRowId?: any
 }
 
 function CustomList(props: ListProps) {
-	const { columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout, getCreateLayout, isCreateMode, closeCreateMode } = props;
+	const { columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout, getCreateLayout, isCreateMode, closeCreateMode, defaultOpenRowId } = props;
 
 	const [page, setPage] = useState<number>(0);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [hasMore, setHasMore] = useState<boolean>(true);
 	const [sortData, setSortData] = useState<SortData>();
 	const [items, setItems] = useState<any[]>([]);
-	const [openRowIndex, setOpenRowIndex] = useState<number>();
+	const [openRowIndex, setOpenRowIndex] = useState<string>();
 	const bodyRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		console.log(searchData)
-	}, [searchData])
 
 	const reloadData = () => {
 		setIsLoading(false);
@@ -52,10 +50,6 @@ function CustomList(props: ListProps) {
 
 		loadData();
 	}
-
-	useEffect(() => {
-		console.log(items);
-	}, [items])
 
 	const loadData = async (items: any[] = [], page: number = 0, hasMore: boolean = true) => {
 		if (isLoading) return;
@@ -80,6 +74,15 @@ function CustomList(props: ListProps) {
 			loadData(items, page, hasMore)
 		}
 	}
+
+	React.useLayoutEffect(() => {
+		if (defaultOpenRowId != undefined) setOpenRowIndex(defaultOpenRowId);
+		console.log("defaultOpenRowId: ", defaultOpenRowId)
+	}, [])
+
+	useEffect(() => {
+		console.log("openRowIndex: ", openRowIndex)
+	}, [openRowIndex])
 
 	/** Установить обработчик нажатия на кнопку поиск */
 	useEffect(() => {
@@ -126,12 +129,12 @@ function CustomList(props: ListProps) {
 						if (data.id === undefined) return;
 						closeCreateMode && closeCreateMode();
 
-						if (data.id === openRowIndex) {
+						if (String(data.id) == openRowIndex) {
 							setOpenRowIndex(undefined)
 							return
 						}
 
-						setOpenRowIndex(data.id)
+						setOpenRowIndex(String(data.id))
 					}
 
 					return <CustomListRow
@@ -139,7 +142,7 @@ function CustomList(props: ListProps) {
 						data={data}
 						columnsSettings={columnsSettings}
 						getDetailsLayout={getDetailsLayout}
-						isShowDetails={getDetailsLayout && data.id === openRowIndex}
+						isShowDetails={getDetailsLayout && String(data.id) === openRowIndex}
 						setOpenRowIndex={toggleShowDetails}
 						reloadData={reloadData}
 					/>
