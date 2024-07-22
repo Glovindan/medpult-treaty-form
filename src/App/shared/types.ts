@@ -418,7 +418,7 @@ export class ProgramDetailsData {
 /** Детальные данные Застрахованного */
 export class InsuredDetailsData {
 	/** ФИО */
-	fullname: InputDataString
+	fullname: InputDataCategory
 	/** Категория */
 	category: InputDataCategory
 	/** Текущий план */
@@ -441,7 +441,7 @@ export class InsuredDetailsData {
 	detach: InputDataString
 
 	constructor() {
-		this.fullname = new InputDataString()
+		this.fullname = new InputDataCategory()
 		this.startDate = new InputDataString()
 		this.endDate = new InputDataString()
 		this.attach = new InputDataString()

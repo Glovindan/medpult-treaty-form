@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TabsWrapper from '../../TabsWrapper/TabsWrapper';
 import TabItem from '../../TabItem/TabItem';
 import PlanDetailsGeneralTab from '../PlanDetailsGeneralTab/PlanDetailsGeneralTab';
-import { DetailsProps, ListColumnData, PlanDetailsData, ProgramDetailsData, SortData, getDetailsLayoutAttributes } from '../../../shared/types';
+import { DetailsProps, InputDataCategory, InputDataString, ListColumnData, PlanDetailsData, ProgramDetailsData, SortData, getDetailsLayoutAttributes } from '../../../shared/types';
 import CustomList from '../../CustomList/CustomList';
 import CustomListRow from '../../CustomList/CustomListRow/CustomListRow';
 import Scripts from '../../../shared/utils/clientScripts';
@@ -12,8 +12,19 @@ import PlanDetailsLayout from '../PlanDetailsLayout/planDetailsLayout';
 import { useMapState } from '../../../shared/utils/utils';
 import ProgramDetails from '../ProgramDetails/ProgramDetails';
 
+interface PlanRowData {
+	'number': InputDataCategory,
+	'title': InputDataString,
+	'type': InputDataCategory,
+	'age': InputDataString,
+	'startDate': InputDataString,
+	'endDate': InputDataString,
+	'parentPlan': InputDataCategory,
+	'additionalAgreement': InputDataString
+}
+
 class PlanDetailsProps implements DetailsProps {
-	data: any;
+	data: PlanRowData;
 	values: PlanDetailsData;
 	setValue: (name: string, value: any) => void
 	setValues: (values: PlanDetailsData) => void
@@ -81,10 +92,33 @@ function PlanDetails(props: PlanDetailsProps) {
 		return <ProgramDetails reloadData={reloadData} columnsSettings={columns} data={rowData} values={programValues} setValue={setProgramValue} setValues={setProgramValues} onClickRowHandler={onClickRowHandler} />
 	}
 
+	/** Получение данных строки с данными формы */
+	const getRowData = () => {
+		if (isLoading) {
+			return data
+		}
+
+		// Формирование строки с возрастом
+		const age = `от ${values.startAge.value} ${values.startAgeMeasurement.value !== values.endAgeMeasurement.value ? values.startAgeMeasurement.value : ""} до ${values.endAge.value} ${values.endAgeMeasurement.value}`
+
+		const dataWithValues: PlanRowData = {
+			...data,
+			number: new InputDataCategory(values.planNumber.value),
+			title: values.name,
+			type: values.type,
+			age: new InputDataString(age),
+			startDate: values.startDate,
+			endDate: values.endDate,
+			parentPlan: new InputDataCategory(values.parentPlan.value)
+		}
+
+		return dataWithValues as any
+	}
+
 	return (
 		<>
 			<CustomListRow
-				data={data}
+				data={getRowData()}
 				columnsSettings={columnsSettings}
 				setOpenRowIndex={onClickRowHandler}
 				isClickable

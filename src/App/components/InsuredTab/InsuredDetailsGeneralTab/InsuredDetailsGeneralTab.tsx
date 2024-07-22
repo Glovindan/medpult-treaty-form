@@ -26,7 +26,7 @@ function InsuredDetailsGeneralTab({ isViewMode, values, setValue, saveStateHandl
 						<CustomInputAppItem isViewMode={isViewMode} saveStateHandler={saveStateHandler} href={Scripts.getSelectInsuredPageLinkResponsible()} name='fullname' inputHandler={setValue} values={values} />
 					</LabledField>
 					<LabledField label={"Номер договора"}>
-						<CustomInput isViewMode={true} name='contractNumber' inputHandler={setValue} values={values} />
+						<CustomInput isViewMode={true} disabled={!isViewMode} name='contractNumber' inputHandler={setValue} values={values} />
 					</LabledField>
 					<LabledField label={"Номер полиса"}>
 						<CustomInput isViewMode={isViewMode} name='policyNumber' inputHandler={setValue} values={values} />

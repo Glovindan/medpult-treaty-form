@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DetailsProps, InsuredDetailsData, ListColumnData, ProgramDetailsData, SortData } from '../../../shared/types';
+import { DetailsProps, IInputData, InputDataCategory, InputDataString, InsuredDetailsData, ListColumnData, ProgramDetailsData, SortData } from '../../../shared/types';
 import CustomList from '../../CustomList/CustomList';
 import CustomListRow from '../../CustomList/CustomListRow/CustomListRow';
 import Scripts from '../../../shared/utils/clientScripts';
@@ -10,8 +10,20 @@ import TabsWrapper from '../../TabsWrapper/TabsWrapper';
 import TabItem from '../../TabItem/TabItem';
 import { localStorageDraftKeyInsuredData, localStorageDraftKeyInsuredId } from '../../../shared/utils/constants';
 
+interface InsuredRowData {
+	'id': string,
+	'fullname': InputDataCategory
+	'birthDate': InputDataString,
+	'policyNumber': InputDataString,
+	'category': InputDataCategory,
+	'startDate': InputDataString,
+	'endDate': InputDataString,
+	'plan': InputDataString,
+	'additionalAgreement': InputDataString,
+}
+
 class InsuredDetailsProps implements DetailsProps {
-	data: any;
+	data: InsuredRowData;
 	values: InsuredDetailsData;
 	setValue: (name: string, value: any) => void
 	setValues: (values: InsuredDetailsData) => void
@@ -97,10 +109,29 @@ function InsuredDetails(props: InsuredDetailsProps) {
 			: <Button clickHandler={onClickSave} buttonType='outline' title='СОХРАНИТЬ' />
 	)
 
+	/** Получение данных строки с данными формы */
+	const getRowData = () => {
+		if (isLoading) {
+			return data
+		}
+
+		const dataWithValues: InsuredRowData = {
+			...data,
+			fullname: values.fullname,
+			policyNumber: values.policyNumber,
+			category: values.category,
+			startDate: values.startDate,
+			endDate: values.endDate,
+			plan: new InputDataString(values.currentPlan.value)
+		}
+
+		return dataWithValues as any
+	}
+
 	return (
 		<>
 			<CustomListRow
-				data={data}
+				data={getRowData()}
 				columnsSettings={columnsSettings}
 				setOpenRowIndex={onClickRowHandler}
 				isClickable
