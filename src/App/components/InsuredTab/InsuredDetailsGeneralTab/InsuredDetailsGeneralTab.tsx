@@ -6,6 +6,7 @@ import CustomInputDate from '../../CustomInputDate/CustomInputDate';
 import CustomSelect from '../../CustomSelect/CustomSelect';
 import Scripts from '../../../shared/utils/clientScripts';
 import CustomInputAppItem from '../../CustomInputAppItem/CustomInputAppItem';
+import CustomInputSearch from '../../CustomInputSearch/CustomInputSearch';
 
 interface PlanDetailsGeneralTabProps {
 	isViewMode: boolean
@@ -70,10 +71,12 @@ function InsuredDetailsGeneralTab({ isViewMode, values, setValue, saveStateHandl
 						<CustomSelect isViewMode={isViewMode} name='currentPlan' inputHandler={setValue} values={values} getDataHandler={Scripts.getParentPlans} />
 					</LabledField>
 					<LabledField label={"Прикреплен"}>
-						<CustomSelect isViewMode={isViewMode} name='attach' inputHandler={setValue} values={values} getDataHandler={Scripts.getParentPlans} />
+						<CustomInputSearch isViewMode={isViewMode} name='attach' inputHandler={setValue} values={values} getDataHandler={Scripts.getContractsByNumber} isLoadOnClick={true} />
+						{/* <CustomSelect isViewMode={isViewMode} name='attach' inputHandler={setValue} values={values} getDataHandler={Scripts.getParentPlans} /> */}
 					</LabledField>
 					<LabledField label={"Откреплен"}>
-						<CustomSelect isViewMode={isViewMode} name='detach' inputHandler={setValue} values={values} getDataHandler={Scripts.getParentPlans} />
+						<CustomInputSearch isViewMode={isViewMode} name='detach' inputHandler={setValue} values={values} getDataHandler={Scripts.getContractsByNumber} isLoadOnClick={true} />
+						{/* <CustomSelect isViewMode={isViewMode} name='detach' inputHandler={setValue} values={values} getDataHandler={Scripts.getParentPlans} /> */}
 					</LabledField>
 				</div>
 

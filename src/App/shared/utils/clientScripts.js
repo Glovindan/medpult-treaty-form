@@ -483,11 +483,15 @@ const getAddressSuggestion = async (value) => {
 	const addresses = [
 		{
 			'value': 'г Полный адрес, улица Полная, д12 кв34',
-			'isFull': true,
+			data: {
+				'isFull': true,
+			},
 		},
 		{
 			'value': 'г Неполный адрес',
-			'isFull': false,
+			data: {
+				'isFull': false,
+			},
 		},
 	]
 	await randomDelay()
@@ -955,6 +959,7 @@ async function getInsuredFulldata(id) {
 
 /** Сохранение Застрахованного */
 async function saveInsured(id, values) {
+	console.log(values)
 	await randomDelay()
 }
 
@@ -1022,6 +1027,23 @@ async function getRisksInsured(insuredId, sortData) {
 	}
 }
 
+/** Получение Договоров по Номеру */
+async function getContractsByNumber(query) {
+	console.log(query)
+
+	const value = {
+		value: 'TEST_TREATY',
+		data: {
+			code: 'TEST_TREATY',
+			isFull: true,
+		},
+	}
+	const data = [value]
+
+	await randomDelay()
+	return data
+}
+
 export default {
 	getProducts,
 	getChannels,
@@ -1059,4 +1081,6 @@ export default {
 	getSelectInsuredPageLinkResponsible,
 	getPolicyCategories,
 	getRisksInsured,
+
+	getContractsByNumber,
 }

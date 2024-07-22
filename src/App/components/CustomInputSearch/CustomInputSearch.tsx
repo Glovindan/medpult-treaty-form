@@ -6,10 +6,13 @@ import InputButton from '../InputButton/InputButton';
 import Loader from '../Loader/Loader';
 import icons from '../../shared/icons';
 import CustomSelectList from '../CustomSelectList/CustomSelectList';
+import { useDebounce } from '../../shared/utils/utils';
 
 interface CustomInputSearch extends CustomInputProps {
 	getDataHandler: (query?: any) => Promise<any>,
 	isViewMode: boolean
+	/** Загружать сразу при нажатии */
+	isLoadOnClick?: boolean
 }
 
 function CustomInputSearch(props: CustomInputSearch) {
@@ -20,10 +23,24 @@ function CustomInputSearch(props: CustomInputSearch) {
 	const [buffer, setBuffer] = useState<any>();
 	const rootRef = useRef<HTMLDivElement>(null);
 	const wrapperRef = useRef<HTMLDivElement>(null);
+	// Значение поискового запроса
+	const [query, setQuery] = useState<string>("");
+	// Значение поискового запроса с debounce
+	const deferredQuery = useDebounce(query, 500);
+
+	useEffect(() => {
+		loadData(query);
+	}, [deferredQuery])
 
 	const clickHandler = async () => {
 		// Записать в буфер и очистить в поле
 		setBuffer("")
+
+		console.log("test")
+		if (props.isLoadOnClick && !props.isViewMode) {
+			setIsOpen(true);
+			loadData(props.values[props.name]);
+		}
 	}
 
 	const loadData = async (query: string) => {
@@ -42,10 +59,10 @@ function CustomInputSearch(props: CustomInputSearch) {
 	const inputHandler = async (name: string, data: IInputData) => {
 		if (!props.inputHandler) return
 		props.inputHandler(props.name, data)
+
 		// Показать список
 		setIsOpen(true)
-
-		await loadData(data.value);
+		setQuery(data.value)
 	}
 
 	const handleOptionClick = async ({ value, data }: { value: string, data?: any }) => {
@@ -95,7 +112,7 @@ function CustomInputSearch(props: CustomInputSearch) {
 					{values.map(value =>
 						<CustomSelectRow
 							value={value.value}
-							data={{ isFull: value.isFull }}
+							data={value.data}
 							clickHandler={handleOptionClick}
 						/>
 					)}
