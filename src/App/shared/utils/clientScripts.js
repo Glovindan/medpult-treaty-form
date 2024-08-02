@@ -910,45 +910,54 @@ async function saveProgram(id, values) {
 async function getInsuredFulldata(id) {
 	const data = {
 		'fullname': {
-			'value': 'Иванов Иван Иванович',
-		},
-		'startDate': {
-			'value': '12.12.1212',
-		},
-		'endDate': {
-			'value': '12.12.1212',
-		},
-		'attach': {
-			'value': '001СБС00123456/2023ДМС',
-		},
-		'policyNumber': {
-			'value': '001СБС00123456/2021-02',
-		},
-		'policyStartDate': {
-			'value': '01.01.2024',
-		},
-		'policyEndDate': {
-			'value': '31.12.2024',
-		},
-		'detach': {
-			'value': '001СБС00123456/2023ДМС',
+			'value': 'Назаров Антон Алексеевич',
+			'data': {
+				'code': '018bfaff-cd9f-e066-2963-01a91bf75063',
+			},
 		},
 		'category': {
 			'value': 'Gold',
 			'data': {
-				'code': 'test',
-			},
-		},
-		'currentPlan': {
-			'value': 'ОНКО-ТКМ-МИР-Г-0-17',
-			'data': {
-				'code': 'test',
+				'code': '019082c4-decc-720b-a053-80787f6dc417',
 			},
 		},
 		'contractNumber': {
-			'value': '001СБС00123456/2023ДМС',
+			'value': 'dasfasfasf',
 			'data': {
-				'code': 'test',
+				'code': '',
+			},
+		},
+		'startDate': {
+			'value': '04.04.2024',
+		},
+		'endDate': {
+			'value': '04.04.2024',
+		},
+		'policyNumber': {
+			'value': 'dffdfsdfsdfsdfsd',
+		},
+		'policyStartDate': {
+			'value': '16.07.2024',
+		},
+		'policyEndDate': {
+			'value': '27.07.2024',
+		},
+		'currentPlan': {
+			'value': 'test',
+			'data': {
+				'code': '0190da00-8d99-7955-b9f4-9432ed0dc511',
+			},
+		},
+		'attach': {
+			'value': '',
+			'data': {
+				'code': 'SDAD',
+			},
+		},
+		'detach': {
+			'value': 'SDSD',
+			'data': {
+				'code': 'SDSD',
 			},
 		},
 	}
@@ -1044,6 +1053,85 @@ async function getContractsByNumber(query) {
 	return data
 }
 
+/** Получение Планов по Номеру */
+async function getPlansByNumber(query) {
+	console.log(query)
+
+	const value = {
+		value: 'TEST_TREATY',
+		data: {
+			code: 'TEST_TREATY',
+			isFull: true,
+		},
+	}
+	const data = [value]
+
+	await randomDelay()
+	return data
+}
+
+/** Получение ДС */
+const getAmendments = async (page) => {
+	const mockData = {
+		/** Идентификатор */
+		'id': '1',
+		/** Номер договора */
+		'contract': new InputDataCategory('001СБС00123456/2023ДМС', 'treaty_id'),
+		/** Доп. соглашение */
+		'amendment': new InputDataCategory('ДС002', 'amendment_id'),
+		/** Дата подписания */
+		'conclusionDate': new InputDataString('01.12.2023 12:00:00'),
+		/** Тип ДС */
+		'amendmentType': new InputDataCategory('Изменение условий', 'type_id'),
+		/** Дата начала */
+		'startDate': new InputDataString('01.12.2023 12:00:00'),
+		/** Дата окончания */
+		'endDate': new InputDataString('01.12.2023 12:00:00'),
+		/** Статус */
+		'status': new InputDataCategory('Действует', 'status_code'),
+	}
+
+	await randomDelay()
+	return {
+		data: Array(20)
+			.fill()
+			.map((data, index) => {
+				return { ...mockData, 'id': index }
+			}),
+		hasMore: false,
+	}
+}
+
+/** Получение полных данных плана по идентификатору */
+async function getAmendmentFulldata(id) {
+	const mockData = {
+		/** Идентификатор */
+		'id': '1',
+		/** Номер договора */
+		'contract': new InputDataCategory('001СБС00123456/2023ДМС', 'treaty_id'),
+		/** Доп. соглашение */
+		'amendment': new InputDataCategory('ДС002', 'amendment_id'),
+		/** Дата подписания */
+		'conclusionDate': new InputDataString('01.12.2023 12:00:00'),
+		/** Тип ДС */
+		'amendmentType': new InputDataCategory('Изменение условий', 'type_id'),
+		/** Дата начала */
+		'startDate': new InputDataString('01.12.2023 12:00:00'),
+		/** Дата окончания */
+		'endDate': new InputDataString('01.12.2023 12:00:00'),
+		/** Статус */
+		'status': new InputDataCategory('Действует', 'status_code'),
+	}
+
+	await randomDelay()
+	return mockData
+}
+
+/** Сохранение ДС */
+async function saveAmendment(id, values) {
+	await randomDelay()
+}
+
 export default {
 	getProducts,
 	getChannels,
@@ -1083,4 +1171,9 @@ export default {
 	getRisksInsured,
 
 	getContractsByNumber,
+	getPlansByNumber,
+
+	getAmendments,
+	getAmendmentFulldata,
+	saveAmendment,
 }

@@ -5,11 +5,10 @@ import Scripts from '../../shared/utils/clientScripts';
 import CustomList from '../CustomList/CustomList';
 import PlanDetails from './PlanDetails/PlanDetails';
 import { useMapState } from '../../shared/utils/utils';
-import PlanDetailsLayout from './PlanDetailsLayout/planDetailsLayout';
 import PlanCreate from '../PlanCreate/PlanCreate';
 
 /** Вкладка Общее */
-function PlansTab({ values, setActionHandlers, saveStateHandler }: TabProps) {
+function PlansTab({ setActionHandlers }: TabProps) {
 
 	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
 	useEffect(() => {

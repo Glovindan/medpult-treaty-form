@@ -53,7 +53,7 @@ function PlanDetailsGeneralTab({ isViewMode, values, setValue }: PlanDetailsGene
 						<CustomInput isViewMode={isViewMode} name='name' inputHandler={setValue} values={values} />
 					</LabledField>
 					<LabledField label={"Предыдущий план"}>
-						<CustomInput isViewMode={isViewMode} name='previousPlan' inputHandler={setValue} values={values} />
+						<CustomInputSearch isViewMode={isViewMode} name='previousPlan' inputHandler={setValue} values={values} getDataHandler={Scripts.getPlansByNumber} isLoadOnClick={true} />
 					</LabledField>
 					<LabledField label={"Возраст"}>
 						<div className="plan-age-input">
@@ -83,7 +83,7 @@ function PlanDetailsGeneralTab({ isViewMode, values, setValue }: PlanDetailsGene
 						<CustomSelect isViewMode={isViewMode} name='type' inputHandler={setValue} values={values} getDataHandler={Scripts.getPlanTypes} />
 					</LabledField>
 					<LabledField label={"Родительский план"}>
-						<CustomSelect isViewMode={isViewMode} name='parentPlan' inputHandler={setValue} values={values} getDataHandler={Scripts.getParentPlans} />
+						<CustomInputSearch isViewMode={isViewMode} name='parentPlan' inputHandler={setValue} values={values} getDataHandler={Scripts.getPlansByNumber} isLoadOnClick={true} />
 					</LabledField>
 					<LabledField label={"Основной регион"}>
 						<CustomInputSearch isViewMode={isViewMode} name='region' inputHandler={setValue} values={values} getDataHandler={Scripts.getAddressSuggestion} />

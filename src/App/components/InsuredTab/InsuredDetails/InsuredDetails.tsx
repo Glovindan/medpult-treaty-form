@@ -120,8 +120,8 @@ function InsuredDetails(props: InsuredDetailsProps) {
 			fullname: values.fullname,
 			policyNumber: values.policyNumber,
 			category: values.category,
-			startDate: values.startDate,
-			endDate: values.endDate,
+			startDate: values.policyStartDate,
+			endDate: values.policyEndDate,
 			plan: new InputDataString(values.currentPlan.value)
 		}
 

@@ -12,6 +12,7 @@ import SidesTab from '../../components/SidesTab/SidesTab'
 import InsuredTab from '../../components/InsuredTab/InsuredTab'
 import PlansTab from '../../components/PlansTab/PlansTab'
 import { useMapState } from '../../shared/utils/utils'
+import AmendmentTab from '../AmendmentTab/AmendmentTab';
 
 /** Форма договора */
 export default function TreatyForm() {
@@ -36,7 +37,7 @@ export default function TreatyForm() {
 	const [values, setValue, setValues] = useMapState<IFormData>(new TreatyFormData());
 	const [insuredValues, setInsuredValues] = useState<InsuredSearchData>(new InsuredSearchData());
 
-	// Установка значения поля поиска застрахованного
+	/** Установка значения поля поиска застрахованного */
 	const setValueSearch = (name: string, value: IInputData) => {
 		setInsuredValues({ ...insuredValues, [name]: value })
 	}
@@ -124,12 +125,12 @@ export default function TreatyForm() {
 							<InsuredTab handler={setValueSearch} values={insuredValues} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
 						<TabItem code={"insurancePlans"} name={"Планы страхования"}>
-							<PlansTab handler={setValueSearch} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
+							<PlansTab handler={() => { }} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
-						{/* <TabItem code={"agreementsAdditional"} name={"Доп соглашения"}>
-							TODO
+						<TabItem code={"agreementsAdditional"} name={"Доп соглашения"}>
+							<AmendmentTab handler={() => { }} values={values} isViewMode={isViewMode} saveStateHandler={saveState} setActionHandlers={setActionHandlers} />
 						</TabItem>
-						<TabItem code={"files"} name={"Вложения"}>
+						{/* <TabItem code={"files"} name={"Вложения"}>
 							TODO
 						</TabItem> */}
 					</TabsWrapper>

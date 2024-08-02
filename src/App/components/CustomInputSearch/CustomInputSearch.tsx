@@ -36,10 +36,9 @@ function CustomInputSearch(props: CustomInputSearch) {
 		// Записать в буфер и очистить в поле
 		setBuffer("")
 
-		console.log("test")
 		if (props.isLoadOnClick && !props.isViewMode) {
 			setIsOpen(true);
-			loadData(props.values[props.name]);
+			loadData(props.values[props.name].value);
 		}
 	}
 
@@ -57,12 +56,12 @@ function CustomInputSearch(props: CustomInputSearch) {
 	}
 
 	const inputHandler = async (name: string, data: IInputData) => {
-		if (!props.inputHandler) return
+		if (!props.inputHandler || props.isViewMode) return
 		props.inputHandler(props.name, data)
 
+		setQuery(data.value)
 		// Показать список
 		setIsOpen(true)
-		setQuery(data.value)
 	}
 
 	const handleOptionClick = async ({ value, data }: { value: string, data?: any }) => {
@@ -75,7 +74,8 @@ function CustomInputSearch(props: CustomInputSearch) {
 
 	/** Не закрывать список подсказок, если адрес неполный */
 	React.useLayoutEffect(() => {
-		if (props.values[props.name].data && !props.values[props.name].data.isFull) {
+		const isFull = props.values[props.name].data?.isFull
+		if (props.values[props.name].data && isFull === false) {
 			setIsOpen(true)
 			loadData(props.values[props.name].value)
 		}

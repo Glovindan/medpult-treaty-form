@@ -11,6 +11,7 @@ import Scripts from '../../shared/utils/clientScripts';
 import utils, { openContractorPage, redirectSPA, useMapState } from '../../shared/utils/utils';
 import InsuredDetails from './InsuredDetails/InsuredDetails';
 import { localStorageDraftKeyInsuredId } from '../../shared/utils/constants';
+import InsuredCreate from './InsuredCreate/InsuredCreate';
 
 interface InsuredTabProps extends Omit<TabProps, "values"> {
 	values: InsuredSearchData
@@ -25,10 +26,14 @@ function InsuredTab({ values, handler, setActionHandlers, saveStateHandler }: In
 		// Получение данных из черновика
 		const draftData = localStorage.getItem(localStorageDraftKeyInsuredId);
 		console.log(draftData)
-		if (!draftData) return undefined
+
+		if (draftData == "") {
+			setIsCreateMode(true)
+		}
 
 		localStorage.removeItem(localStorageDraftKeyInsuredId)
-		return draftData
+
+		return draftData ?? undefined
 	}
 
 	// Установка обработчиков нажатия на кнопки действий в заголовке вкладок
@@ -51,8 +56,9 @@ function InsuredTab({ values, handler, setActionHandlers, saveStateHandler }: In
 
 	/** Создание контрагента */
 	const onClickCreateContractor = () => {
-		saveStateHandler();
-		openContractorPage()
+		// saveStateHandler();
+		// openContractorPage()
+		setIsCreateMode(true);
 	}
 
 	/** Нажатие на контрагента */
@@ -81,6 +87,15 @@ function InsuredTab({ values, handler, setActionHandlers, saveStateHandler }: In
 		return <InsuredDetails saveStateHandler={saveStateHandler} reloadData={reloadData} columnsSettings={columns} data={rowData} values={insuredValues} setValue={setInsuredValue} setValues={setInsuredValues} onClickRowHandler={onClickRowHandler} />
 	}
 
+	const [isCreateMode, setIsCreateMode] = useState<boolean>(false);
+	const closeCreateMode = () => {
+		setIsCreateMode(false);
+	}
+	/** Получение формы детальной информации по строке списка Застрахованных */
+	const getCreateInsuredLayout = ({ reloadData, onClickRowHandler }: getDetailsLayoutAttributes) => {
+		return <InsuredCreate saveStateHandler={saveStateHandler} reloadData={reloadData} columnsSettings={columns} data={null} values={insuredValues} setValue={setInsuredValue} setValues={setInsuredValues} onClickRowHandler={closeCreateMode} />
+	}
+
 	return (
 		<div className="insured-tab">
 			<div className="insured-tab__search">
@@ -95,7 +110,7 @@ function InsuredTab({ values, handler, setActionHandlers, saveStateHandler }: In
 				<Button clickHandler={onClickSearch} title={buttonTitle} style={{ height: "100%" }} />
 			</div>
 			<div className="insured-tab-list">
-				<CustomList defaultOpenRowId={() => getDefaultRowIdFromDraft()} columnsSettings={columns} searchData={values} setSearchHandler={setOnClickSearch} getDetailsLayout={getInsuredDetailsLayout} getDataHandler={Scripts.getContractors} />
+				<CustomList defaultOpenRowId={() => getDefaultRowIdFromDraft()} getCreateLayout={getCreateInsuredLayout} closeCreateMode={closeCreateMode} isCreateMode={isCreateMode} columnsSettings={columns} searchData={values} setSearchHandler={setOnClickSearch} getDetailsLayout={getInsuredDetailsLayout} getDataHandler={Scripts.getContractors} />
 			</div>
 		</div>
 	)

@@ -353,7 +353,7 @@ export class PlanDetailsData {
 	/** Наименование */
 	name: InputDataString
 	/** Предыдущий план */
-	previousPlan: InputDataString
+	previousPlan: InputDataCategory
 	/** Коэффициент на родственника */
 	relativeFactor: InputDataString
 	/** Страховая сумма по плану на 1 ЗХ, год */
@@ -361,7 +361,7 @@ export class PlanDetailsData {
 	/** Тип плана */
 	type: InputDataCategory
 	/** Родительский план */
-	parentPlan: InputDataString
+	parentPlan: InputDataCategory
 	/** Основной регион */
 	region: InputDataString
 	/** Медицинский коэффициент */
@@ -379,11 +379,11 @@ export class PlanDetailsData {
 		this.endAgeMeasurement = new InputDataString()
 		this.insurancePremium = new InputDataString()
 		this.name = new InputDataString()
-		this.previousPlan = new InputDataString()
+		this.previousPlan = new InputDataCategory()
 		this.relativeFactor = new InputDataString()
 		this.insuranceAmount = new InputDataString()
 		this.type = new InputDataCategory()
-		this.parentPlan = new InputDataString()
+		this.parentPlan = new InputDataCategory()
 		this.region = new InputDataString()
 		this.medicalFactor = new InputDataString()
 	}
@@ -430,7 +430,7 @@ export class InsuredDetailsData {
 	/** Дата открепления */
 	endDate: InputDataString
 	/** Прикреплен */
-	attach: InputDataString
+	attach: InputDataCategory
 	/** Номер полиса */
 	policyNumber: InputDataString
 	/** Дата начала действия полиса */
@@ -438,20 +438,41 @@ export class InsuredDetailsData {
 	/** Дата окончания действия полиса */
 	policyEndDate: InputDataString
 	/** Откреплен */
-	detach: InputDataString
+	detach: InputDataCategory
 
 	constructor() {
 		this.fullname = new InputDataCategory()
 		this.startDate = new InputDataString()
 		this.endDate = new InputDataString()
-		this.attach = new InputDataString()
+		this.attach = new InputDataCategory()
 		this.policyNumber = new InputDataString()
 		this.policyStartDate = new InputDataString()
 		this.policyEndDate = new InputDataString()
-		this.detach = new InputDataString()
+		this.detach = new InputDataCategory()
 
 		this.category = new InputDataCategory()
 		this.currentPlan = new InputDataCategory()
 		this.contractNumber = new InputDataCategory()
+	}
+}
+
+/** Детальные данные ДС */
+export class AmendmentDetailsData {
+	contract: InputDataCategory
+	amendment: InputDataCategory
+	conclusionDate: InputDataString
+	amendmentType: InputDataCategory
+	startDate: InputDataString
+	endDate: InputDataString
+	status: InputDataCategory
+
+	constructor() {
+		this.contract = new InputDataCategory()
+		this.amendment = new InputDataCategory()
+		this.conclusionDate = new InputDataString()
+		this.amendmentType = new InputDataCategory()
+		this.startDate = new InputDataString()
+		this.endDate = new InputDataString()
+		this.status = new InputDataCategory()
 	}
 }

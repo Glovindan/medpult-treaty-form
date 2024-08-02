@@ -13,6 +13,7 @@ import { useMapState } from '../../../shared/utils/utils';
 import ProgramDetails from '../ProgramDetails/ProgramDetails';
 
 interface PlanRowData {
+	'id': string,
 	'number': InputDataCategory,
 	'title': InputDataString,
 	'type': InputDataCategory,
@@ -48,10 +49,6 @@ function PlanDetails(props: PlanDetailsProps) {
 			setValues(fullData as any)
 		})
 	}, [])
-
-	React.useLayoutEffect(() => {
-
-	}, [values])
 
 	/** Колонки списка программ */
 	const columns = [
