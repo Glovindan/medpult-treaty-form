@@ -76,6 +76,7 @@ function CustomInput(props: CustomInputProps) {
 		>
 			<input
 				name={name}
+				autoComplete="off"
 				className='custom-input__input'
 				style={{
 					cursor: cursor

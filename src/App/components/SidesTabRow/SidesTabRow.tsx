@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { IFormData, IInputData, InputDataCategory, SideData } from '../../shared/types'
+import { IFormData, IInputData, InputDataCategory, InputDataString, SideData } from '../../shared/types'
 import CustomSelectList from '../CustomSelect/CustomSelect'
 import Scripts from '../../shared/utils/clientScripts'
 import CustomInputAppItem from '../CustomInputAppItem/CustomInputAppItem'
 import icons from '../../shared/icons'
 import InputButton from '../InputButton/InputButton'
 import { openContractorPage } from '../../shared/utils/utils'
+import CustomInput from '../CustomInput/CustomInput'
 
 type SidesTabRowProps = {
 	index: number
 	type: InputDataCategory
-	contractor: InputDataCategory
+	contractor: InputDataString
 	isEdit?: boolean
 	values: IFormData
 	handler: (name: string, value: any) => void
@@ -64,6 +65,13 @@ function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveSta
 		handler("sides", sides)
 	}
 
+	const inputHandler = (name: string, data: IInputData) => {
+		const sides = values.sides;
+		sides[index].actualData.contractor = new InputDataString(data.value);
+
+		handler("sides", sides)
+	}
+
 	const getTypeValueHandler = () => {
 		const sides = values.sides;
 		console.log(sides)
@@ -77,7 +85,7 @@ function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveSta
 
 	const removeContractorValueHandler = () => {
 		const sides = values.sides;
-		sides[index].actualData.contractor = new InputDataCategory();
+		sides[index].actualData.contractor = new InputDataString();
 
 		handler("sides", sides)
 	}
@@ -91,7 +99,7 @@ function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveSta
 		const sides = values.sides;
 
 		const isTypeInvalid = !sides[index].actualData.type.data.code;
-		const isContractorInvalid = !sides[index].actualData.contractor.data.code;
+		const isContractorInvalid = !sides[index].actualData.contractor.value;
 
 		if (isTypeInvalid || isContractorInvalid) {
 			setIsTypeInvalid(isTypeInvalid)
@@ -108,7 +116,7 @@ function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveSta
 		const sides = values.sides;
 
 
-		if (!sides[index].originalData.contractor.data.code && !sides[index].originalData.type.data.code) {
+		if (!sides[index].originalData.contractor.value && !sides[index].originalData.type.data.code) {
 			deleteRow();
 			return;
 		}
@@ -127,24 +135,25 @@ function SidesTabRow({ index, type, contractor, isEdit, values, handler, saveSta
 	)
 
 	/** Нажатие на контрагента */
-	const onClickContractor = () => {
-		saveStateHandler();
-		const contractorId = values.sides[index].actualData.contractor.data.code;
-		if (contractorId)
-			openContractorPage(contractorId)
-	}
+	// const onClickContractor = () => {
+	// 	saveStateHandler();
+	// 	const contractorId = values.sides[index].actualData.contractor.data.code;
+	// 	if (contractorId)
+	// 		openContractorPage(contractorId)
+	// }
 
 	/** Разметка режима редактирования */
 	const editLayout = ([
 		<CustomSelectList isInvalid={isTypeInvalid} getValueHandler={getTypeValueHandler} getDataHandler={Scripts.getResponsibleTypes} name={String(index)} values={values} inputHandler={selectHandler} />,
-		<CustomInputAppItem clickHandler={onClickContractor} isInvalid={isContractorInvalid} href={Scripts.getSelectContractorPageLinkResponsible(index)} removeValueHandler={removeContractorValueHandler} getValueHandler={getContractorValueHandler} name={String(index)} values={values} inputHandler={selectHandler} saveStateHandler={saveStateHandler} />,
+		// <CustomInputAppItem clickHandler={onClickContractor} isInvalid={isContractorInvalid} href={Scripts.getSelectContractorPageLinkResponsible(index)} removeValueHandler={removeContractorValueHandler} getValueHandler={getContractorValueHandler} name={String(index)} values={values} inputHandler={selectHandler} saveStateHandler={saveStateHandler} />,
+		<CustomInput isInvalid={isContractorInvalid} getValueHandler={getContractorValueHandler} name={String(index)} values={values} inputHandler={inputHandler} />,
 		buttons
 	])
 
 	/** Разметка режима просмотра */
 	const viewLayout = ([
 		<div className="sides-tab-row__type">{type.value}</div>,
-		<div className="sides-tab-row__contractor" onClick={onClickContractor}>{contractor.value}</div>
+		<div className="sides-tab-row__contractor" /* onClick={onClickContractor} */>{contractor.value}</div>
 	])
 
 	return (

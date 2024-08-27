@@ -70,10 +70,14 @@ function InsuredDetails(props: InsuredDetailsProps) {
 		// Сброс черновика
 		localStorage.removeItem(localStorageDraftKeyInsuredData)
 		const draftDataParsed: InsuredDetailsData = JSON.parse(draftData);
+		// Получить полные данные по draftDataParsed.fullname.data.code 
+		Scripts.getInsuredFulldata(draftDataParsed.fullname.data.code).then(fullData => {
+			setIsLoading(false)
+			setIsViewMode(false)
 
-		setIsLoading(false)
-		setIsViewMode(false)
-		setValues(draftDataParsed as any)
+			// Присвоить полные данные в состояние
+			setValues(fullData as any)
+		})
 	}, [])
 
 	/** Колонки списка ВМП */

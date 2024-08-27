@@ -84,7 +84,7 @@ function SidesTab(props: TabProps) {
 			side.isEdit = false;
 		}
 
-		handler("sides", sides.filter(side => !!side.actualData.contractor.data.code || !!side.actualData.type.data.code))
+		handler("sides", sides.filter(side => !!side.actualData.contractor.value || !!side.actualData.type.data.code))
 	}, [isViewMode])
 
 	return (

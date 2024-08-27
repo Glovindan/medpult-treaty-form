@@ -7,13 +7,21 @@ import GeneralTab from '../../components/GeneralTab/GeneralTab'
 import Button from '../../components/Button/Button'
 import { IFormData, IInputData, InsuredSearchData, TreatyFormData } from '../../shared/types'
 import Scripts from '../../shared/utils/clientScripts'
-import { localStorageDraftKey, localStorageIdKey } from '../../shared/utils/constants'
+import { localStorageDraftKey, localStorageDraftKeyInsuredId, localStorageIdKey, localStorageInsuredIdKey } from '../../shared/utils/constants'
 import SidesTab from '../../components/SidesTab/SidesTab'
 import InsuredTab from '../../components/InsuredTab/InsuredTab'
 import PlansTab from '../../components/PlansTab/PlansTab'
 import { useMapState } from '../../shared/utils/utils'
 import AmendmentTab from '../AmendmentTab/AmendmentTab';
 
+enum TabCodes {
+	general = "general",
+	sides = "sides",
+	insured = "insured",
+	insurancePlans = "insurancePlans",
+	agreementsAdditional = "agreementsAdditional",
+	files = "files"
+}
 /** Форма договора */
 export default function TreatyForm() {
 
@@ -55,6 +63,12 @@ export default function TreatyForm() {
 			setActiveTabCode(data.activeTabCode);
 
 			return;
+		}
+
+		// Получение данных из черновика
+		const insuredId = localStorage.getItem(localStorageDraftKeyInsuredId)
+		if (insuredId) {
+			setActiveTabCode(TabCodes.insured);
 		}
 
 		// Получение данных из Системы

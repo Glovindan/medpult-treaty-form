@@ -156,13 +156,13 @@ export class SideDataExtended {
 /** Сторона */
 export class SideData {
 	type: InputDataCategory
-	contractor: InputDataCategory
+	contractor: InputDataString
 	// isEdit: boolean
 
 	constructor(/* isEdit?: boolean */) {
 		// this.isEdit = !!isEdit
 		this.type = new InputDataCategory()
-		this.contractor = new InputDataCategory()
+		this.contractor = new InputDataString()
 	}
 }
 
@@ -219,7 +219,7 @@ export class TreatyFormData implements IFormData {
 
 		this.number = new InputDataString()
 		this.policyHolder = new InputDataString()
-		this.region = new InputDataString()
+		this.region = new InputDataCategory()
 		this.conclusionDate = new InputDataString()
 		this.startDate = new InputDataString()
 		this.endDate = new InputDataString()
@@ -363,7 +363,7 @@ export class PlanDetailsData {
 	/** Родительский план */
 	parentPlan: InputDataCategory
 	/** Основной регион */
-	region: InputDataString
+	region: InputDataCategory
 	/** Медицинский коэффициент */
 	medicalFactor: InputDataString
 
@@ -384,7 +384,7 @@ export class PlanDetailsData {
 		this.insuranceAmount = new InputDataString()
 		this.type = new InputDataCategory()
 		this.parentPlan = new InputDataCategory()
-		this.region = new InputDataString()
+		this.region = new InputDataCategory()
 		this.medicalFactor = new InputDataString()
 	}
 }

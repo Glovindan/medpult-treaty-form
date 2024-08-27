@@ -60,8 +60,9 @@ function InsuredCreate(props: InsuredDetailsProps) {
 		// Получение данных из черновика
 		const draftData = localStorage.getItem(localStorageDraftKeyInsuredData);
 
-		// Если нет данных из черновика - загрузить свежие
+		// Если нет данных из черновика - пропуск парсинга
 		if (!draftData) {
+			setIsLoading(false)
 			return;
 		}
 
@@ -69,7 +70,13 @@ function InsuredCreate(props: InsuredDetailsProps) {
 		localStorage.removeItem(localStorageDraftKeyInsuredData)
 		const draftDataParsed: InsuredDetailsData = JSON.parse(draftData);
 
-		setValues(draftDataParsed as any)
+		// Получить полные данные по draftDataParsed.fullname.data.code 
+		Scripts.getInsuredFulldata(draftDataParsed.fullname.data.code).then(fullData => {
+			setIsLoading(false)
+
+			// Присвоить полные данные в состояние
+			setValues(fullData as any)
+		})
 	}, [])
 
 	/** Нажатие на кнопку сохранить */
@@ -81,15 +88,21 @@ function InsuredCreate(props: InsuredDetailsProps) {
 
 	return (
 		<>
-			<div className="insured-details">
-				<div className="insured-details__tabs">
-					<InsuredDetailsGeneralTab {...props} saveStateHandler={saveStateWithInsuredData} isViewMode={false} />
-				</div>
-				<div className="insured-details__actions">
-					<Button clickHandler={onClickSave} buttonType='outline' title='СОХРАНИТЬ' />
-					<Button clickHandler={onClickRowHandler} title='ЗАКРЫТЬ' />
-				</div>
-			</div>
+			{
+				isLoading
+					? (<div className="insured-details">
+						< Loader />
+					</div>)
+					: (<div className="insured-details">
+						<div className="insured-details__tabs">
+							<InsuredDetailsGeneralTab {...props} saveStateHandler={saveStateWithInsuredData} isViewMode={false} />
+						</div>
+						<div className="insured-details__actions">
+							<Button clickHandler={onClickSave} buttonType='outline' title='СОХРАНИТЬ' />
+							<Button clickHandler={onClickRowHandler} title='ЗАКРЫТЬ' />
+						</div>
+					</div>)
+			}
 		</>
 	)
 }

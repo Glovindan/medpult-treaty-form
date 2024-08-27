@@ -86,7 +86,7 @@ function PlanDetailsGeneralTab({ isViewMode, values, setValue }: PlanDetailsGene
 						<CustomInputSearch isViewMode={isViewMode} name='parentPlan' inputHandler={setValue} values={values} getDataHandler={Scripts.getPlansByNumber} isLoadOnClick={true} />
 					</LabledField>
 					<LabledField label={"Основной регион"}>
-						<CustomInputSearch isViewMode={isViewMode} name='region' inputHandler={setValue} values={values} getDataHandler={Scripts.getAddressSuggestion} />
+						<CustomInputSearch isLoadOnClick={true} isViewMode={isViewMode} name='region' inputHandler={setValue} values={values} getDataHandler={Scripts.getAddressSuggestion} />
 					</LabledField>
 					<LabledField label={"Медицинский коэффициент"}>
 						<CustomInput isViewMode={isViewMode} name='medicalFactor' inputHandler={setValue} values={values} maskFunction={masks.applyNumbersMask} />

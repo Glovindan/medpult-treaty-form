@@ -200,9 +200,6 @@ async function getTreaty() {
 					},
 					'contractor': {
 						'value': 'Иванов Иван Иванович',
-						'data': {
-							'code': '123456',
-						},
 					},
 				},
 				'actualData': {
@@ -214,9 +211,6 @@ async function getTreaty() {
 					},
 					'contractor': {
 						'value': 'Иванов Иван Иванович',
-						'data': {
-							'code': '123456',
-						},
 					},
 				},
 			},

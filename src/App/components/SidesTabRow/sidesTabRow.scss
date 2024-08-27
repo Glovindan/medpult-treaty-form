@@ -33,18 +33,19 @@
 	&__contractor {
 		font-family: 'Inter';
 		font-style: normal;
-		font-weight: 600;
+		font-weight: 400;
+		// font-weight: 600;
 		font-size: 14px;
 		line-height: 130%;
 		display: flex;
 		align-items: center;
 		letter-spacing: 0.0025em;
-		color: #4588e5;
+		// color: #4588e5;
 		width: fit-content;
 
-		&:hover {
-			border-bottom: 2px solid #4588e5;
-			margin-top: 2px;
-		}
+		// &:hover {
+		// 	border-bottom: 2px solid #4588e5;
+		// 	margin-top: 2px;
+		// }
 	}
 }

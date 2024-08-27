@@ -66,7 +66,7 @@ function GeneralTab(props: TabProps) {
 					<CustomSelect isViewMode={isViewMode} getDataHandler={Scripts.getChannels} name='channel' inputHandler={handler} values={values} />
 				</LabledField>
 				<LabledField label={"Регион заключения"}>
-					<CustomInputSearch isViewMode={isViewMode} name='region' inputHandler={handler} values={values} getDataHandler={Scripts.getAddressSuggestion} />
+					<CustomInputSearch isLoadOnClick={true} isViewMode={isViewMode} name='region' inputHandler={handler} values={values} getDataHandler={Scripts.getAddressSuggestion} />
 				</LabledField>
 				<LabledField label={"Валюта договора"}>
 					<CustomSelect isViewMode={isViewMode} getDataHandler={Scripts.getCurrencies} name='currency' inputHandler={handler} values={values} />
