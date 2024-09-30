@@ -656,12 +656,39 @@ async function getPlanFulldata(id) {
 		'endDate': {
 			'value': '31.12.2024',
 		},
-		'insuranceType': {
-			'value': '',
-			'data': {
-				'code': '',
+		// 'insuranceType': {
+		// 	'value': '',
+		// 	'data': {
+		// 		'code': '',
+		// 	},
+		// },
+		'insuranceType': [
+			{
+				'value': 'Взрослые',
+				'data': {
+					'code': 'adult',
+				},
 			},
-		},
+			{
+				'value': 'Взрослые2',
+				'data': {
+					'code': 'adult2',
+				},
+			},
+			{
+				'value': 'Взрослые4',
+				'data': {
+					'code': 'adult4',
+				},
+			},
+			// {
+			// 	'value':
+			// 		'Взрослыефпфтпофыпфпполфполфрпфыпфлрдыпдлрфдлфдлрыпдрлфдрлпыafasfaskfhashgilahghasgasghakgsagksgkjakhgsahkagkjaskg',
+			// 	'data': {
+			// 		'code': 'long',
+			// 	},
+			// },
+		],
 		'ageFactor': {
 			'value': '',
 		},
@@ -716,8 +743,19 @@ async function getPlanFulldata(id) {
 }
 
 /** Получение типов ЗХ */
-async function getInsuranceTypes() {
-	const data = [new InputDataString('Дети, Взрослые')]
+async function getInsuranceTypes(query) {
+	const data = [
+		new InputDataCategory('Дети', 'child'),
+		new InputDataCategory('Взрослые', 'adult'),
+		new InputDataCategory('Взрослые1', 'adult1'),
+		new InputDataCategory('Взрослые2', 'adult2'),
+		new InputDataCategory('Взрослые3', 'adult3'),
+		new InputDataCategory('Взрослые4', 'adult4'),
+		new InputDataCategory(
+			'Взрослыефпфтпофыпфпполфполфрпфыпфлрдыпдлрфдлфдлрыпдрлфдрлпыafasfaskfhashgilahghasgasghakgsagksgkjakhgsahkagkjaskg',
+			'long'
+		),
+	]
 
 	await randomDelay()
 	return data

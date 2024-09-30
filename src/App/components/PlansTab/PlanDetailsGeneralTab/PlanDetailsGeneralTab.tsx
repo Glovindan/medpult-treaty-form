@@ -7,6 +7,7 @@ import CustomSelect from '../../CustomSelect/CustomSelect';
 import masks from '../../../shared/utils/masks';
 import Scripts from '../../../shared/utils/clientScripts';
 import CustomInputSearch from '../../CustomInputSearch/CustomInputSearch';
+import CustomInputSearchMultiple from '../../CustomInputSearchMultiple/CustomInputSearchMultiple';
 
 interface PlanDetailsGeneralTabProps {
 	isViewMode: boolean
@@ -38,7 +39,8 @@ function PlanDetailsGeneralTab({ isViewMode, values, setValue }: PlanDetailsGene
 						</div>
 					</div>
 					<LabledField label={"Тип ЗХ"}>
-						<CustomSelect isViewMode={isViewMode} name='insuranceType' inputHandler={setValue} values={values} getDataHandler={Scripts.getInsuranceTypes} />
+						{/* <CustomSelect isViewMode={isViewMode} name='insuranceType' inputHandler={setValue} values={values} getDataHandler={Scripts.getInsuranceTypes} /> */}
+						<CustomInputSearchMultiple isLoadOnClick={true} isViewMode={isViewMode} name='insuranceType' inputHandler={setValue} values={values} getDataHandler={Scripts.getInsuranceTypes} />
 					</LabledField>
 					<LabledField label={"Возрастной коэффициент"}>
 						<CustomInput isViewMode={isViewMode} name='ageFactor' inputHandler={setValue} values={values} maskFunction={masks.applyNumbersMask} />

@@ -1,0 +1,17 @@
+@import url('./SearchElement/searchElement.scss');
+.custom-input-search-multiple {
+	min-height: 40px;
+	&__variants {
+		display: flex;
+		flex-direction: row;
+		gap: 12px;
+		max-height: 150px;
+		max-width: 100%;
+		flex-wrap: wrap;
+		overflow-y: auto;
+	}
+
+	&__select {
+		margin-bottom: 9px;
+	}
+}

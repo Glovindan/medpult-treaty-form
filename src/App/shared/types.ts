@@ -125,7 +125,7 @@ export interface CustomInputProps extends React.ComponentProps<'input'> {
 	values: { [key: string]: any }
 	name: string
 	buttons?: any
-	inputHandler?: (name: string, value: IInputData) => void
+	inputHandler?: (name: string, value: any) => void
 	clickHandler?: (ev) => void
 	cursor?: string
 	isOpen?: boolean
@@ -334,7 +334,8 @@ export class PlanDetailsData {
 	/** Дата окончания */
 	endDate: InputDataString
 	/** Тип ЗХ */
-	insuranceType: InputDataCategory
+	// insuranceType: InputDataCategory
+	insuranceType: InputDataCategory[]
 
 	/** Возрастной коэффициент */
 	ageFactor: InputDataString
@@ -371,7 +372,8 @@ export class PlanDetailsData {
 		this.planNumber = new InputDataString()
 		this.startDate = new InputDataString()
 		this.endDate = new InputDataString()
-		this.insuranceType = new InputDataCategory()
+		// this.insuranceType = new InputDataCategory()
+		this.insuranceType = []
 		this.ageFactor = new InputDataString()
 		this.startAge = new InputDataString()
 		this.startAgeMeasurement = new InputDataString()

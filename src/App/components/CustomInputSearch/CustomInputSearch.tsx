@@ -91,6 +91,7 @@ function CustomInputSearch(props: CustomInputSearch) {
 	return (
 		<div className="custom-select" ref={rootRef}>
 			<CustomInput
+				{...props}
 				values={props.values}
 				name={props.name}
 				clickHandler={clickHandler}
