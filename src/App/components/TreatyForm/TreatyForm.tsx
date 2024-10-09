@@ -124,6 +124,11 @@ export default function TreatyForm() {
 			? `Договор ${values.number.value} от ${values.conclusionDate.value}`
 			: "Новый договор"
 
+	/** Закрытие задачи */
+	const handleCloseTreaty = () => {
+		history.back();
+	}
+
 	return (
 		<>
 			<div style={{ background: "#F2F4F6", padding: "10px", minHeight: "100%" }}>
@@ -150,7 +155,7 @@ export default function TreatyForm() {
 					</TabsWrapper>
 					<div style={{ padding: "0 18px 18px 18px", textAlign: "right", display: "flex", gap: "18px", flexDirection: "row", justifyContent: "flex-end" }}>
 						{formActionButton}
-						<Button clickHandler={() => { }} title='ЗАКРЫТЬ' />
+						<Button clickHandler={handleCloseTreaty} title='ЗАКРЫТЬ' />
 					</div>
 				</Panel>
 			</div>
