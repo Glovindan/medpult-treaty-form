@@ -7,7 +7,7 @@ import GeneralTab from '../../components/GeneralTab/GeneralTab'
 import Button from '../../components/Button/Button'
 import { IFormData, IInputData, InsuredSearchData, TreatyFormData } from '../../shared/types'
 import Scripts from '../../shared/utils/clientScripts'
-import { localStorageDraftKey, localStorageDraftKeyInsuredId, localStorageIdKey, localStorageInsuredIdKey } from '../../shared/utils/constants'
+import { localStorageDraftKey, localStorageDraftKeyInsuredId, localStorageIdKey } from '../../shared/utils/constants'
 import SidesTab from '../../components/SidesTab/SidesTab'
 import InsuredTab from '../../components/InsuredTab/InsuredTab'
 import PlansTab from '../../components/PlansTab/PlansTab'
@@ -121,7 +121,7 @@ export default function TreatyForm() {
 	/** Заголовок панели */
 	const panelLabel =
 		values.number.value
-			? `Договор ${values.number.value} от ${values.conclusionDate.value}`
+			? `Договор ${values.number.value} от ${values.conclusionDate.value} (${values.status.value})`
 			: "Новый договор"
 
 	/** Закрытие задачи */
