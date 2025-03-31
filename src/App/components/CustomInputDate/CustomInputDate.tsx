@@ -5,6 +5,7 @@ import CustomInput from '../CustomInput/CustomInput';
 import InputButton from '../InputButton/InputButton';
 import Masks from '../../shared/utils/masks';
 import icons from '../../shared/icons';
+import moment from 'moment';
 
 function CustomInputDate(props) {
 	const { type = "date", inputHandler, name } = props;
@@ -47,9 +48,25 @@ function CustomInputDate(props) {
 					break;
 				}
 		}
-
 		inputHandler(name, { value: value })
 	}
+
+	// Изменение значения пикера
+	useEffect(() => {
+		
+		const picker = pickerRef.current;
+		if (!picker) return;
+
+		console.log(moment(props.values[name].value, 'DD.MM.YYYY').format())
+		// Если дата валидна - изменить значение пикера
+		if(props.values[name].value.match(/\d\d\.\d\d\.\d\d\d\d/gm)) {
+			picker.value = moment(props.values[name].value, 'DD.MM.YYYY').format("YYYY-MM-DD")
+			return;
+		}
+
+		// Сброс значения пикера
+		picker.value = '';
+	}, [props.values[name]])
 
 	return (
 		<div className='custom-input-date'>
