@@ -729,26 +729,12 @@ async function getPlanFulldata(id) {
 		},
 		'region': {
 			value: ['Московская область', 'Ленинградская область'],
-			data: { isFull: true },
 		},
 		'medicalFactor': {
 			'value': '',
 		},
 		'regionExt': {
-			value: [
-				'Московская область',
-				'Ленинградская область',
-				'Московская область',
-				'Ленинградская область',
-				'Московская область',
-				'Ленинградская область',
-				'Московская область',
-				'Ленинградская область',
-				'Московская область',
-				'Ленинградская область',
-				'Московская область',
-			],
-			data: { isFull: true },
+			value: ['Московская область', 'Ленинградская область', 'Московская область'],
 		},
 	}
 
@@ -1177,6 +1163,9 @@ async function getAmendmentFulldata(id) {
 async function saveAmendment(id, values) {
 	await randomDelay()
 }
+async function OnInit() {
+	await randomDelay()
+}
 
 export default {
 	getProducts,
@@ -1222,4 +1211,5 @@ export default {
 	getAmendments,
 	getAmendmentFulldata,
 	saveAmendment,
+	OnInit,
 }

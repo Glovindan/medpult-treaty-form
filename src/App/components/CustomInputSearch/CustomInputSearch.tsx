@@ -125,8 +125,8 @@ function CustomInputSearch(props: CustomInputSearch) {
 				editModeButtons={[<InputButton svg={buttonSvg} clickHandler={clickHandler} />]}
 				viewModeButtons={
 					(props.name === 'region' || props.name === 'regionExt') &&
-					Array.isArray(props.values[props.name]?.value) &&
-					props.values[props.name].value.length > 0
+					props.values[props.name]?.value &&
+					props.values[props.name]?.value.length > 0
 						? [<InputButton svg={icons.InfoRegion} clickHandler={handleInfoButtonClick} />]
 						: undefined
 				}
@@ -138,7 +138,7 @@ function CustomInputSearch(props: CustomInputSearch) {
 					<InfoModal
 						title={props.name === 'region' ? ' Регион включения' : 'Регион исключения'}
 						closeModal={closeModal}
-						values={props.values[props.name].value}
+						values={props.values[props.name].value?.split(',').map((v) => v.trim())}
 					></InfoModal>
 				</ModalWrapper>
 			)}
