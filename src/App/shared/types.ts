@@ -137,6 +137,8 @@ export interface CustomInputProps extends React.ComponentProps<'input'> {
 	getValueHandler?: (props: CustomInputProps) => string
 	isInvalid?: boolean
 	customClassname?: string
+	editModeButtons?: React.ReactNode[]
+	viewModeButtons?: React.ReactNode[]
 }
 
 /** Сторона (С сохранением изначального состояния данных) */
@@ -363,10 +365,12 @@ export class PlanDetailsData {
 	type: InputDataCategory
 	/** Родительский план */
 	parentPlan: InputDataCategory
-	/** Основной регион */
+	/** Регион включения */
 	region: InputDataCategory
 	/** Медицинский коэффициент */
 	medicalFactor: InputDataString
+	/** Регион исключения */
+	regionExt: InputDataCategory
 
 	constructor() {
 		this.planNumber = new InputDataString()
@@ -388,6 +392,7 @@ export class PlanDetailsData {
 		this.parentPlan = new InputDataCategory()
 		this.region = new InputDataCategory()
 		this.medicalFactor = new InputDataString()
+		this.regionExt = new InputDataCategory()
 	}
 }
 
