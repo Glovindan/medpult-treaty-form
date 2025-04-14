@@ -35,7 +35,7 @@ export interface IFormData extends IFormDataGeneral {
 	/** Канал продажи */
 	channel: IInputData
 	/** Регион заключения */
-	region: IInputData
+	regionImprisonment: IInputData
 	/** Валюта договора */
 	currency: IInputData
 	/** Статус */
@@ -203,7 +203,7 @@ export class TreatyFormData implements IFormData {
 
 	number: IInputData
 	policyHolder: IInputData
-	region: IInputData
+	regionImprisonment: IInputData
 	conclusionDate: IInputData
 	startDate: IInputData
 	endDate: IInputData
@@ -221,7 +221,7 @@ export class TreatyFormData implements IFormData {
 
 		this.number = new InputDataString()
 		this.policyHolder = new InputDataString()
-		this.region = new InputDataCategory()
+		this.regionImprisonment = new InputDataCategory()
 		this.conclusionDate = new InputDataString()
 		this.startDate = new InputDataString()
 		this.endDate = new InputDataString()

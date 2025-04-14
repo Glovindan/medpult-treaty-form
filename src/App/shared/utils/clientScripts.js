@@ -152,7 +152,7 @@ async function getTreaty() {
 				'code': 'channelTest',
 			},
 		},
-		'region': {
+		'regionImprisonment': {
 			'value': 'test',
 		},
 		'currency': {
@@ -312,7 +312,7 @@ async function getTreatyLPU() {
 				'code': 'channelTest',
 			},
 		},
-		'region': {
+		'regionImprisonment': {
 			'value': 'test',
 		},
 		'currency': {
@@ -728,13 +728,13 @@ async function getPlanFulldata(id) {
 			'value': '',
 		},
 		'region': {
-			value: ['Московская область', 'Ленинградская область'],
+			value: 'Московская область , Ленинградская область',
 		},
 		'medicalFactor': {
 			'value': '',
 		},
 		'regionExt': {
-			value: ['Московская область', 'Ленинградская область', 'Московская область'],
+			value: 'Московская область, Ленинградская область, Московская область',
 		},
 	}
 
