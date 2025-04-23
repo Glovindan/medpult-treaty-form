@@ -8,6 +8,7 @@ import masks from '../../../shared/utils/masks'
 import Scripts from '../../../shared/utils/clientScripts'
 import CustomInputSearch from '../../CustomInputSearch/CustomInputSearch'
 import CustomInputSearchMultiple from '../../CustomInputSearchMultiple/CustomInputSearchMultiple'
+import CustomInputRegion from './CustomInputRegion/CustomInputRegion'
 
 interface PlanDetailsGeneralTabProps {
 	isViewMode: boolean
@@ -179,13 +180,9 @@ function PlanDetailsGeneralTab({ isViewMode, values, setValue }: PlanDetailsGene
 						/>
 					</LabledField>
 					<LabledField label={'Регион включения'}>
-						<CustomInputSearch
-							isLoadOnClick={true}
-							isViewMode={isViewMode}
-							name="region"
-							inputHandler={setValue}
-							values={values}
-							getDataHandler={Scripts.getAddressSuggestion}
+						<CustomInputRegion 
+							regions={values.region} 
+							isInclude={true}							
 						/>
 					</LabledField>
 					<LabledField label={'Медицинский коэффициент'}>
@@ -198,14 +195,18 @@ function PlanDetailsGeneralTab({ isViewMode, values, setValue }: PlanDetailsGene
 						/>
 					</LabledField>
 					<LabledField label={'Регион исключения'}>
-						<CustomInputSearch
+						<CustomInputRegion 
+							regions={values.regionExt} 
+							isInclude={false}							
+						/>
+						{/* <CustomInputSearch
 							isLoadOnClick={true}
 							isViewMode={isViewMode}
 							name="regionExt"
 							inputHandler={setValue}
 							values={values}
 							getDataHandler={Scripts.getAddressSuggestion}
-						/>
+						/> */}
 					</LabledField>
 				</div>
 			</div>

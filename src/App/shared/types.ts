@@ -366,11 +366,11 @@ export class PlanDetailsData {
 	/** Родительский план */
 	parentPlan: InputDataCategory
 	/** Регион включения */
-	region: InputDataCategory
+	region: string[]
 	/** Медицинский коэффициент */
 	medicalFactor: InputDataString
 	/** Регион исключения */
-	regionExt: InputDataCategory
+	regionExt: string[]
 
 	constructor() {
 		this.planNumber = new InputDataString()
@@ -390,9 +390,9 @@ export class PlanDetailsData {
 		this.insuranceAmount = new InputDataString()
 		this.type = new InputDataCategory()
 		this.parentPlan = new InputDataCategory()
-		this.region = new InputDataCategory()
+		this.region = []
 		this.medicalFactor = new InputDataString()
-		this.regionExt = new InputDataCategory()
+		this.regionExt = []
 	}
 }
 

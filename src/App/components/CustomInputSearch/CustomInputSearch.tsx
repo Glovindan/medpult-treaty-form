@@ -66,14 +66,6 @@ function CustomInputSearch(props: CustomInputSearch) {
 		setIsOpen(true)
 	}
 
-	// const handleOptionClick = async ({ value, data }: { value: string; data?: any }) => {
-	// 	console.log(data)
-	// 	setIsOpen(false)
-
-	// 	if (!props.inputHandler) return
-	// 	props.inputHandler(props.name, { value: value, data: data })
-	// }
-
 	const handleOptionClick = async ({ value, data }: { value: string; data?: any }) => {
 		setIsOpen(false)
 
@@ -102,15 +94,6 @@ function CustomInputSearch(props: CustomInputSearch) {
 
 	const buttonSvg = icons.Triangle
 
-	const [isModalOpen, setIsModalOpen] = useState(false)
-	// Обработчик открытия модального окна
-	const handleInfoButtonClick = () => {
-		setIsModalOpen(true)
-	}
-	const closeModal = () => {
-		setIsModalOpen(false)
-	}
-
 	return (
 		<div className="custom-select" ref={rootRef}>
 			<CustomInput
@@ -123,25 +106,8 @@ function CustomInputSearch(props: CustomInputSearch) {
 				cursor={props.isViewMode ? 'text' : 'pointer'}
 				isOpen={isOpen}
 				editModeButtons={[<InputButton svg={buttonSvg} clickHandler={clickHandler} />]}
-				viewModeButtons={
-					(props.name === 'region' || props.name === 'regionExt') &&
-					props.values[props.name]?.value &&
-					props.values[props.name]?.value.length > 0
-						? [<InputButton svg={icons.InfoRegion} clickHandler={handleInfoButtonClick} />]
-						: undefined
-				}
 				isViewMode={props.isViewMode}
 			/>
-			{/* Модальное окно */}
-			{isModalOpen && (
-				<ModalWrapper>
-					<InfoModal
-						title={props.name === 'region' ? ' Регион включения' : 'Регион исключения'}
-						closeModal={closeModal}
-						values={props.values[props.name].value?.split(',').map((v) => v.trim())}
-					></InfoModal>
-				</ModalWrapper>
-			)}
 			{isOpen && (
 				<CustomSelectList
 					rootRef={rootRef}
