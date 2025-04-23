@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 const Search = (
 	<svg width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,13 +51,21 @@ const Triangle = (
 )
 
 const Cross = (
-	<svg
-		height="100%"
-		width="100%"
-		xmlns="http://www.w3.org/2000/svg"
-	>
-		<path d="M8 8L16 16" stroke="#64C3F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-		<path d="M16 8L8 16" stroke="#64C3F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+	<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+		<path
+			d="M8 8L16 16"
+			stroke="#64C3F4"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+		<path
+			d="M16 8L8 16"
+			stroke="#64C3F4"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
 	</svg>
 )
 
@@ -174,7 +182,20 @@ const SortArrow = (
 
 const DeleteSearchItem = (
 	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path d="M16.2426 7.75827L7.75736 16.2435M16.2426 16.2435L7.75736 7.75827" stroke="#AAAAAD" stroke-width="2" stroke-linecap="round" />
+		<path
+			d="M16.2426 7.75827L7.75736 16.2435M16.2426 16.2435L7.75736 7.75827"
+			stroke="#AAAAAD"
+			stroke-width="2"
+			stroke-linecap="round"
+		/>
+	</svg>
+)
+
+const InfoRegion = (
+	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<circle cx="12" cy="12" r="9" stroke="#45B0E6" stroke-width="2" />
+		<path d="M12 12V16" stroke="#45B0E6" stroke-width="2" stroke-linecap="round" />
+		<circle cx="12" cy="8" r="1" fill="#45B0E6" />
 	</svg>
 )
 
@@ -201,4 +222,5 @@ export default {
 	SortArrow,
 	/** Иконка удаления элемента фильтра с поиском */
 	DeleteSearchItem,
+	InfoRegion,
 }

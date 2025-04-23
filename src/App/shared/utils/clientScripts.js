@@ -152,7 +152,7 @@ async function getTreaty() {
 				'code': 'channelTest',
 			},
 		},
-		'region': {
+		'regionImprisonment': {
 			'value': 'test',
 		},
 		'currency': {
@@ -312,7 +312,7 @@ async function getTreatyLPU() {
 				'code': 'channelTest',
 			},
 		},
-		'region': {
+		'regionImprisonment': {
 			'value': 'test',
 		},
 		'currency': {
@@ -728,13 +728,13 @@ async function getPlanFulldata(id) {
 			'value': '',
 		},
 		'region': {
-			'value': 'г Полный адрес, улица Полная, д12 кв34',
-			'data': {
-				'isFull': true,
-			},
+			value: 'Московская область , Ленинградская область',
 		},
 		'medicalFactor': {
 			'value': '',
+		},
+		'regionExt': {
+			value: 'Московская область, Ленинградская область, Московская область',
 		},
 	}
 
@@ -1163,6 +1163,9 @@ async function getAmendmentFulldata(id) {
 async function saveAmendment(id, values) {
 	await randomDelay()
 }
+async function OnInit() {
+	await randomDelay()
+}
 
 export default {
 	getProducts,
@@ -1208,4 +1211,5 @@ export default {
 	getAmendments,
 	getAmendmentFulldata,
 	saveAmendment,
+	OnInit,
 }

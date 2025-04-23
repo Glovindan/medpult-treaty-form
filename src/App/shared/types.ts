@@ -35,7 +35,7 @@ export interface IFormData extends IFormDataGeneral {
 	/** Канал продажи */
 	channel: IInputData
 	/** Регион заключения */
-	region: IInputData
+	regionImprisonment: IInputData
 	/** Валюта договора */
 	currency: IInputData
 	/** Статус */
@@ -137,6 +137,8 @@ export interface CustomInputProps extends React.ComponentProps<'input'> {
 	getValueHandler?: (props: CustomInputProps) => string
 	isInvalid?: boolean
 	customClassname?: string
+	editModeButtons?: React.ReactNode[]
+	viewModeButtons?: React.ReactNode[]
 }
 
 /** Сторона (С сохранением изначального состояния данных) */
@@ -201,7 +203,7 @@ export class TreatyFormData implements IFormData {
 
 	number: IInputData
 	policyHolder: IInputData
-	region: IInputData
+	regionImprisonment: IInputData
 	conclusionDate: IInputData
 	startDate: IInputData
 	endDate: IInputData
@@ -219,7 +221,7 @@ export class TreatyFormData implements IFormData {
 
 		this.number = new InputDataString()
 		this.policyHolder = new InputDataString()
-		this.region = new InputDataCategory()
+		this.regionImprisonment = new InputDataCategory()
 		this.conclusionDate = new InputDataString()
 		this.startDate = new InputDataString()
 		this.endDate = new InputDataString()
@@ -363,10 +365,12 @@ export class PlanDetailsData {
 	type: InputDataCategory
 	/** Родительский план */
 	parentPlan: InputDataCategory
-	/** Основной регион */
+	/** Регион включения */
 	region: InputDataCategory
 	/** Медицинский коэффициент */
 	medicalFactor: InputDataString
+	/** Регион исключения */
+	regionExt: InputDataCategory
 
 	constructor() {
 		this.planNumber = new InputDataString()
@@ -388,6 +392,7 @@ export class PlanDetailsData {
 		this.parentPlan = new InputDataCategory()
 		this.region = new InputDataCategory()
 		this.medicalFactor = new InputDataString()
+		this.regionExt = new InputDataCategory()
 	}
 }
 
